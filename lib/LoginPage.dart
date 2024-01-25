@@ -252,7 +252,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextButton(onPressed: () { Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => const forgotpassword(),
+                        builder: (context) => const Forgotpassword(),
                       ),
                     );
                       },

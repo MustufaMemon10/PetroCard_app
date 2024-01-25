@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:petrocardapppp/LoginPage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'WalkThrough.dart';
 
 void main() => runApp(MaterialApp(
@@ -24,17 +22,17 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   late Animation<double> animation;
 
   startTime() async {
-    var _duration = new Duration(seconds: 4);
+    var _duration = new Duration(seconds: 3);
     return new Timer(_duration, checkFirstSeen);
   }
 
   Future checkFirstSeen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
     // if(prefs.getString('id') != null) {
-    //   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Home()), (Route<dynamic> route) => false);
+    //   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => HomePage()), (Route<dynamic> route) => false);
     // }else{
     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-        builder: (BuildContext context) => LoginPage()), (
+        builder: (BuildContext context) => WalkThrough()), (
         Route<dynamic> route) => false);
   // }
   }
