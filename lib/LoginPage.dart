@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
     String username = usernameController.text;
     String password = passwordController.text;
     if (username.isEmpty || password.isEmpty) {
-      showSnackBar('Please enter both username and password.', isError:true);
+      showSnackBar('Please fill both username and password.', isError:true);
     }
     else {
       bool authenticationSuccess = authenticateUser(username, password);
