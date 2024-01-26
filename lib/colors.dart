@@ -12,6 +12,8 @@ class AppColors {
   static const accent1Gold = Color(0xFFFFD700);//#FFD700
   static const accent2Turquoise = Color(0xFF00CED1); //#00CED1
   static const neutralBackground = Color(0xFFFFFFFF);//#FFFFFF
+  static const white = Color(0xFFFFFFFF);//#FFFFFF
+  static const red = Color(0xFFF44336);//#FFFFFF
   static const neutralText = Color(0xFF333333);//#333333
   static const Color primaryText = Color(0xFF333333);
   static const Color secondaryText = Color(0xFF999999);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petrocardapppp/LoginPage.dart';
 import 'package:petrocardapppp/forgotpassword.dart';
 import 'package:petrocardapppp/splashscreen.dart';
 
@@ -20,7 +21,7 @@ class _PetroCardState extends State<PetroCard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Forgotpassword(),
+      body: otpPage(mobileNumber: '8493943344',),
     );
   }
 }
