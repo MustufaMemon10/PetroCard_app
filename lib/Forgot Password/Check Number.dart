@@ -248,7 +248,7 @@ class _CheckNumberdState extends State<CheckNumber> {
       SnackBar(
         content: Text(message),
         duration: Duration(seconds: 2),
-        backgroundColor: isError ? AppColors.translightPurple2 : Colors.green,
+        backgroundColor: isError ? AppColors.red : Colors.green,
       ),
     );
   }
