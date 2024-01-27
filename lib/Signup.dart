@@ -90,7 +90,7 @@ class _SignUppageState extends State<SignUppage> {
           children: <Widget>[
             FadeInDown(duration: Duration(milliseconds: 1000),
               child: Container(
-                height: height * 0.2,
+                height: height * 0.25,
                 width: width,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
