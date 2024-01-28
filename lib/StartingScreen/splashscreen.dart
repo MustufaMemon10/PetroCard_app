@@ -2,11 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'WalkThrough.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/StartingScreen//WalkThrough.dart';
 
 void main() => runApp(MaterialApp(
-  theme:
-  ThemeData(primaryColor: Color(0xFF08364B)),
   debugShowCheckedModeBanner: false,
   home: SplashScreen(),
 ));
@@ -57,6 +56,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = ScreenUtil().screenWidth;
+    double screenHeight = ScreenUtil().screenHeight;
     return Scaffold(
         backgroundColor: Color(0xFFffffff),
         body: Stack(
@@ -65,12 +66,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Padding(padding: EdgeInsets.all(24),
+                  Padding(padding: EdgeInsets.all(24.w),
                     child:Lottie.asset('assets/images/SplashScreen_animation.json',repeat: false) ,),
                   Text('Petro Card',
                     style: TextStyle(
                         color: Color(0xFF032737),
-                        fontSize: 36,
+                        fontSize: 36.sp,
                         fontWeight: FontWeight.bold,
                     ),
                   ),

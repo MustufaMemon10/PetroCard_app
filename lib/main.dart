@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:petrocardapppp/splashscreen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/StartingScreen/splashscreen.dart';
 
-void main() =>
-  runApp(const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: PetroCard(),
-    )
+
+void main() async {
+  runApp(const Myapp());
+}
+class Myapp extends StatelessWidget {
+  const Myapp({super.key});
+
+  @override
+  Widget build(BuildContext context) => ScreenUtilInit(
+    designSize: const Size(360, 690),
+    minTextAdapt: true,
+    splitScreenMode: true,
+    builder: (context, widget) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: PetroCard(),
+      );
+    },
   );
+}
+
 
 class PetroCard extends StatefulWidget {
   const PetroCard({super.key});

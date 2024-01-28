@@ -3,8 +3,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:petrocardapppp/Forgot Password/Check Number.dart';
 import 'package:petrocardapppp/Signup.dart';
-import 'package:petrocardapppp/colors.dart';
-import 'package:petrocardapppp/HomePage.dart';
+import 'package:petrocardapppp/Components/colors.dart';
+import 'package:petrocardapppp/HomeScreen/HomePage.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -169,89 +169,80 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             child: Column(
                                 children: <Widget>[
-                                  GestureDetector(
-                                    onTap:(){
-                                      FocusScope.of(context).unfocus();
-                                    },
-                                    child: Container(
-                                      key: const Key('usernameTextField'),
-                                      padding: const EdgeInsets.all(10.0),
-                                      decoration: const BoxDecoration(
-                                          border: Border(bottom: BorderSide(
-                                            color: AppColors.lightPurple,
-                                          ))
-                                      ),
-                                      child:  Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Icon(
-                                              Icons.mail,
-                                              color: Colors.grey,
+                                  Container(
+                                    key: const Key('usernameTextField'),
+                                    padding: const EdgeInsets.all(10.0),
+                                    decoration: const BoxDecoration(
+                                        border: Border(bottom: BorderSide(
+                                          color: AppColors.lightPurple,
+                                        ))
+                                    ),
+                                    child:  Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Icon(
+                                            Icons.mail,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: TextField(
+                                            controller: usernameController,
+                                            textInputAction: TextInputAction.next,
+                                            decoration: const InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "Username or e-mail ",
+                                                hintStyle: TextStyle(color: AppColors.grey,letterSpacing: 0.7),
                                             ),
                                           ),
-                                          Expanded(
-                                            child: TextField(
-                                              controller: usernameController,
-                                              decoration: const InputDecoration(
-                                                  border: InputBorder.none,
-                                                  hintText: "Username or e-mail ",
-                                                  hintStyle: TextStyle(color: AppColors.grey,letterSpacing: 0.7)
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  InkWell(
-                                    onTap:(){
-                                      FocusScope.of(context).unfocus();
-                                    },
-                                    child: Container(
-                                      padding:const EdgeInsets.all(10.0),
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Icon(
-                                              Icons.lock_outline,
-                                              color: Colors.grey,
-                                            ),
+                                  Container(
+                                    padding:const EdgeInsets.all(10.0),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Icon(
+                                            Icons.lock_outline,
+                                            color: Colors.grey,
                                           ),
-                                          Expanded(
-                                            child: TextField(
-                                              key: const Key('passwordTextField'),
-                                              controller: passwordController,
-                                              onChanged: (text){
-                                                setState(() {
-                                                  if(passwordController.text.isNotEmpty) {
-                                                    showPassword = false;
-                                                  }
-                                                });
-                                              },
-                                              decoration: InputDecoration(
-                                                border: InputBorder.none,
-                                                hintText: "Password",
-                                                hintStyle: const TextStyle(color: AppColors.grey,letterSpacing: 0.7),
-                                                suffixIcon:passwordController.text.isNotEmpty
-                                                    ?IconButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      showPassword = !showPassword;
-                                                    });
-                                                  },
-                                                  icon: Icon(
-                                                    showPassword ? Icons.visibility : Icons.visibility_off,
-                                                    color: AppColors.grey,
-                                                  ),
-                                                ):null,
-                                              ),
-                                              obscureText: !showPassword,
+                                        ),
+                                        Expanded(
+                                          child: TextField(
+                                            controller: passwordController,
+                                            textInputAction: TextInputAction.go,
+                                            onChanged: (text){
+                                              setState(() {
+                                                if(passwordController.text.isNotEmpty) {
+                                                  showPassword = false;
+                                                }
+                                              });
+                                            },
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: "Password",
+                                              hintStyle: const TextStyle(color: AppColors.grey,letterSpacing: 0.7),
+                                              suffixIcon:passwordController.text.isNotEmpty
+                                                  ?IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    showPassword = !showPassword;
+                                                  });
+                                                },
+                                                icon: Icon(
+                                                  showPassword ? Icons.visibility : Icons.visibility_off,
+                                                  color: AppColors.grey,
+                                                ),
+                                              ):null,
                                             ),
+                                            obscureText: !showPassword,
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ]
@@ -262,7 +253,7 @@ class _LoginPageState extends State<LoginPage> {
                             height: 10.0,
                           ),
                           FadeInUp(duration: const Duration(milliseconds: 2100), child: Center(child:
-                          TextButton(onPressed: () { Navigator.push(
+                          TextButton(onPressed:() { Navigator.push(
                             context,
                             CupertinoPageRoute(
                               builder: (context) => const CheckNumber(),

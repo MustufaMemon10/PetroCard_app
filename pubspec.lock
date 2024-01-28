@@ -126,6 +126,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.11"
+  flutter_screenutil:
+    dependency: "direct main"
+    description:
+      name: flutter_screenutil
+      sha256: "8cf100b8e4973dc570b6415a2090b0bfaa8756ad333db46939efc3e774ee100d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.9.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -144,14 +152,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
-  keyboard_actions:
-    dependency: "direct main"
-    description:
-      name: keyboard_actions
-      sha256: "31e0ab2a706ac8f58887efa60efc1f19aecdf37d8ab0f665a0f156d1fbeab650"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.0"
   lints:
     dependency: transitive
     description:

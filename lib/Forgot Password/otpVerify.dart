@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:petrocardapppp/Forgot%20Password/Check%20Number.dart';
-import 'package:petrocardapppp/colors.dart';
+import 'package:petrocardapppp/Components/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:petrocardapppp/Forgot%20Password/ChangePasswordScreen.dart';
 

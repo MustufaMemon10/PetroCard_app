@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:petrocardapppp/LoginPage.dart';
-import 'package:petrocardapppp/colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/Components/colors.dart';
 
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -140,16 +141,18 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                           padding: const EdgeInsets.all(10.0),
                                           child: Icon(
                                             Icons.lock_open,
-                                            color: Colors.grey,
+                                            color: AppColors.secondaryText,
                                           ),
                                         ),
                                         Expanded(
                                           child: TextField(
                                             controller: newPasswordController,
+                                            textInputAction: TextInputAction.next,
                                             obscureText: !showPasswordFields,
                                             decoration: InputDecoration(
                                               border: InputBorder.none,
                                               hintText: 'New Password',
+                                                hintStyle: TextStyle(color: AppColors.secondaryText)
                                             ),
                                           ),
                                         ),
@@ -164,16 +167,18 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                           padding: const EdgeInsets.all(10.0),
                                           child: Icon(
                                             Icons.lock_outline,
-                                            color: Colors.grey,
+                                            color: AppColors.secondaryText,
                                           ),
                                         ),
                                         Expanded(
                                           child: TextField(
                                             controller: confirmPasswordController,
                                             obscureText: !showPasswordFields,
+                                            textInputAction: TextInputAction.go,
                                             decoration: InputDecoration(
                                               border: InputBorder.none,
                                               hintText: 'Confirm Password',
+                                              hintStyle: TextStyle(color: AppColors.secondaryText),
                                               suffixIcon: IconButton(
                                                 icon: Icon(
                                                   showPasswordFields
