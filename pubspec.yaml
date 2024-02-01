@@ -36,6 +36,7 @@ dependencies:
   flutter_onboarding_slider: ^1.0.11
   animate_do: ^3.0.2
   flutter_screenutil: ^5.9.0
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:
@@ -49,7 +50,8 @@ flutter:
 
 
   assets:
-  - assets/images/
+  - assets/Animations/
+  - assets/Icons/
 
 #  assets:
 #    - images/a_dot_burr.jpeg

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:petrocardapppp/Forgot%20Password/Check%20Number.dart';
+import 'package:petrocardapppp/Pages/Forgot Password/Check Number.dart';
 import 'package:petrocardapppp/Components/colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:petrocardapppp/Forgot%20Password/ChangePasswordScreen.dart';
+import 'package:petrocardapppp/Pages/Forgot Password/ChangePasswordScreen.dart';
 
 class otpPage extends StatefulWidget {
-  final String mobileNumber;
+  final String initialMobileNumber;
 
-  const otpPage({super.key, required this.mobileNumber});
+  const otpPage({Key?key, required this.initialMobileNumber})  : super(key: key);
 
   @override
   State<otpPage> createState() => _otpPageState();
@@ -36,11 +36,11 @@ class _otpPageState extends State<otpPage> {
         child: Column(
           children: <Widget>[
             FadeInDown(
-              duration: Duration(milliseconds: 1000),
+              duration: const Duration(milliseconds: 1000),
               child: Container(
                 height: height * .3,
                 width: width,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomLeft,
@@ -57,8 +57,8 @@ class _otpPageState extends State<otpPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         FadeInUp(
-                          duration: Duration(milliseconds: 1000),
-                          child: Text(
+                          duration: const Duration(milliseconds: 1000),
+                          child: const Text(
                             "OTP",
                             style: TextStyle(
                               color: AppColors.darkPurple,
@@ -67,12 +67,12 @@ class _otpPageState extends State<otpPage> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         FadeInUp(
-                          duration: Duration(milliseconds: 1000),
-                          child: Text(
+                          duration: const Duration(milliseconds: 1000),
+                          child: const Text(
                             "Verify!",
                             style: TextStyle(
                               color: AppColors.darkPurple,
@@ -81,12 +81,12 @@ class _otpPageState extends State<otpPage> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         FadeInUp(
-                          duration: Duration(milliseconds: 1300),
-                          child: Text(
+                          duration: const Duration(milliseconds: 1300),
+                          child: const Text(
                             "Please verify your Mobile number by entering 4-digit Otp",
                             style: TextStyle(
                               color: AppColors.primaryText,
@@ -95,31 +95,31 @@ class _otpPageState extends State<otpPage> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         FadeInUp(
-                          duration: Duration(milliseconds: 1400),
+                          duration: const Duration(milliseconds: 1400),
                           child: Row(
                             children: [
                               Text(
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: AppColors.primaryText,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 16,
                                 ),
-                                '+91${widget.mobileNumber}',
+                                '+91${widget.initialMobileNumber}',
                               ),
                               TextButton(onPressed: () {
+                                String mobileNumber = widget.initialMobileNumber;
                                 Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                    builder: (
-                                        context) => const CheckNumber(),
+                                    builder: (context) => CheckNumber(initialMobileNumber: mobileNumber),
                                   ),
                                 );
                               },
-                                child: Text("Edit",
+                                child: const Text("Edit",
                                   style: TextStyle(
                                     color: AppColors.translightPurple2,
                                   ),
@@ -139,7 +139,7 @@ class _otpPageState extends State<otpPage> {
               child: FadeInUp(
                 duration: const Duration(milliseconds: 1700),
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(50.0),
                         topRight: Radius.circular(50.0),
@@ -159,7 +159,7 @@ class _otpPageState extends State<otpPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          SizedBox(
+                          const SizedBox(
                             height: 30.0,
                           ),
                           FadeInUp(
@@ -207,7 +207,7 @@ class _otpPageState extends State<otpPage> {
                                     borderRadius: BorderRadius.circular(30.0),
                                     color: AppColors.darkPurple,
                                     boxShadow: ([
-                                      BoxShadow(
+                                      const BoxShadow(
                                         color: AppColors.lightPurple,
                                         blurRadius: 5,
                                         offset: Offset(0, 10),
@@ -217,7 +217,7 @@ class _otpPageState extends State<otpPage> {
                                   ),
                                   height: 40,
                                   width: width * .7,
-                                  child: Align(
+                                  child: const Align(
                                     alignment: Alignment.center,
                                     child:
                                     Text(
@@ -265,20 +265,20 @@ class _otpPageState extends State<otpPage> {
               nextFocusNode.requestFocus();
             }
           },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             counter: Offstage(),
             border: OutlineInputBorder(),
           ),
         )
     );
   }
-  void verifyOtp()  {
+  Future<void> verifyOtp() async  {
     String otp = "${otpController1.text}${otpController2.text}${otpController3.text}${otpController4.text}";
     // Check if the entered OTP is correct
     if (otp == '1234') {
       showSnackBar('OTP is Correct!', isError: false);
       // Navigate to the next screen after showing success message
-      Future.delayed(Duration(seconds: 5));
+      await Future.delayed(Duration(seconds: 2));
       Navigator.push(
         context,
         CupertinoPageRoute(

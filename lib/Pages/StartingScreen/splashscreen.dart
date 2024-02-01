@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/StartingScreen//WalkThrough.dart';
+import 'package:petrocardapppp/Pages/StartingScreen//WalkThrough.dart';
 
 void main() => runApp(MaterialApp(
   debugShowCheckedModeBanner: false,
@@ -40,10 +40,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   void initState(){
     super.initState();
-    animationController = new AnimationController(
-        vsync: this, duration: new Duration(seconds: 3));
+    animationController =  AnimationController(
+        vsync: this, duration:  Duration(seconds: 3));
     animation =
-    new CurvedAnimation(parent: animationController, curve: Curves.fastOutSlowIn);
+     CurvedAnimation(parent: animationController, curve: Curves.fastOutSlowIn);
 
     animation.addListener(() => this.setState(() {}));
     animationController.forward();
@@ -56,8 +56,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = ScreenUtil().screenWidth;
-    double screenHeight = ScreenUtil().screenHeight;
     return Scaffold(
         backgroundColor: Color(0xFFffffff),
         body: Stack(
@@ -67,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Padding(padding: EdgeInsets.all(24.w),
-                    child:Lottie.asset('assets/images/SplashScreen_animation.json',repeat: false) ,),
+                    child:Lottie.asset('assets/Animations/SplashScreen_animation.json',repeat: false) ,),
                   Text('Petro Card',
                     style: TextStyle(
                         color: Color(0xFF032737),

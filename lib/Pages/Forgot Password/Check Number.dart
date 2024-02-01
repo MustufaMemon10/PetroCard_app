@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:petrocardapppp/Forgot Password/otpVerify.dart';
+import 'package:petrocardapppp/Components/CustomTextfield.dart';
+import 'package:petrocardapppp/Pages/Forgot Password/otpVerify.dart';
 import 'package:petrocardapppp/Components/colors.dart';
 
 class CheckNumber extends StatefulWidget {
   final String? initialMobileNumber;
-  const CheckNumber({super.key, this.initialMobileNumber});
+  const CheckNumber({Key? key, required this.initialMobileNumber,}) : super(key: key);
 
   @override
-  State<CheckNumber> createState() => _CheckNumberdState();
+  State<CheckNumber> createState() => _CheckNumberedState();
 }
 
-class _CheckNumberdState extends State<CheckNumber> {
+class _CheckNumberedState extends State<CheckNumber> {
   TextEditingController mobileNumberController = TextEditingController();
   @override
   void initState(){super.initState();
@@ -22,21 +23,22 @@ class _CheckNumberdState extends State<CheckNumber> {
   }
 
 
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
+      body: SizedBox(
         height: height,
         child: Column(
           children: <Widget>[
             FadeInDown(
-              duration: Duration(milliseconds: 1000),
+              duration: const Duration(milliseconds: 1000),
               child: Container(
                 height: height * 0.25,
                 width: width,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomLeft,
@@ -53,8 +55,8 @@ class _CheckNumberdState extends State<CheckNumber> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         FadeInUp(
-                          duration: Duration(milliseconds: 1000),
-                          child: Text(
+                          duration: const Duration(milliseconds: 1000),
+                          child: const Text(
                             "Reset password",
                             style: TextStyle(
                               color: AppColors.darkPurple,
@@ -63,12 +65,12 @@ class _CheckNumberdState extends State<CheckNumber> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         FadeInUp(
-                          duration: Duration(milliseconds: 1300),
-                          child: Text(
+                          duration: const Duration(milliseconds: 1300),
+                          child: const Text(
                             "Forgot Password ?That's okay.",
                             style: TextStyle(
                               color: AppColors.primaryText,
@@ -77,12 +79,12 @@ class _CheckNumberdState extends State<CheckNumber> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         FadeInUp(
-                          duration: Duration(milliseconds: 1400),
-                          child: Text(
+                          duration: const Duration(milliseconds: 1400),
+                          child: const Text(
                             "Please provide your Mobile number to reset your password ",
                             style: TextStyle(
                               color: AppColors.primaryText,
@@ -102,7 +104,7 @@ class _CheckNumberdState extends State<CheckNumber> {
               child: FadeInUp(
                 duration: const Duration(milliseconds: 1700),
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(50.0),
                         topRight: Radius.circular(50.0),
@@ -122,7 +124,7 @@ class _CheckNumberdState extends State<CheckNumber> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          SizedBox(
+                          const SizedBox(
                             height: 30.0,
                           ),
                           FadeInUp(
@@ -140,38 +142,7 @@ class _CheckNumberdState extends State<CheckNumber> {
                                       offset: Offset(0, 10),
                                     )
                                   ]),
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    padding: const EdgeInsets.all(10.0),
-                                    decoration: const BoxDecoration(
-                                    ),
-                                    child:Row(
-                                      children: [
-                                        const Padding(
-                                          padding: EdgeInsets.all(10.0),
-                                          child: Icon(
-                                            Icons.phone,
-                                            color: AppColors.grey,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: TextField(
-                                            controller: mobileNumberController,
-                                            keyboardType:
-                                            TextInputType.number,
-                                            decoration: const InputDecoration(
-                                                border: InputBorder.none,
-                                                hintText: "Mobile Number",
-                                                hintStyle: TextStyle(
-                                                    color: AppColors.grey)),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              child: CustomTextfield(icon: Icons.phone_android_rounded,obscureText: false, hintText: 'Mobile number', controller: mobileNumberController,showBorder: false,),
                             ),
                           ),
                           FadeInUp(
@@ -185,7 +156,7 @@ class _CheckNumberdState extends State<CheckNumber> {
                                     borderRadius: BorderRadius.circular(30.0),
                                     color: AppColors.darkPurple,
                                     boxShadow: ([
-                                      BoxShadow(
+                                      const BoxShadow(
                                         color: AppColors.lightPurple,
                                         blurRadius: 5,
                                         offset: Offset(0, 10),
@@ -195,7 +166,7 @@ class _CheckNumberdState extends State<CheckNumber> {
                                   ),
                                   height: 40,
                                   width: width * .6,
-                                  child:  Align(
+                                  child:  const Align(
                                     alignment: Alignment.center,
                                     child:
                                     Text(
@@ -230,7 +201,7 @@ class _CheckNumberdState extends State<CheckNumber> {
           context,
           CupertinoPageRoute(
             builder: (context) => otpPage(
-              mobileNumber: mobileNumberController.text,
+              initialMobileNumber: mobileNumberController.text,
             ),
           ),
         );
@@ -247,7 +218,7 @@ class _CheckNumberdState extends State<CheckNumber> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
         backgroundColor: isError ? AppColors.red : Colors.green,
       ),
     );

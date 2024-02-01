@@ -1,4 +1,4 @@
-import 'package:petrocardapppp/LoginPage.dart';
+import 'package:petrocardapppp/Pages/LoginScreen/LoginPage.dart';
 import 'package:petrocardapppp/Components/colors.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,7 +54,7 @@ class WalkThrough extends StatelessWidget {
       width: screenWidth,
       height: 400.h,
       child: Center(
-        child: Lottie.asset('assets/images/animation_walkthrough.json',repeat: true,
+        child: Lottie.asset('assets/Animations/animation_walkthrough.json',repeat: true,
             fit: BoxFit.cover),
       ),
     ),
@@ -62,7 +62,7 @@ class WalkThrough extends StatelessWidget {
       width: screenWidth,
       height: 400.h,
       child: Center(
-        child: Lottie.asset('assets/images/Animation_location new.json',repeat: true,
+        child: Lottie.asset('assets/Animations/Animation_location new.json',repeat: true,
             reverse: true,
             fit: BoxFit.cover),
       ),
@@ -71,7 +71,7 @@ class WalkThrough extends StatelessWidget {
            width: screenWidth,
            height: 400.h,
            child: Center(
-              child: Lottie.asset('assets/images/history_new2.json',repeat: true,
+              child: Lottie.asset('assets/Animations/history_new2.json',repeat: true,
                reverse: true,
                fit: BoxFit.cover),
             ),
