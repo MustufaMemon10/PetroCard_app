@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:petrocardapppp/Pages/Forgot Password/Check Number.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Components/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:petrocardapppp/Pages/Forgot Password/ChangePasswordScreen.dart';
 
-class otpPage extends StatefulWidget {
+class OtpPage extends StatefulWidget {
   final String initialMobileNumber;
 
-  const otpPage({Key?key, required this.initialMobileNumber})  : super(key: key);
+  const OtpPage({Key?key, required this.initialMobileNumber})  : super(key: key);
 
   @override
-  State<otpPage> createState() => _otpPageState();
+  State<OtpPage> createState() => OtpPageState();
 
 }
 
-class _otpPageState extends State<otpPage> {
+class OtpPageState extends State<OtpPage> {
   TextEditingController otpController1 = TextEditingController();
   TextEditingController otpController2 = TextEditingController();
   TextEditingController otpController3 = TextEditingController();
@@ -31,16 +32,15 @@ class _otpPageState extends State<otpPage> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: height,
         child: Column(
           children: <Widget>[
             FadeInDown(
-              duration: const Duration(milliseconds: 1000),
+              duration:  const Duration(milliseconds: 1000),
               child: Container(
-                height: height * .3,
                 width: width,
-                decoration: const BoxDecoration(
+                decoration:  const BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomLeft,
@@ -49,64 +49,64 @@ class _otpPageState extends State<otpPage> {
                           AppColors.neutralBackground,
                         ])),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40,vertical:20),
+                  padding:  EdgeInsets.symmetric(horizontal: 40.w,vertical: 30.h),
                   child: FadeInUp(
-                    duration: const Duration(milliseconds: 1200),
+                    duration:  const Duration(milliseconds: 1200),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         FadeInUp(
-                          duration: const Duration(milliseconds: 1000),
-                          child: const Text(
+                          duration:  const Duration(milliseconds: 1000),
+                          child:  Text(
                             "OTP",
                             style: TextStyle(
                               color: AppColors.darkPurple,
                               fontWeight: FontWeight.bold,
-                              fontSize: 30,
+                              fontSize: 35.sp,
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
+                        SizedBox(
+                          height: 5.h,
                         ),
                         FadeInUp(
-                          duration: const Duration(milliseconds: 1000),
-                          child: const Text(
+                          duration:  const Duration(milliseconds: 1000),
+                          child:  Text(
                             "Verify!",
                             style: TextStyle(
                               color: AppColors.darkPurple,
                               fontWeight: FontWeight.bold,
-                              fontSize: 30,
+                              fontSize: 30.sp,
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
+                        SizedBox(
+                          height: 5.h,
                         ),
                         FadeInUp(
-                          duration: const Duration(milliseconds: 1300),
-                          child: const Text(
+                          duration:  const Duration(milliseconds: 1300),
+                          child:  Text(
                             "Please verify your Mobile number by entering 4-digit Otp",
                             style: TextStyle(
                               color: AppColors.primaryText,
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: 20.sp,
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
+                        SizedBox(
+                          height: 5.h,
                         ),
                         FadeInUp(
-                          duration: const Duration(milliseconds: 1400),
+                          duration:  const Duration(milliseconds: 1400),
                           child: Row(
                             children: [
                               Text(
-                                style: const TextStyle(
+                                style:  TextStyle(
                                   color: AppColors.primaryText,
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                 ),
                                 '+91${widget.initialMobileNumber}',
                               ),
@@ -119,9 +119,10 @@ class _otpPageState extends State<otpPage> {
                                   ),
                                 );
                               },
-                                child: const Text("Edit",
+                                child:  Text("Edit",
                                   style: TextStyle(
-                                    color: AppColors.translightPurple2,
+                                    color: AppColors.translightPurple,
+                                    fontSize: 14.sp
                                   ),
                                 ),
                               )
@@ -137,15 +138,15 @@ class _otpPageState extends State<otpPage> {
             Expanded(
               flex: 1,
               child: FadeInUp(
-                duration: const Duration(milliseconds: 1700),
+                duration:  const Duration(milliseconds: 1700),
                 child: Container(
-                  decoration: const BoxDecoration(
+                  decoration:  BoxDecoration(
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(50.0),
-                        topRight: Radius.circular(50.0),
+                        topLeft: Radius.circular(50.0.r),
+                        topRight: Radius.circular(50.0.r),
                       ),
                       color: AppColors.neutralBackground,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: AppColors.primaryText,
                           blurRadius: 15,
@@ -153,23 +154,21 @@ class _otpPageState extends State<otpPage> {
                         )
                       ]),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 40, vertical: 10.0),
+                    padding:  EdgeInsets.symmetric(
+                        horizontal: 40.w, vertical: 10.0.h),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          const SizedBox(
-                            height: 30.0,
+                          SizedBox(
+                            height: 30.0.h,
                           ),
                           FadeInUp(
-                            duration: const Duration(milliseconds: 1900),
+                            duration:  const Duration(milliseconds: 1900),
                             child: Column(
                               children: <Widget>[
                                 Container(
-                                  padding: const EdgeInsets.all(10.0),
-                                  decoration: const BoxDecoration(
-                                  ),
+                                  padding:  EdgeInsets.all(10.0.w),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment
                                         .spaceEvenly,
@@ -194,20 +193,20 @@ class _otpPageState extends State<otpPage> {
                           ),
 
                           FadeInUp(
-                            duration: const Duration(milliseconds: 2000),
+                            duration:  const Duration(milliseconds: 2000),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 30.0),
+                              padding:  EdgeInsets.symmetric(
+                                  horizontal: 20.0.w, vertical: 30.0.h),
                               child: GestureDetector(
                                 onTap: () {
                                   verifyOtp();
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30.0),
+                                    borderRadius: BorderRadius.circular(30.0.r),
                                     color: AppColors.darkPurple,
-                                    boxShadow: ([
-                                      const BoxShadow(
+                                    boxShadow: (const [
+                                      BoxShadow(
                                         color: AppColors.lightPurple,
                                         blurRadius: 5,
                                         offset: Offset(0, 10),
@@ -215,9 +214,9 @@ class _otpPageState extends State<otpPage> {
                                       ),
                                     ]),
                                   ),
-                                  height: 40,
-                                  width: width * .7,
-                                  child: const Align(
+                                  height: 40.h,
+                                  width: .7.sw,
+                                  child:  Align(
                                     alignment: Alignment.center,
                                     child:
                                     Text(
@@ -225,6 +224,7 @@ class _otpPageState extends State<otpPage> {
                                       style: TextStyle(
                                         color: AppColors.white,
                                         fontWeight: FontWeight.bold,
+                                        fontSize: 16.sp,
                                         letterSpacing: 1.0,
                                       ),
                                     ),
@@ -248,8 +248,8 @@ class _otpPageState extends State<otpPage> {
       FocusNode currentFocusNode,
       FocusNode? previousFocusNode,
       FocusNode? nextFocusNode,) {
-    return Container(
-        width: 50,
+    return SizedBox(
+        width: 50.w,
         child: TextField(
           controller: controller,
           maxLength: 1,
@@ -278,11 +278,11 @@ class _otpPageState extends State<otpPage> {
     if (otp == '1234') {
       showSnackBar('OTP is Correct!', isError: false);
       // Navigate to the next screen after showing success message
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       Navigator.push(
         context,
         CupertinoPageRoute(
-          builder: (context) => ChangePasswordScreen(),
+          builder: (context) => const ChangePasswordScreen(),
         ),
       );
     } else {
@@ -294,7 +294,7 @@ class _otpPageState extends State<otpPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
         backgroundColor: isError ? AppColors.red : Colors.green,
       ),
     );

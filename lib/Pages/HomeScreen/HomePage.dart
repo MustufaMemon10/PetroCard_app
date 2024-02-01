@@ -1,98 +1,174 @@
-import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Components/colors.dart';
+import 'package:petrocardapppp/Widgets/GreetingWidget.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: AppColors.translightPurple2,
       body: Column(
-      children: [
-       Container(
-         height: 120.h,
-         width: width,
-         decoration: const BoxDecoration(
-           gradient: LinearGradient(
-             begin: Alignment.topCenter,
-             end: Alignment.bottomCenter,
-             colors: [
-               AppColors.translightPurple2,
-               AppColors.neutralBackground,
-             ],
-           ),
-         ),
-         child: Row(
-           crossAxisAlignment: CrossAxisAlignment.start,
-         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-         children: [
-           Padding(
-             padding: EdgeInsets.symmetric(vertical: 10.0.w,horizontal: 10.0.h),
-             child: Container(
-               padding: EdgeInsets.symmetric(vertical: 10.0.w,horizontal: 10.0.h),
-               height: 50,
-               width: 50,
-               decoration: BoxDecoration(
-                 color: AppColors.white.withOpacity(0.1),
-                 borderRadius: BorderRadius.circular(60.r),
-                 border: Border.all(
-                   color: Colors.white.withOpacity(0.3), // Adjust the border color for better visibility
-                   width: 1.5,
-                 ),
-               ),
-               child: ClipRRect(
-                 borderRadius: BorderRadius.circular(16.0),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: Container(
-            color: Colors.white.withOpacity(0.1),
-            child: Image.asset("assets/Icons/menu.png",height: 40.h,width: 40.w,),
+        children: [
+          Stack(
+            children: [
+              Container(
+                height: 1.sh,
+                width: 1.sw,
+                padding: const EdgeInsets.symmetric(vertical: 35.0,horizontal: 10.0),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.white,
+                      AppColors.translightPurple2,
+                    ],
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Column(
+                        children: [
+                          Stack(
+                            children: [
+                              SizedBox(
+                                height: 55.h,
+                                width: width,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.white,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: AppColors.white.withOpacity(.5),width: 1.0),
+                                      boxShadow:  [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 5,
+                                          blurRadius: 15,
+                                          offset: const Offset(0, 10),
+                                        ),
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 5,
+                                          blurRadius: 10,
+                                          offset: const Offset(0, 5),
+                                        ),
+                                      ],
+                                    ),
+                                    child: IconButton(onPressed: (){}, icon: const Icon(Icons.menu),color: AppColors.primaryText,),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: AppColors.white,
+                                      boxShadow:  [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 5,
+                                          blurRadius: 15,
+                                          offset: const Offset(0, 10),
+                                        ),
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 5,
+                                          blurRadius: 10,
+                                          offset: const Offset(0, 5),
+                                        ),
+                                      ],
+                                    ),
+                                    child: IconButton(onPressed: (){}, icon: const Icon(Icons.notifications_active_outlined),color: AppColors.primaryText,),
+                                  ),
+                                ]),
+                              ),
+                              Positioned(
+                                  top: 5.h,
+                                  right: 120.0.w,
+                                  left: 5.w,
+                                  child:
+                                  Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      GreetingWidget(),
+                                       Text(' Mustufa Memon!',style: TextStyle(
+                                        fontSize: 14.0.sp,fontWeight: FontWeight.w500,
+                                      ),)
+                                    ],
+                                  )
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  height: .5.sh,
+                  width: 1.sw,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.0.r),
+                      topRight: Radius.circular(30.0.r),
+                    ),
+                    color: AppColors.white,
+                    boxShadow:  [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 5,
+                        blurRadius: 15,
+                        offset: const Offset(0, 10),
+                      ),
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 5,
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child:Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            height: 4.h,
+                            width: 50.w,
+                            decoration: BoxDecoration(
+                              color: AppColors.secondaryText,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                        )
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-             ),
-           ),
-             ),
-           ),
-           Padding(
-             padding: EdgeInsets.symmetric(vertical: 10.0.w,horizontal: 10.0.h),
-             child: Container(
-               padding: EdgeInsets.symmetric(vertical: 10.0.w,horizontal: 10.0.h),
-               height: 50,
-               width: 50,
-               decoration: BoxDecoration(
-                 color: AppColors.white.withOpacity(0.1),
-                 borderRadius: BorderRadius.circular(60.r),
-                 border: Border.all(
-                   color: Colors.white.withOpacity(0.3), // Adjust the border color for better visibility
-                   width: 1.5,
-                 ),
-               ),
-               child: ClipRRect(
-                 borderRadius: BorderRadius.circular(16.0),
-             child: BackdropFilter(
-               filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-               child: Container(
-                 color: Colors.white.withOpacity(0.1),
-                 child: Image.asset("assets/Icons/notification-bell.png",height: 40.h,width: 40.w,),
-               ),
-             ),
-           ),
-             ),
-           ),
-         ],
-         ),
-       )
-      ],
-      )
+        ],
+      ),
     );
   }
 }
