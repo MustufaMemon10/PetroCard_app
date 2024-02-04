@@ -18,10 +18,6 @@ class _MyappbarState extends State<Myappbar> {
         .of(context)
         .size
         .width;
-    final height = MediaQuery
-        .of(context)
-        .size
-        .height;
     return Container(
       height: .20.sh,
       padding: const EdgeInsets.symmetric(

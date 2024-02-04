@@ -12,7 +12,6 @@ class WalkThrough extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = ScreenUtil().screenWidth;
-    double screenHeight = ScreenUtil().screenHeight;
     return SafeArea(
       child: OnBoardingSlider(
         finishButtonText: 'Login',

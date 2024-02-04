@@ -23,10 +23,6 @@ class _MyNavBarState extends State<MyNavBar> {
         .of(context)
         .size
         .width;
-    final height = MediaQuery
-        .of(context)
-        .size
-        .height;
     return Container(
         margin: const EdgeInsets.only(bottom: 5.0,right: 10.0,left: 10.0),
         height:.075.sh,

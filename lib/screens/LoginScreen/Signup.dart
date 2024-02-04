@@ -6,7 +6,6 @@ import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Components/colors.dart';
 import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
-import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
 
 class SignUppage extends StatefulWidget {
   const SignUppage({super.key});

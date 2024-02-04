@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Components/colors.dart';
 import 'package:petrocardapppp/DrawerComponents/InfoCard.dart';
 import 'package:petrocardapppp/DrawerComponents/side_menu_tile.dart';
-import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer({super.key});
@@ -25,8 +24,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: GestureDetector(
         onTap: () {

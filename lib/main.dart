@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/Components/bottom_navigationbar.dart';
 import 'package:petrocardapppp/Components/colors.dart';
-import 'package:petrocardapppp/Components/Drawer.dart';
 import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
-import 'package:petrocardapppp/screens/MainScreen/HomeScreen.dart';
-import 'package:petrocardapppp/screens/StartingScreen/splashscreen.dart';
 
 
 void main() async {

@@ -1,14 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/Components/Drawer.dart';
 import 'package:petrocardapppp/Components/Myappbar.dart';
 import 'package:petrocardapppp/Components/bottom_navigationbar.dart';
-import 'package:petrocardapppp/Components/colors.dart';
 import 'package:petrocardapppp/screens/MainScreen/HomeScreen.dart';
 import 'package:petrocardapppp/screens/MainScreen/Location_screen.dart';
-
-import 'GreetingWidget.dart';
 import '../screens/MainScreen/Setting_screen.dart';
 import '../screens/MainScreen/User_screen.dart';
 
@@ -23,14 +18,6 @@ class HomeWidgetState extends State<HomeWidget> {
   int _currentIndex =1 ;
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    final height = MediaQuery
-        .of(context)
-        .size
-        .height;
     return Scaffold(
       backgroundColor: Colors.transparent,
         body: Stack(
