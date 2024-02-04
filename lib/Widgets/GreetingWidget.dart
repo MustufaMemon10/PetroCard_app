@@ -20,7 +20,7 @@ class GreetingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       generateGreeting(),
-      style: TextStyle(fontSize: 18.0.sp,fontWeight: FontWeight.w600,color: AppColors.primaryText),
+      style: TextStyle(fontSize: 22.0.sp,fontWeight: FontWeight.w600,color: AppColors.primaryText),
     );
   }
 }

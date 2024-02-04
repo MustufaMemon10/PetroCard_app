@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/Pages/StartingScreen//WalkThrough.dart';
+import 'package:petrocardapppp/screens/StartingScreen//WalkThrough.dart';
 
 void main() => runApp(MaterialApp(
   debugShowCheckedModeBanner: false,

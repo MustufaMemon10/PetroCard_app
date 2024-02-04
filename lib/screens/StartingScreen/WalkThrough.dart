@@ -1,4 +1,4 @@
-import 'package:petrocardapppp/Pages/LoginScreen/LoginPage.dart';
+import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
 import 'package:petrocardapppp/Components/colors.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/cupertino.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:petrocardapppp/Pages/Forgot Password/Check Number.dart';
+import 'package:petrocardapppp/screens/Forgot Passwordscreen/Check Number.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Components/colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:petrocardapppp/Pages/Forgot Password/ChangePasswordScreen.dart';
+import 'package:petrocardapppp/screens/Forgot Passwordscreen/ChangePasswordScreen.dart';
 
 class OtpPage extends StatefulWidget {
   final String initialMobileNumber;

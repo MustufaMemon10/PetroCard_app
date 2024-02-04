@@ -37,7 +37,8 @@ dependencies:
   animate_do: ^3.0.2
   flutter_screenutil: ^5.9.0
   image_picker: ^1.0.7
-
+  font_awesome_flutter: ^10.7.0
+  curved_navigation_bar: ^1.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -52,7 +53,15 @@ flutter:
   assets:
   - assets/Animations/
   - assets/Icons/
-
+fonts:
+  - family: Poppins
+    fonts:
+      - asset: assets/fonts/Poppins-Light.ttf
+        weight: 100
+      - asset: assets/fonts/Poppins-Medium.ttf
+        weight: 400
+      - asset: assets/fonts/Poppins-Bold.ttf
+        weight: 600
 #  assets:
 #    - images/a_dot_burr.jpeg
 #    - images/a_dot_ham.jpeg

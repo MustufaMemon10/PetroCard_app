@@ -3,10 +3,10 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Widgets/CustomTextfieldWidget.dart';
-import 'package:petrocardapppp/Pages/Forgot Password/Check Number.dart';
-import 'package:petrocardapppp/Pages/LoginScreen/Signup.dart';
+import 'package:petrocardapppp/screens//Forgot Passwordscreen/Check Number.dart';
+import 'package:petrocardapppp/screens/LoginScreen/Signup.dart';
 import 'package:petrocardapppp/Components/colors.dart';
-import 'package:petrocardapppp/Pages/HomeScreen/HomePage.dart';
+import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        CupertinoPageRoute(builder: (context) => const HomePage()),
+        CupertinoPageRoute(builder: (context) => const BaseScreen()),
       );
     });
   }

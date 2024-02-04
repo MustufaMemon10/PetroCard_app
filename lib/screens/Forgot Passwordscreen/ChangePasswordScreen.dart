@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:petrocardapppp/Pages/LoginScreen/LoginPage.dart';
+import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
 import 'package:petrocardapppp/Widgets/CustomTextfieldWidget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Components/colors.dart';

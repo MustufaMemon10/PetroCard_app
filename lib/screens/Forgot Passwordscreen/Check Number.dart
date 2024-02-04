@@ -3,7 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Widgets/CustomTextfieldWidget.dart';
-import 'package:petrocardapppp/Pages/Forgot Password/otpVerify.dart';
+import 'package:petrocardapppp/screens/Forgot Passwordscreen//otpVerify.dart';
 import 'package:petrocardapppp/Components/colors.dart';
 
 class CheckNumber extends StatefulWidget {
