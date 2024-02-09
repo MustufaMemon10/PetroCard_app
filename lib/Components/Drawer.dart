@@ -15,64 +15,69 @@ class _HomeDrawerState extends State<HomeDrawer> {
   int selectedIndex = 0; // Track the selected index
 
   // Define the list of SidemenuTiles
-  final List<SidemenuTile> sidemenuTiles = [
-    SidemenuTile(title: 'Rate Us', icon: CupertinoIcons.star, page: HomeDrawer()),
-    SidemenuTile(title: 'Feedback', icon: CupertinoIcons.exclamationmark_bubble, page: HomeDrawer()),
-    SidemenuTile(title: 'About us', icon: CupertinoIcons.personalhotspot, page: HomeDrawer()),
-    SidemenuTile(title: 'Log Out', icon: CupertinoIcons.rectangle_expand_vertical, page: HomeDrawer()),
+  final List<SlidermenuItem> slidermenuItem = [
+    SlidermenuItem(title: 'Rate Us', iconData: CupertinoIcons.star, onTap: (String ) { HomeDrawer(); },),
+    SlidermenuItem(title: 'Feedback', iconData: CupertinoIcons.exclamationmark_bubble,  onTap: (String ) { HomeDrawer();}),
+    SlidermenuItem(title: 'About us', iconData: CupertinoIcons.personalhotspot,  onTap: (String ) { HomeDrawer();}),
+    SlidermenuItem(title: 'Log Out', iconData: Icons.arrow_back_ios,  onTap: (String ) { HomeDrawer();}),
+    SlidermenuItem(title: 'Settings',isSetting: true, iconData: Icons.settings,  onTap: (String) { HomeDrawer();}),
   ];
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pop();
-        },
+      child: Container(
+        height: 1.sh,
+        width: 0.7.sw,
+        decoration: BoxDecoration(
+          color: AppColors.black.withOpacity(0.7),
+        ),
         child: Container(
-          height: 1.sh,
-          width: .7.sw,
-          decoration: BoxDecoration(
-            color: AppColors.darkPurple.withOpacity(0.7),
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(12.0),
-              bottomRight: Radius.circular(12.0),
-            ),
-          ),
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const InfoCard(name: 'Abu Usman', email: 'Abu12@gmail.com'),
-                Padding(
-                  padding: const EdgeInsets.only(left: 24.0, top: 32.0, bottom: 16.0,),
-                  child: Text(
-                    'Browse'.toUpperCase(),
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white70),
+          color: Colors.white,
+          padding: const EdgeInsets.only(top: 30),
+          child: ListView(
+              children: <Widget>[
+                const SizedBox(
+                  height: 30,
+                ),
+                CircleAvatar(
+                  radius: 43,
+                  backgroundColor: Colors.black12,
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundImage: Image.asset(
+                        'assets/Animations/1684996885825.jpg')
+                        .image,
                   ),
                 ),
-                // Use ListView.builder to build the list dynamically
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: sidemenuTiles.length,
-                  itemBuilder: (context, index) {
-                    final tile = sidemenuTiles[index];
-                    return GestureDetector(
-                      onTap: () {
-                        // Update the selected index on tile tap
-                        setState(() {
-                          selectedIndex = index;
-                        });
-                      },
-                      child: tile,
-                    );
-                    }
-                      ),
-                       ]
-                    ),
-          ),
+                 SizedBox(
+                  height: 20.h,
                 ),
-      ),
+                 Text(
+                  'Mustufa Memon',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20.sp,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              // Use ListView.builder to build the list dynamically
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: slidermenuItem.length,
+                itemBuilder: (context, index) {
+                  final tile = slidermenuItem[index];
+                  return  tile;
+                  }
+                    ),
+                     ]
+                  ),
+        ),
+              ),
           );
   }
 }

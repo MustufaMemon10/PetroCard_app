@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petrocardapppp/Components/NotificationShade.dart';
 import 'package:petrocardapppp/Components/colors.dart';
 import 'package:petrocardapppp/Components/Drawer.dart';
 import 'package:petrocardapppp/Widgets/Home Widget.dart';
@@ -12,13 +14,45 @@ class BaseScreen extends StatefulWidget {
   State<BaseScreen> createState() => _BaseScreenState();
 }
 
-class _BaseScreenState extends State<BaseScreen> {
+class _BaseScreenState extends State<BaseScreen> with SingleTickerProviderStateMixin{
   bool isDrawerOpen = false;
-  bool isIconPressed = false;
+  bool isNotificationOpen = false;
+  late AnimationController _animationController;
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   void toggleDrawer() {
     setState(() {
       isDrawerOpen = !isDrawerOpen;
-      isIconPressed = !isIconPressed;
+      if (isDrawerOpen) {
+        _animationController.forward();
+        isNotificationOpen = false;
+      } else {
+        _animationController.reverse();
+      }
+    });
+  }
+  void toggleNotification(){
+    setState(() {
+      isNotificationOpen = !isNotificationOpen;
+      if (isNotificationOpen) {
+        isDrawerOpen = false; // Close drawer when opening notification shade
+      }
+      else{
+        isNotificationOpen = false;
+      }
     });
   }
 
@@ -27,30 +61,39 @@ class _BaseScreenState extends State<BaseScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          const HomeWidget(),
-          AnimatedPositioned(
-              left: isDrawerOpen ? 0 : 0.7,
-              duration: const Duration(milliseconds:600),
-              child: isDrawerOpen? const HomeDrawer():const SizedBox()),
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 500),
-            top: 30.0,
-            left: isDrawerOpen ? 0.7.sw : 10.w,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              height: isDrawerOpen? 34 : 34,
-              width:  isDrawerOpen? 34 : 34,
-              child: InkWell(
-                splashColor: Colors.transparent,
-                onTap: toggleDrawer,
-                child:Icon(
-                  isDrawerOpen ? FontAwesomeIcons.xmark : Icons.menu,
-                  color: AppColors.darkPurple,
-                  size: isDrawerOpen? 34 : 28,
-                ),
-              ),
-            ),
+          HomeWidget(
+            isDrawerOpen: isDrawerOpen,
+            isNotificationOpen: isNotificationOpen,
+            toggleDrawer: toggleDrawer,
+            toggleNotification: toggleNotification,
           ),
+        if (isDrawerOpen || isNotificationOpen) GestureDetector(
+          onTap: () {
+          if (isDrawerOpen) {
+             toggleDrawer();
+             } else if (isNotificationOpen) {
+              toggleNotification();
+             }
+               },
+               child: Container(
+               color: Colors.black.withOpacity(0.4),
+             ),
+            ),
+            AnimatedPositioned(
+            duration: const Duration(milliseconds: 300),
+            top: 0,
+            bottom: 0,
+            left: isDrawerOpen ? 0 : -450,
+            child: const HomeDrawer(),
+          ),
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 300),
+            top: 0,
+            bottom: 0,
+            right: isNotificationOpen ? 0 : -450,
+            child: const NotificationShade(),
+          ),
+        
         ],
       ),
     );

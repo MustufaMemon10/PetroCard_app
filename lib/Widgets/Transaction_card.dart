@@ -1,68 +1,50 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:petrocardapppp/Components/colors.dart';
+class DraggableListSleeve<T> extends StatefulWidget {
+  final List<T> items;
+  final Widget Function(T item) itemBuilder;
+  final void Function(List<T> newItems) onReorder;
 
-class TransactionCard extends StatefulWidget {
-  const TransactionCard({super.key});
+  DraggableListSleeve({
+    required this.items,
+    required this.itemBuilder,
+    required this.onReorder,
+  });
 
   @override
-  State<TransactionCard> createState() => _TransactionCardState();
+  _DraggableListSleeveState<T> createState() => _DraggableListSleeveState<T>();
 }
 
-class _TransactionCardState extends State<TransactionCard> {
+class _DraggableListSleeveState<T> extends State<DraggableListSleeve<T>> {
+  late List<T> _items;
+
+  @override
+  void initState() {
+    super.initState();
+    _items = List.from(widget.items);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.5,
-      minChildSize: 0.1,
-      maxChildSize: 0.8,
-      builder: (BuildContext context, ScrollController scrollController) {
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            final maxHeight = constraints.maxHeight * 0.8; // Set your maximum height
-            return Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0.r),
-                  topRight: Radius.circular(30.0.r),
-                ),
-                color: AppColors.black,
-              ),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Container(
-                        height: 4.h,
-                        width: 50.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.secondaryText,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: min(maxHeight, constraints.maxHeight),
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      child: SizedBox(
-                        height: 1.sh, // Adjust the height as needed
-                        width: 1.sw,
-                        // Add other content as needed
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
+    return ReorderableListView(
+      children: _items
+          .map((item) => ListTile(
+                key: Key(item.toString()),
+                title: widget.itemBuilder(item),
+              ))
+          .toList(),
+      onReorder: _onReorder,
     );
+  }
+
+  void _onReorder(int oldIndex, int newIndex) {
+    setState(() {
+      if (newIndex > oldIndex) {
+        newIndex -= 1;
+      }
+      final T item = _items.removeAt(oldIndex);
+      _items.insert(newIndex, item);
+      widget.onReorder(_items);
+    });
   }
 }

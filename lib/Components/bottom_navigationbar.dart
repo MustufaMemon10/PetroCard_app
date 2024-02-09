@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,10 +37,7 @@ class _MyNavBarState extends State<MyNavBar> {
               offset: const Offset(0, 10),
             ),
           ],
-          borderRadius:  BorderRadius.circular(50.0
-            // topLeft: Radius.circular(30.0),
-            // topRight: Radius.circular(30.0),
-          ),
+          borderRadius:  BorderRadius.circular(50.r),
         ),
         child: ListView.builder(
           itemCount: 4,
@@ -141,14 +139,14 @@ class _MyNavBarState extends State<MyNavBar> {
   List<IconData> listOfIcons = [
     Icons.location_on_sharp,
     Icons.home_rounded,
-    Icons.settings_rounded,
+    CupertinoIcons.creditcard,
     Icons.person_rounded,
   ];
 
   List<String> listOfStrings = [
     'Locations',
     'Home',
-    'Settings',
+    'Cards',
     'Account',
   ];
 }
