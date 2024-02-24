@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   lottie: ^2.5.0
+  http: ^0.13.4
   flutter_svg:
   cupertino_icons: ^1.0.2
   shared_preferences: ^2.2.2

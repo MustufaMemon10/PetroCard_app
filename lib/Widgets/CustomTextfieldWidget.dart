@@ -8,7 +8,9 @@ class CustomTextfield extends StatefulWidget {
   final IconData icon;
   final String hintText;
   final bool obscureText;
+  final String errorMsg;
   final TextEditingController controller;
+  final Function(String value) validatorValue;
   final bool showBorder;
   final bool sufixIcon;
   final bool numerickeyboard;
@@ -22,6 +24,8 @@ class CustomTextfield extends StatefulWidget {
     this.showBorder = true,
     this.sufixIcon = false,
     required this.obscureText,
+    required this.validatorValue,
+    required this.errorMsg,
     this.numerickeyboard = false,
     this.istrue = true,
   }) : super(key: key);
@@ -60,11 +64,18 @@ class _CustomTextfieldState extends State<CustomTextfield> {
             ),
           ),
           Expanded(
-            child: TextField(
+            child: TextFormField(
               controller: widget.controller,
               obscureText: _isObscured,
               textInputAction:
               widget.istrue ? TextInputAction.next : TextInputAction.go,
+              validator: (value){
+                widget.validatorValue(value!);
+                if(value!.isEmpty){
+                  return widget.errorMsg;
+                }
+                return null;
+    },
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: widget.hintText,
@@ -172,7 +183,7 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
                   ),
                 ),
                 Expanded(
-                  child: TextField(
+                  child: TextFormField(
                     controller: widget.controller2,
                     obscureText: _isObscured,
                     textInputAction: TextInputAction.go,

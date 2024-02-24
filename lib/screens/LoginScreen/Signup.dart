@@ -19,6 +19,7 @@ class _SignUppageState extends State<SignUppage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController createPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController NumberController = TextEditingController();
 
   bool showPasswordFields = false;
 
@@ -206,6 +207,8 @@ class _SignUppageState extends State<SignUppage> {
                                       CustomTextfield(
                                         obscureText: false,
                                         controller: fullNameController,
+                                        validatorValue: (val) {},
+                                        errorMsg: 'Please enter First Name',
                                         showBorder: true,
                                         hintText: 'Full name',
                                         icon: Icons.person,
@@ -214,7 +217,30 @@ class _SignUppageState extends State<SignUppage> {
                                         obscureText: false,
                                         controller: emailController,
                                         showBorder: true,
+                                        validatorValue: (val) {
+                                          if (val.isEmpty ||
+                                              RegExp(r"\s").hasMatch(val)) {
+                                            return "Email must not be empty";
+                                          } else {
+                                            if (RegExp(
+                                                r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
+                                                .hasMatch(val)) {
+                                              return null;
+                                            }
+                                          }
+                                        },
+                                        errorMsg: 'Enter a valid Email',
                                         hintText: 'Email',
+                                        icon: Icons.mail_outline,
+                                      ),
+                                      CustomTextfield(
+                                        obscureText: false,
+                                        controller: NumberController,
+                                        showBorder: true,
+                                        validatorValue: (val) {
+                                        },
+                                        errorMsg: 'Please enter contact no',
+                                        hintText: 'Phone Number',
                                         icon: Icons.mail_outline,
                                       ),
                                       CustomPassfields(
