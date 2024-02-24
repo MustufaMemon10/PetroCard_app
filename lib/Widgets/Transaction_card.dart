@@ -1,50 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:petrocardapppp/utilities/styles.dart';
 
-class DraggableListSleeve<T> extends StatefulWidget {
-  final List<T> items;
-  final Widget Function(T item) itemBuilder;
-  final void Function(List<T> newItems) onReorder;
-
-  DraggableListSleeve({
-    required this.items,
-    required this.itemBuilder,
-    required this.onReorder,
+class TransactionCard extends StatefulWidget {
+  final String title;
+  final String subTitle;
+  final String price;
+  final String letter;
+  final Color color;
+  TransactionCard({
+  required this.color,
+  required this.letter,
+  required this.price,
+  required this.subTitle,
+  required this.title,
   });
 
   @override
-  _DraggableListSleeveState<T> createState() => _DraggableListSleeveState<T>();
+  State<TransactionCard> createState() => _TransactionCardState();
 }
 
-class _DraggableListSleeveState<T> extends State<DraggableListSleeve<T>> {
-  late List<T> _items;
-
-  @override
-  void initState() {
-    super.initState();
-    _items = List.from(widget.items);
-  }
-
+class _TransactionCardState extends State<TransactionCard> {
   @override
   Widget build(BuildContext context) {
-    return ReorderableListView(
-      children: _items
-          .map((item) => ListTile(
-                key: Key(item.toString()),
-                title: widget.itemBuilder(item),
-              ))
-          .toList(),
-      onReorder: _onReorder,
+    return SizedBox(
+          height: 62.0,
+          width: 343.0,
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(children: [
+                  Container(
+                    height: 44.0,
+                    width: 44.0,
+                    decoration: BoxDecoration(
+                      color: widget.color,
+                      borderRadius: BorderRadius.circular(22.0)
+                    ),
+                    child: Center(child: Text(widget.letter,style: TextStyle(fontSize: 30.0,fontWeight: FontWeight.w700,color: Colors.white),)),
+                  ),
+                  SizedBox(width: 16.0),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(widget.title,style: AppStyles.otherDetailsPrimary,),
+                      Text(widget.subTitle,style: AppStyles.otherDetailsSecondary,)
+                    ],
+                  )
+                ],),
+                  Row(children: [
+              Text(widget.price+'₹',style: TextStyle(color: Colors.red),)
+            ],),
+              ],
+            ),
+            Divider(
+                color: Colors.grey.withOpacity(0.5),
+                thickness: 0.5,
+                endIndent: 16.0,
+                indent: 16.0,
+              )
+          ],)
     );
-  }
-
-  void _onReorder(int oldIndex, int newIndex) {
-    setState(() {
-      if (newIndex > oldIndex) {
-        newIndex -= 1;
-      }
-      final T item = _items.removeAt(oldIndex);
-      _items.insert(newIndex, item);
-      widget.onReorder(_items);
-    });
   }
 }

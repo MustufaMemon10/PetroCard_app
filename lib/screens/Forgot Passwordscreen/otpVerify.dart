@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:petrocardapppp/screens/Forgot Passwordscreen/Check Number.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/Components/colors.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:petrocardapppp/screens/Forgot Passwordscreen/ChangePasswordScreen.dart';
 

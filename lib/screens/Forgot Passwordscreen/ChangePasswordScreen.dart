@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
 import 'package:petrocardapppp/Widgets/CustomTextfieldWidget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/Components/colors.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 
 
 class ChangePasswordScreen extends StatefulWidget {

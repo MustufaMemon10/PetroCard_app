@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/Components/colors.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 class NotificationItem extends StatefulWidget {
   final String notTitle;
   final String subtitle;

@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:petrocardapppp/Components/colors.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextfield extends StatefulWidget {
@@ -11,6 +12,7 @@ class CustomTextfield extends StatefulWidget {
   final bool showBorder;
   final bool sufixIcon;
   final bool numerickeyboard;
+  final bool istrue;
 
   const CustomTextfield({
     Key? key,
@@ -20,7 +22,8 @@ class CustomTextfield extends StatefulWidget {
     this.showBorder = true,
     this.sufixIcon = false,
     required this.obscureText,
-    this.numerickeyboard= false,
+    this.numerickeyboard = false,
+    this.istrue = true,
   }) : super(key: key);
 
   @override
@@ -39,7 +42,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:  EdgeInsets.symmetric(vertical: 10.0.h,horizontal: 10.0.w),
+      padding: EdgeInsets.symmetric(vertical: 10.0.h, horizontal: 10.0.w),
       decoration: widget.showBorder
           ? const BoxDecoration(
         border: Border(
@@ -59,12 +62,14 @@ class _CustomTextfieldState extends State<CustomTextfield> {
           Expanded(
             child: TextField(
               controller: widget.controller,
-              obscureText:  _isObscured,
-              textInputAction: TextInputAction.next,
+              obscureText: _isObscured,
+              textInputAction:
+              widget.istrue ? TextInputAction.next : TextInputAction.go,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: widget.hintText,
-                hintStyle: const TextStyle(color: AppColors.secondaryText, letterSpacing: 0.7),
+                hintStyle:
+                const TextStyle(color: AppColors.secondaryText, letterSpacing: 0.7),
                 suffixIcon: widget.sufixIcon
                     ? IconButton(
                   icon: Icon(
@@ -85,6 +90,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
     );
   }
 }
+
 class CustomPassfields extends StatefulWidget {
   final IconData icon;
   final IconData icon2;
@@ -124,8 +130,7 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
         children: [
           Container(
             padding: const EdgeInsets.all(10.0),
-            decoration:
-                const BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(color: AppColors.lightPurple),
               ),
@@ -142,67 +147,69 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
                 Expanded(
                   child: TextField(
                     controller: widget.controller,
-                    obscureText:  _isObscured,
+                    obscureText: _isObscured,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: widget.hintText,
-                      hintStyle: const TextStyle(color: AppColors.secondaryText, letterSpacing: 0.7),
+                      hintStyle: const TextStyle(
+                          color: AppColors.secondaryText, letterSpacing: 0.7),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-      Container(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                children: [
+          Container(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
                 Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Icon(
-                widget.icon2,
-                color: AppColors.secondaryText,
-                ),
+                  padding: const EdgeInsets.all(10.0),
+                  child: Icon(
+                    widget.icon2,
+                    color: AppColors.secondaryText,
+                  ),
                 ),
                 Expanded(
-                child: TextField(
-                controller: widget.controller2,
-                obscureText:  _isObscured,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: widget.hintText2,
-                hintStyle: const TextStyle(color: AppColors.secondaryText, letterSpacing: 0.7),
-                suffixIcon: IconButton(
-                icon: Icon(
-                _isObscured ? Icons.visibility : Icons.visibility_off,
+                  child: TextField(
+                    controller: widget.controller2,
+                    obscureText: _isObscured,
+                    textInputAction: TextInputAction.go,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: widget.hintText2,
+                        hintStyle: const TextStyle(
+                            color: AppColors.secondaryText, letterSpacing: 0.7),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isObscured
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isObscured = !_isObscured;
+                            });
+                          },
+                        )),
+                  ),
                 ),
-                onPressed: () {
-                setState(() {
-                _isObscured = !_isObscured;
-                });
-                },
-                )
-                ),
-                ),
-                ),
-                ],
-                ),
-                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 }
+
 class NumericTextField extends StatelessWidget {
-  final IconData icon;
   final String hintText;
   final TextEditingController controller;
   final bool showBorder;
   const NumericTextField({
     Key? key,
-    required this.icon,
     required this.hintText,
     required this.controller,
     this.showBorder = true,
@@ -211,6 +218,7 @@ class NumericTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 50.h,
       padding: const EdgeInsets.all(10.0),
       decoration: showBorder
           ? BoxDecoration(
@@ -220,13 +228,20 @@ class NumericTextField extends StatelessWidget {
       )
           : null,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Icon(
-              icon,
-              color: Colors.grey,
-            ),
+            padding:  EdgeInsets.symmetric(vertical: 10.0,horizontal: 5.0),
+            child: Text(
+              '+91',
+              style: TextStyle(
+                color: AppColors.primaryText.withOpacity(0.8),
+                fontSize: 16.0,
+              ),
+            )
+          ),
+          VerticalDivider(
+            color: AppColors.lightPurple,
           ),
           Expanded(
             child: TextField(
@@ -237,8 +252,11 @@ class NumericTextField extends StatelessWidget {
               ],
               decoration: InputDecoration(
                 border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(vertical: 14.0),
                 hintText: hintText,
-                hintStyle: TextStyle(color: Colors.grey, letterSpacing: 0.7),
+                hintStyle: TextStyle(color: Colors.grey,
+                    fontSize: 16.0,
+                    letterSpacing: 0.7),
               ),
             ),
           ),
@@ -247,4 +265,3 @@ class NumericTextField extends StatelessWidget {
     );
   }
 }
-

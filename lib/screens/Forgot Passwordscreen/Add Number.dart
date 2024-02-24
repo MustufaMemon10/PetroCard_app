@@ -49,7 +49,7 @@ class _CheckNumberedState extends State<CheckNumber> {
                           AppColors.neutralBackground,
                         ])),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40.w,vertical: 20.h),
+                  padding:  EdgeInsets.symmetric(horizontal: 40.w),
                   child: FadeInUp(
                     duration: const Duration(milliseconds: 1200),
                     child: Column(
@@ -144,7 +144,7 @@ class _CheckNumberedState extends State<CheckNumber> {
                                       offset: Offset(0, 10),
                                     )
                                   ]),
-                              child: NumericTextField( hintText: 'Phone Number', controller: mobileNumberController,showBorder: false,),
+                              child: NumericTextField(hintText: 'Mobile number', controller: mobileNumberController,showBorder: false,),
                             ),
                           ),
                           FadeInUp(

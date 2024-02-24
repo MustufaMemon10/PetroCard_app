@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Components/NotificationItem.dart';
-import 'package:petrocardapppp/Components/colors.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 
 class NotificationShade extends StatefulWidget {
   const NotificationShade({super.key});
@@ -39,17 +39,12 @@ class _NotificationShadeState extends State<NotificationShade> {
                     ),
                   ),
                     Container(
-                      height: 40,
-                      width:40.0,
+                      height: 40.h,
+                      width:  40.0.w,
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: AppColors.lightPurple.withAlpha(130),
                         borderRadius: BorderRadius.circular(15.0),
-                        boxShadow: [
-                          BoxShadow(color: AppColors.primaryPurple.withOpacity(0.7),
-                          blurRadius: 3.0,
-                          offset: Offset(3,3)
-                          )
-                        ]
+                        border: Border.all(width: 0.4.w,color: Colors.black.withOpacity(0.5))
                         ),
                       child: TextButton(onPressed: (){},child: Icon(CupertinoIcons.settings,color: AppColors.black,size: 24.0),)),
                 ],

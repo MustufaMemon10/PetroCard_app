@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:petrocardapppp/Components/colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 
 class SlidermenuItem extends StatelessWidget {
   final String title;
@@ -20,7 +21,9 @@ class SlidermenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height:  isSetting? 250 : 0,),
+        Divider(height: 5.h,
+          color: AppColors.black.withOpacity(.3),
+        ),
         ListTile(
             title: Text(title,
                 style: const TextStyle(

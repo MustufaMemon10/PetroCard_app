@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petrocardapppp/Components/NotificationShade.dart';
-import 'package:petrocardapppp/Components/colors.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/Components/Drawer.dart';
 import 'package:petrocardapppp/Widgets/Home Widget.dart';
 
@@ -73,10 +71,10 @@ class _BaseScreenState extends State<BaseScreen> with SingleTickerProviderStateM
              toggleDrawer();
              } else if (isNotificationOpen) {
               toggleNotification();
-             }
+                }
                },
                child: Container(
-               color: Colors.black.withOpacity(0.4),
+               color: AppColors.black.withOpacity(0.4),
              ),
             ),
             AnimatedPositioned(
@@ -93,7 +91,6 @@ class _BaseScreenState extends State<BaseScreen> with SingleTickerProviderStateM
             right: isNotificationOpen ? 0 : -450,
             child: const NotificationShade(),
           ),
-        
         ],
       ),
     );

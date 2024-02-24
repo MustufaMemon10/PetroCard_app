@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:petrocardapppp/Widgets/CustomTextfieldWidget.dart';
 import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/Components/colors.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
 
 class SignUppage extends StatefulWidget {
@@ -14,41 +14,40 @@ class SignUppage extends StatefulWidget {
   State<SignUppage> createState() => _SignUppageState();
 }
 
-
 class _SignUppageState extends State<SignUppage> {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController mobileNumberController = TextEditingController();
   TextEditingController createPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
   bool showPasswordFields = false;
 
-  void showSnackBar(String message,{required bool isError}) {
+  void showSnackBar(String message, {required bool isError}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
         duration: Duration(seconds: 2),
-        backgroundColor: isError ? AppColors.red : Colors.green,),
+        backgroundColor: isError ? AppColors.red : Colors.green,
+      ),
     );
   }
   void handleSignUp() {
     String fullName = fullNameController.text;
     String email = emailController.text;
-    String number = mobileNumberController.text;
     String password = createPasswordController.text;
     String confirmPassword = confirmPasswordController.text;
-
     if (fullName.isEmpty ||
-        email.isEmpty || number.isEmpty ||
+        email.isEmpty ||
         password.isEmpty ||
         confirmPassword.isEmpty) {
       showSnackBar('Please fill in all fields.', isError: true);
     } else if (password != confirmPassword) {
-      showSnackBar('Password and Confirm Password do not match.', isError: true);
+      showSnackBar('Password and Confirm Password do not match.',
+          isError: true);
     } else {
       // Perform signup logic here
-      bool signUpSuccess = signUpUser(fullName, email,number , password,confirmPassword);
+      bool signUpSuccess =
+      signUpUser(fullName, email,password, confirmPassword);
 
       if (signUpSuccess) {
         showSnackBarAndNavigate('Signup Successful', isError: false);
@@ -57,8 +56,9 @@ class _SignUppageState extends State<SignUppage> {
       }
     }
   }
-  bool signUpUser(
-      String fullName, String email,String number, String password,String confirmPassword) {
+
+  bool signUpUser(String fullName, String email, String password,
+      String confirmPassword) {
     // Perform signup authentication logic here
     // For example, check if the email is not already registered
     // and then store the new user data
@@ -66,6 +66,7 @@ class _SignUppageState extends State<SignUppage> {
     // For simplicity, assume all signups are successful
     return true;
   }
+
   void showSnackBarAndNavigate(String message, {required bool isError}) {
     showSnackBar(message, isError: isError);
     // Navigate to the home page after successful signup
@@ -78,7 +79,6 @@ class _SignUppageState extends State<SignUppage> {
   }
 // Other methods remain the same...
 
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -88,58 +88,66 @@ class _SignUppageState extends State<SignUppage> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: InkWell(
-          onTap:(){
+          onTap: () {
             FocusScope.of(context).unfocus();
           },
           child: Container(
             height: height,
             child: Column(
               children: <Widget>[
-                FadeInDown(duration: Duration(milliseconds: 1000),
+                FadeInDown(
+                  duration: Duration(milliseconds: 1000),
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 40.w,vertical: 50.0.h),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 40.w, vertical: 50.0.h),
                     width: width,
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
-                            begin:Alignment.topLeft,
-                            end:  Alignment.bottomLeft,
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomLeft,
                             colors: [
                               AppColors.translightPurple2,
                               AppColors.neutralBackground,
-                            ]
-                        )
-                    ),
-                    child: FadeInUp(duration: const Duration(milliseconds: 1200),
-                      child:  Column(
+                            ])),
+                    child: FadeInUp(
+                      duration: const Duration(milliseconds: 1200),
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children:[
-                          FadeInUp(duration: Duration(milliseconds: 1000),
+                        children: [
+                          FadeInUp(
+                            duration: Duration(milliseconds: 1000),
                             child: Text(
                               "Sign up",
-                              style:TextStyle(
+                              style: TextStyle(
                                 color: AppColors.darkPurple,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 40.sp,
                               ),
                             ),
                           ),
-                          SizedBox(height: 5.h,),
-                          FadeInUp(duration: Duration(milliseconds: 1300),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          FadeInUp(
+                            duration: Duration(milliseconds: 1300),
                             child: Text(
                               "New here?",
-                              style:TextStyle(
+                              style: TextStyle(
                                 color: AppColors.primaryText,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 35.sp,
                               ),
                             ),
                           ),
-                          SizedBox(height: 5.h,),
-                          FadeInUp(duration: Duration(milliseconds: 1400),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          FadeInUp(
+                            duration: Duration(milliseconds: 1400),
                             child: Text(
                               "Become a member",
-                              style:TextStyle(
+                              style: TextStyle(
                                 color: AppColors.primaryText,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 18.sp,
@@ -153,164 +161,133 @@ class _SignUppageState extends State<SignUppage> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: FadeInUp(duration: const Duration(milliseconds: 1600),
+                  child: FadeInUp(
+                    duration: const Duration(milliseconds: 1600),
                     child: Container(
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(50.0.r),topRight: Radius.circular(50.0.r),
+                            topLeft: Radius.circular(50.0.r),
+                            topRight: Radius.circular(50.0.r),
                           ),
                           color: AppColors.neutralBackground,
                           boxShadow: [
                             BoxShadow(
                               color: AppColors.primaryText,
                               blurRadius: 15,
-                              offset: Offset(0 ,10),
+                              offset: Offset(0, 10),
                             )
-                          ]
-                      ),
+                          ]),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 40.w,vertical:10.0.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 40.w, vertical: 10.0.h),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                             SizedBox(height: 10.h,),
-                            FadeInUp(duration: const Duration(milliseconds: 1700), child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white,
-                                  border: Border.all(color:  AppColors.lightPurple),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: AppColors.lightPurple,
-                                      blurRadius: 20,
-                                      offset: Offset(0, 10),
-                                    )
-                                  ]
-                              ),
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    padding: const EdgeInsets.all(10.0),
-                                    decoration: const BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                              color: AppColors.lightPurple,
-                                            ))),
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Icon(
-                                            Icons.person,
-                                            color: AppColors.secondaryText,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: TextField(
-                                            controller: fullNameController,
-                                            textInputAction: TextInputAction.next,
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: 'Full name',
-                                              hintStyle: TextStyle(color: AppColors.secondaryText)
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            FadeInUp(
+                                duration: const Duration(milliseconds: 1700),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: AppColors.lightPurple),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: AppColors.lightPurple,
+                                          blurRadius: 20,
+                                          offset: Offset(0, 10),
+                                        )
+                                      ]),
+                                  child: Column(
+                                    children: <Widget>[
+                                      CustomTextfield(
+                                        obscureText: false,
+                                        controller: fullNameController,
+                                        showBorder: true,
+                                        hintText: 'Full name',
+                                        icon: Icons.person,
+                                      ),
+                                      CustomTextfield(
+                                        obscureText: false,
+                                        controller: emailController,
+                                        showBorder: true,
+                                        hintText: 'Email',
+                                        icon: Icons.mail_outline,
+                                      ),
+                                      CustomPassfields(
+                                        icon: Icons.lock_outline_rounded,
+                                        icon2: Icons.lock_person_outlined,
+                                        controller: createPasswordController,
+                                        controller2: confirmPasswordController,
+                                        hintText: 'Password',
+                                        hintText2: 'Confirm Password',
+                                        obscureText: !showPasswordFields,
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            FadeInUp(
+                                duration: const Duration(milliseconds: 1900),
+                                child: MaterialButton(
+                                  onPressed: () {
+                                    handleSignUp();
+                                  },
+                                  color: const Color.fromRGBO(49, 39, 79, 1),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  height: 50,
+                                  child: const Center(
+                                    child: Text(
+                                      "Sign up",
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                   ),
-                                  Container(
-                                    padding: const EdgeInsets.all(10.0),
-                                    decoration: const BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                              color: AppColors.lightPurple,
-                                            ))),
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Icon(
-                                            Icons.mail_outline,
-                                            color: AppColors.secondaryText,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: TextField(
-                                            textInputAction: TextInputAction.next,
-                                            controller: emailController,
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: 'E-mail',
-                                              hintStyle: TextStyle(color: AppColors.secondaryText)
+                                )),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            FadeInUp(
+                                duration: const Duration(milliseconds: 2000),
+                                child: Center(
+                                    child: TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                              builder: (context) =>
+                                              const LoginPage(),
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(10.0),
-                                    decoration: const BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                              color: AppColors.lightPurple,
-                                            ))),
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Icon(
-                                            Icons.phone_android,
-                                            color: AppColors.secondaryText,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: TextField(
-                                            controller: mobileNumberController,
-                                            textInputAction: TextInputAction.next,
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: 'Phone number',
-                                              hintStyle: TextStyle(color: AppColors.secondaryText)
+                                          );
+                                        },
+                                        child: const Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Already have an account?",
+                                              style: TextStyle(
+                                                  color:
+                                                  AppColors.secondaryText,
+                                                  letterSpacing: 0.5,
+                                                  fontSize: 13.0),
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  CustomPassfields(icon: Icons.lock_outline_rounded,icon2:Icons.lock_person_outlined,controller: createPasswordController,controller2: confirmPasswordController,hintText: 'New Password',hintText2: 'Confirm Password',obscureText: !showPasswordFields,),
-                                ],
-                              ),
-                            )),
-                            const SizedBox(height: 20,),
-                            FadeInUp(duration: const Duration(milliseconds: 1900), child: MaterialButton(
-                              onPressed: () {},
-                              color: const Color.fromRGBO(49, 39, 79, 1),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              height: 50,
-                              child: const Center(
-                                child: Text("Sign up", style: TextStyle(color: Colors.white),),
-                              ),
-                            )),
-                            const SizedBox(height: 10.0,),
-                            FadeInUp(duration: const Duration(milliseconds: 2000), child: Center(child: TextButton(onPressed: () {
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) => const LoginPage(),
-                                ),
-                              );
-                            }, child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Already have an account?", style: TextStyle(color: AppColors.secondaryText,letterSpacing: 0.5,fontSize: 13.0),
-                                ),
-                                Text("Login", style: TextStyle(color: Color.fromRGBO(49, 39, 79, .6),letterSpacing: 0.5,fontSize: 15.0),),
-                              ],
-                            )))),
+                                            Text(
+                                              "Login",
+                                              style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      49, 39, 79, .6),
+                                                  letterSpacing: 0.5,
+                                                  fontSize: 15.0),
+                                            ),
+                                          ],
+                                        )))),
                           ],
                         ),
                       ),
@@ -325,4 +302,3 @@ class _SignUppageState extends State<SignUppage> {
     );
   }
 }
-

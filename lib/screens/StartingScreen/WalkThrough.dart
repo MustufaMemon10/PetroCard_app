@@ -1,5 +1,5 @@
 import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
-import 'package:petrocardapppp/Components/colors.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

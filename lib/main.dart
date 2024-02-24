@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/Components/colors.dart';
+import 'package:petrocardapppp/screens/StartingScreen/splashscreen.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
 
 void main() async {
@@ -18,11 +19,11 @@ class Myapp extends StatelessWidget {
       return  MaterialApp(
         theme: ThemeData(
             scaffoldBackgroundColor: AppColors.white,
-            fontFamily: "Poppins",
+            fontFamily: "RobotoMono",
             appBarTheme: const AppBarTheme(
               backgroundColor: AppColors.white,
               elevation: 0,
-            )
+            ),
         ),
         debugShowCheckedModeBanner: false,
         home:  const PetroCard(),
@@ -30,7 +31,6 @@ class Myapp extends StatelessWidget {
     },
   );
 }
-
 
 class PetroCard extends StatefulWidget {
   const PetroCard({super.key});
@@ -41,8 +41,8 @@ class PetroCard extends StatefulWidget {
 class _PetroCardState extends State<PetroCard> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: BaseScreen(),
+    return Scaffold(
+      body: SplashScreen(),
     );
   }
 }
