@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
+import 'package:petrocardapppp/screens/LoginScreen/Signup.dart';
 import 'package:petrocardapppp/screens/StartingScreen/splashscreen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';

@@ -16,7 +16,7 @@ class ChangePasswordScreen extends StatefulWidget {
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final TextEditingController oldPasswordController = TextEditingController();
-  final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
 
   bool showOldPassword = false;
@@ -133,7 +133,21 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                         offset: Offset(0, 10),
                                       )
                                     ]),
-                               child: CustomPassfields(icon: Icons.lock_outline_rounded,icon2:Icons.lock_person_outlined,controller: newPasswordController,controller2: confirmPasswordController,hintText: 'New Password',hintText2: 'Confirm Password',obscureText: !showPasswordFields,),
+                               child:   CustomPassfields(
+                                 icon: Icons.lock_outline_rounded,
+                                 icon2: Icons.lock_person_outlined,
+                                 controller: passwordController,
+                                 controller2: confirmPasswordController,
+                                 validator: (val) {
+                                   if (RegExp(r"\s").hasMatch(val)|| RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(val)) {
+                                     return "Use Proper Password ";
+                                   }
+                                 },
+                                 errorMsg: "Please Enter Password",
+                                 hintText: 'Password',
+                                 hintText2: 'Confirm Password',
+                                 obscureText: !showPasswordFields,
+                               ),
                               ),
                             ),
                              SizedBox(
@@ -194,7 +208,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   void changePassword() {
     // String oldPassword = oldPasswordController.text;
-    String newPassword = newPasswordController.text;
+    String newPassword = passwordController.text;
     String confirmPassword = confirmPasswordController.text;
 
     // Implement your change password logic here

@@ -71,7 +71,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
               widget.istrue ? TextInputAction.next : TextInputAction.go,
               validator: (value){
                 widget.validatorValue(value!);
-                if(value!.isEmpty){
+                if(value.isEmpty){
                   return widget.errorMsg;
                 }
                 return null;
@@ -108,6 +108,8 @@ class CustomPassfields extends StatefulWidget {
   final String hintText;
   final String hintText2;
   final TextEditingController controller;
+  final String errorMsg;
+  final Function(String value) validator;
   final TextEditingController controller2;
   final bool obscureText;
 
@@ -118,6 +120,8 @@ class CustomPassfields extends StatefulWidget {
     required this.hintText,
     required this.hintText2,
     required this.controller,
+    required this.validator,
+    required this.errorMsg,
     required this.controller2,
     required this.obscureText,
   }) : super(key: key);
@@ -147,6 +151,7 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
               ),
             ),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -156,10 +161,17 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
                   ),
                 ),
                 Expanded(
-                  child: TextField(
+                  child: TextFormField(
                     controller: widget.controller,
                     obscureText: _isObscured,
                     textInputAction: TextInputAction.next,
+                    validator: (value){
+                      widget.validator(value!);
+                      if(value.isEmpty){
+                      return widget.errorMsg;
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: widget.hintText,
@@ -187,6 +199,13 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
                     controller: widget.controller2,
                     obscureText: _isObscured,
                     textInputAction: TextInputAction.go,
+                    validator: (value){
+                      widget.validator(value!);
+                      if(value.isEmpty){
+                        return widget.errorMsg;
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: widget.hintText2,

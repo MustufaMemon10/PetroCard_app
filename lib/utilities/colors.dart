@@ -9,6 +9,8 @@ class AppColors {
   static const transparent = Color(0x80FFFFFF);//#A020F0
   static const darkPurple = Color.fromRGBO(49, 39, 79, 1);// #4B0082
   static const grey = Color.fromRGBO(97, 97, 97, 1);// #4B0082
+  static const Color backgroundColor = Color(0xFFFFFFFF); // White
+  static const Color scaffoldBackgroundColor = Color(0xFFF5F5F5); //
   static const accent1Gold = Color(0xFFFFD700);//#FFD700
   static const accent2Turquoise = Color(0xFF00CED1); //#00CED1
   static const neutralBackground = Color(0xFFFFFFFF);//#FFFFFF

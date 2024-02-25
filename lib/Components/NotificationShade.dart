@@ -22,8 +22,7 @@ class _NotificationShadeState extends State<NotificationShade> {
         decoration: const BoxDecoration(
           color: AppColors.white,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             Container(
               height: 40,

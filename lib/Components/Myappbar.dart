@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
-import '../utilities/colors.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Myappbar extends StatefulWidget {
@@ -24,6 +27,22 @@ class Myappbar extends StatefulWidget {
 }
 
 class _MyappbarState extends State<Myappbar> {
+  String userName = '';
+
+  getUserName() async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
+    setState(() {
+      userName = setpreference.getString('name')!;
+    });
+
+  }
+
+  @override
+  void initState() {
+    getUserName();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -81,16 +100,16 @@ class _MyappbarState extends State<Myappbar> {
               ),
             ),
             AnimatedPositioned(
-              top: 7,
-                left: 40,
-                right: 40,
+              top: 10,
+                left: 60,
                 duration: const Duration(milliseconds: 300),
                 child: Center(
-                  child: Text(
-                    'Petro Card',
+                  child: Text('Welcome '+
+                      userName.split(' ')[0].substring(0, 1).toUpperCase() +
+                      userName.split(' ')[0].substring(1),
                     style: TextStyle(
                       color: AppColors.black,
-                      fontSize: 24.0.sp,
+                      fontSize: 18.0.sp,
                       fontFamily: 'RobotoMono',
                       fontWeight: FontWeight.w800,
                     ),

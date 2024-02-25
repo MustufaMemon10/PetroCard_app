@@ -1,12 +1,16 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:http/http.dart' as http;
 import 'package:petrocardapppp/Widgets/CustomTextfieldWidget.dart';
 import 'package:petrocardapppp/screens//Forgot Passwordscreen/Check Number.dart';
 import 'package:petrocardapppp/screens/LoginScreen/Signup.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
-import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,49 +23,52 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final formKey = new GlobalKey<FormState>();
+  var logindata;
+  var data;
   bool showPassword = false;
   bool isLoading = false;
 
-  void showSnackBar(String message, {required bool isError}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 2),
-        backgroundColor: isError ? AppColors.red : Colors.green,
-      ),
-    );
-  }
-
-  void handleLogin() {
-    String username = usernameController.text;
-    String password = passwordController.text;
-    if (username.isEmpty || password.isEmpty) {
-      showSnackBar('Please fill both username and password.', isError: true);
-    } else {
-      bool authenticationSuccess = authenticateUser(username, password);
-      if (authenticationSuccess) {
-        showSnackBarAndNavigate('Login Successful', isError: false);
-      } else {
-        showSnackBar('Username & password are Incorrect', isError: true);
+  Future<void> handleLogin() async {
+    final form = formKey.currentState;
+    if (form!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      final login_url = Uri.parse(
+          "https://petrocard.000webhostapp.com/API/login.php");
+      final response = await http
+          .post(login_url, body: {
+        "email": usernameController.text,
+        "password": passwordController.text,
+      });
+      if (response.statusCode == 200) {
+        logindata = jsonDecode(response.body);
+        data =
+        jsonDecode(response.body)['user'];
+        print(data);
+        setState(() {
+          isLoading = false;
+        });
+        if (logindata['error'] == false) {
+          SharedPreferences setpreference = await SharedPreferences.getInstance();
+          setpreference.setString('id', data['id'].toString());
+          setpreference.setString('name', data['name'].toString());
+        //  setpreference.setString('contactUs', data['phone']!.toString());
+          setpreference.setString('email', data['email'].toString());
+        //  setpreference.setString('role', data['role'].toString());
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => BaseScreen()), (Route<dynamic> route) => false);
+        }else{
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(logindata['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red, // Customize background color
+            ),
+          );
+        }
       }
     }
   }
-
-  void showSnackBarAndNavigate(String message, {required bool isError}) {
-    showSnackBar(message, isError: isError);
-    //home page after successful msg
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        CupertinoPageRoute(builder: (context) => const BaseScreen()),
-      );
-    });
-  }
-
-  bool authenticateUser(String username, String password) {
-    return username == "Mustufa Memon" && password == "jerry123";
-  }
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -73,85 +80,92 @@ class _LoginPageState extends State<LoginPage> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: isLoading?Center(child:CircularProgressIndicator(color: AppColors.black,)) :SizedBox(
+        child: isLoading? Center(
+          child: LoadingAnimationWidget.flickr(
+            leftDotColor: AppColors.darkPurple,
+            rightDotColor: AppColors.secondaryText,
+            size: 100,
+          ),
+        ):Container(
+          color: AppColors.scaffoldBackgroundColor,
           height: height,
           child: Form(
             key: formKey,
-            child: Column(
-              children: <Widget>[
+            child: Stack(
+              children: [
                 FadeInDown(
                   duration: const Duration(milliseconds: 1000),
-                  child: Container(
-                    height: 230.h,
-                    width: width,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            AppColors.translightPurple2,
-                            AppColors.neutralBackground,
-                          ]),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 40.w, vertical: 10.0.h),
-                      child: FadeInUp(
-                        duration: const Duration(milliseconds: 1200),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            FadeInUp(
-                              duration: const Duration(milliseconds: 1000),
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                  color: AppColors.darkPurple,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 35.sp,
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        left: 10.w, top: 25.0.h,bottom: 15.h,),
+                      height: 0.30.sh,
+                      width: width,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 40.w, vertical: 10.0.h),
+                        child: FadeInUp(
+                          duration: const Duration(milliseconds: 1200),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              FadeInUp(
+                                duration: const Duration(milliseconds: 1000),
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    color: AppColors.darkPurple,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 35.sp,
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            FadeInUp(
-                              duration: const Duration(milliseconds: 1300),
-                              child: Text(
-                                "Hey there,",
-                                style: TextStyle(
-                                  color: AppColors.primaryText,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30.sp,
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              FadeInUp(
+                                duration: const Duration(milliseconds: 1300),
+                                child: Text(
+                                  "Hey there,",
+                                  style: TextStyle(
+                                    color: AppColors.primaryText,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30.sp,
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            FadeInUp(
-                              duration: const Duration(milliseconds: 1400),
-                              child: Text(
-                                "Welcome Back",
-                                style: TextStyle(
-                                  color: AppColors.primaryText,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 18.sp,
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              FadeInUp(
+                                duration: const Duration(milliseconds: 1400),
+                                child: Text(
+                                  "Welcome Back",
+                                  style: TextStyle(
+                                    color: AppColors.primaryText,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 18.sp,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-                Expanded(
-                  flex: 1,
+                AnimatedPositioned(
+                  top: 230,
+                  left: 0,
+                  right: 0,
+                  duration: Duration(milliseconds: 2000),
                   child: FadeInUp(
                     duration: const Duration(milliseconds: 1700),
                     child: Container(
+                      height: height,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(50.0.r),
@@ -200,8 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                                             RegExp(r"\s").hasMatch(val)) {
                                           return "Email must not be empty";
                                         } else {
-                                          if (RegExp(
-                                              r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
+                                          if (RegExp(r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
                                               .hasMatch(val)) {
                                           }
                                         }
@@ -216,9 +229,10 @@ class _LoginPageState extends State<LoginPage> {
                                       validatorValue: (val) {
                                         if (val.isEmpty ||
                                             RegExp(r"\s").hasMatch(val)) {
+                                          return 'Use Proper Password';
                                         }
                                       },
-                                      errorMsg: 'Use Proper Password',
+                                      errorMsg: 'Please Enter Password',
                                       obscureText: showPassword,
                                       controller: passwordController,
                                       showBorder: false,
@@ -271,10 +285,10 @@ class _LoginPageState extends State<LoginPage> {
                                       borderRadius: BorderRadius.circular(50.r),
                                       boxShadow: (const [
                                         BoxShadow(
-                                          color: AppColors.darkPurple,
+                                          color: AppColors.lightPurple2,
                                           blurRadius: 5,
-                                          offset: Offset(5, 5),
-                                          blurStyle: BlurStyle.normal,
+                                          offset: Offset(5, -5),
+                                          blurStyle: BlurStyle.solid,
                                         ),
                                       ]),
                                     ),
@@ -322,8 +336,7 @@ class _LoginPageState extends State<LoginPage> {
                                                     color: AppColors.darkPurple,
                                                     letterSpacing: 0.5,
                                                     fontSize: 14.0.sp)),
-                                          ],
-                                        )))),
+                                          ],))))
                           ],
                         ),
                       ),
