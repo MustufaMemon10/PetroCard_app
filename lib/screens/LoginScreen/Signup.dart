@@ -36,53 +36,53 @@ class _SignUppageState extends State<SignUppage> {
   //   );
 
 
-    Future<void> _handleSingUp() async {
-      final form = formKey.currentState;
-      if (form!.validate()) {
+  Future<void> _handleSingUp() async {
+    final form = formKey.currentState;
+    if (form!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      final login_url = Uri.parse(
+          "https://petrocard.000webhostapp.com/API/signup.php");
+      final response = await http
+          .post(login_url, body: {
+        "email": emailController.text,
+        "password": passwordController.text,
+        "name": fullNameController.text,
+        "phone": NumberController.text,
+        "role": "1",
+      });
+      if (response.statusCode == 200) {
+        logindata = jsonDecode(response.body);
+        data =
+        jsonDecode(response.body)['user'];
+        print(logindata);
         setState(() {
-          isLoading = true;
+          isLoading = false;
         });
-        final login_url = Uri.parse(
-            "https://petrocard.000webhostapp.com/API/signup.php");
-        final response = await http
-            .post(login_url, body: {
-          "email": emailController.text,
-          "password": passwordController.text,
-          "name": fullNameController.text,
-          "phone": NumberController.text,
-          "role": "1",
-        });
-        if (response.statusCode == 200) {
-          logindata = jsonDecode(response.body);
-          data =
-          jsonDecode(response.body)['user'];
-          print(logindata);
-          setState(() {
-            isLoading = false;
-          });
-          if (logindata['error'] == false) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(logindata['message'].toString()),
-                duration: Duration(seconds: 2),
-                backgroundColor: Colors.green, // Customize background color
-              ),
-            );
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => LoginPage()),
-                    (route) => false);
-          }else{
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(logindata['message'].toString()),
-                duration: Duration(seconds: 2),
-                backgroundColor: Colors.red, // Customize background color
-              ),
-            );
-          }
+        if (logindata['error'] == false) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(logindata['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.green, // Customize background color
+            ),
+          );
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => LoginPage()),
+                  (route) => false);
+        }else{
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(logindata['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red, // Customize background color
+            ),
+          );
         }
       }
     }
+  }
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -103,20 +103,20 @@ class _SignUppageState extends State<SignUppage> {
               child: ListView(
                 children: <Widget>[
                   FadeInDown(
-                    duration: Duration(milliseconds: 1000),
+                    duration: Duration(milliseconds: 400),
                     child: Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: 30.w, vertical: 20.0.h),
                       width: width,
                       height: 0.25.sh,
-                      child: FadeInUp(
-                        duration: const Duration(milliseconds: 1200),
+                      child: FadeInDown(
+                        duration: const Duration(milliseconds: 450),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            FadeInUp(
-                              duration: Duration(milliseconds: 1000),
+                            FadeInDown(
+                              duration: Duration(milliseconds: 460),
                               child: Text(
                                 "Sign up",
                                 style: TextStyle(
@@ -129,8 +129,8 @@ class _SignUppageState extends State<SignUppage> {
                             SizedBox(
                               height: 5.h,
                             ),
-                            FadeInUp(
-                              duration: Duration(milliseconds: 1300),
+                            FadeInDown(
+                              duration: Duration(milliseconds: 470),
                               child: Text(
                                 "New here?",
                                 style: TextStyle(
@@ -143,8 +143,8 @@ class _SignUppageState extends State<SignUppage> {
                             SizedBox(
                               height: 5.h,
                             ),
-                            FadeInUp(
-                              duration: Duration(milliseconds: 1400),
+                            FadeInDown(
+                              duration: Duration(milliseconds: 480),
                               child: Text(
                                 "Become a member",
                                 style: TextStyle(
@@ -162,7 +162,7 @@ class _SignUppageState extends State<SignUppage> {
                   Container(
                     height: height,
                     child: FadeInUp(
-                      duration: const Duration(milliseconds: 1600),
+                      duration: const Duration(milliseconds: 500),
                       child: Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
@@ -187,7 +187,7 @@ class _SignUppageState extends State<SignUppage> {
                                 height: 10.h,
                               ),
                               FadeInUp(
-                                  duration: const Duration(milliseconds: 1700),
+                                  duration: const Duration(milliseconds: 520),
                                   child: Container(
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
@@ -206,7 +206,9 @@ class _SignUppageState extends State<SignUppage> {
                                         CustomTextfield(
                                           obscureText: false,
                                           controller: fullNameController,
-                                          validatorValue: (val) {},
+                                          validatorValue: (val) {
+                                            return null;
+                                          },
                                           errorMsg: 'Please enter Full Name',
                                           showBorder: true,
                                           hintText: 'Full name',
@@ -217,15 +219,16 @@ class _SignUppageState extends State<SignUppage> {
                                           controller: emailController,
                                           showBorder: true,
                                           validatorValue: (val) {
-                                            if (RegExp(r"\s").hasMatch(val)) {
+                                            if (RegExp(r"\s").hasMatch(val!)) {
                                               return "Email must not be empty";
                                             } else {
-                                              if (val.contains('@') || !val.contains('.')||
-                                              RegExp(r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
-                                                  .hasMatch(val)) {
+                                              if (val.contains('@') || val.contains('.')||
+                                                  RegExp(r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
+                                                      .hasMatch(val)) {
                                                 return 'Enter a valid Email';
                                               }
                                             }
+                                            return null;
                                           },
                                           errorMsg: 'Enter a valid Email',
                                           hintText: 'Email',
@@ -236,6 +239,7 @@ class _SignUppageState extends State<SignUppage> {
                                           controller: NumberController,
                                           showBorder: true,
                                           validatorValue: (val) {
+                                            return null;
                                           },
                                           errorMsg: 'Please enter Phone no',
                                           hintText: 'Phone Number',
@@ -263,7 +267,7 @@ class _SignUppageState extends State<SignUppage> {
                                 height: 20,
                               ),
                               FadeInUp(
-                                  duration: const Duration(milliseconds: 1900),
+                                  duration: const Duration(milliseconds: 550),
                                   child: MaterialButton(
                                     onPressed: () {
                                       _handleSingUp();
@@ -284,7 +288,7 @@ class _SignUppageState extends State<SignUppage> {
                                 height: 10.0,
                               ),
                               FadeInUp(
-                                  duration: const Duration(milliseconds: 2000),
+                                  duration: const Duration(milliseconds: 600),
                                   child: Center(
                                       child: TextButton(
                                           onPressed: () {

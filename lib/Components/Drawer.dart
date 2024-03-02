@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/DrawerComponents/Rating_popup.dart';
+import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/DrawerComponents/side_menu_tile.dart';
 import 'package:petrocardapppp/DrawerComponents/userdetails.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer({super.key});
@@ -13,15 +16,6 @@ class HomeDrawer extends StatefulWidget {
 }
 class _HomeDrawerState extends State<HomeDrawer> {
   int selectedIndex = 0; // Track the selected index
-
-  // Define the list of SidemenuTiles
-  final List<SlidermenuItem> slidermenuItem = [
-    SlidermenuItem(title: 'Rate Us', iconData: CupertinoIcons.star, onTap: (String ) { const HomeDrawer(); },),
-    SlidermenuItem(title: 'Feedback', iconData: CupertinoIcons.exclamationmark_bubble,  onTap: (String ) { const HomeDrawer();}),
-    SlidermenuItem(title: 'About us', iconData: CupertinoIcons.personalhotspot,  onTap: (String ) { const HomeDrawer();}),
-    SlidermenuItem(title: 'Log Out', iconData: Icons.arrow_back_ios,  onTap: (String ) { const HomeDrawer();}),
-    SlidermenuItem(title: 'Settings',isSetting: true, iconData: Icons.settings,  onTap: (String) { const HomeDrawer();}),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +35,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 height: 20,
               ),
               const User_details(),
-              SlidermenuItem(title: 'Rate Us', iconData: CupertinoIcons.star, onTap: (String ) { const HomeDrawer(); },),
+              SlidermenuItem(title: 'Rate Us', iconData: CupertinoIcons.star, onTap: (String ) { Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => RatingPopup()),
+                      (route) => false);},),
               SlidermenuItem(title: 'Feedback', iconData: CupertinoIcons.exclamationmark_bubble,  onTap: (String ) { const HomeDrawer();}),
               SlidermenuItem(title: 'About us', iconData: CupertinoIcons.personalhotspot,  onTap: (String ) { const HomeDrawer();}),
-              SlidermenuItem(title: 'Log Out', iconData: Icons.arrow_back_ios,  onTap: (String ) { const HomeDrawer();}),
-              SizedBox(height: 0.38.sh,),
-              SlidermenuItem(title: 'Settings',isSetting: true, iconData: CupertinoIcons.settings,  onTap: (String) { const HomeDrawer();}),
+              SlidermenuItem(title: 'Log Out', iconData: Icons.arrow_back_ios,  onTap: (String ) {   Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                      (route) => false);}),
     ]
             ),
       ),

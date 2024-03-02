@@ -8,16 +8,12 @@ import 'package:petrocardapppp/screens/MainScreen/Location_screen.dart';
 import '../screens/MainScreen/User_screen.dart';
 class HomeWidget extends StatefulWidget {
   final bool isDrawerOpen;
-  final bool isNotificationOpen;
   final VoidCallback toggleDrawer;
-  final VoidCallback toggleNotification;
 
   const HomeWidget({
     Key? key,
     required this.isDrawerOpen,
-    required this.isNotificationOpen,
     required this.toggleDrawer,
-    required this.toggleNotification,
   }) : super(key: key);
 
   @override
@@ -43,10 +39,8 @@ class HomeWidgetState extends State<HomeWidget> {
                    top: 0,
                    left: 0,
                    right: 0,
-                   child: Myappbar(isDrawerOpen: widget.isNotificationOpen,
-                     isNotificationOpen: widget.isNotificationOpen,
+                   child: Myappbar(isDrawerOpen: widget.isDrawerOpen,
                      toggleDrawer: widget.toggleDrawer,
-                     toggleNotification: widget.toggleNotification,
                    ),
             ),
             Positioned(

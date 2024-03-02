@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/utilities/styles.dart';
 
 class CustomTextfield extends StatefulWidget {
   final IconData icon;
@@ -10,7 +10,7 @@ class CustomTextfield extends StatefulWidget {
   final bool obscureText;
   final String errorMsg;
   final TextEditingController controller;
-  final Function(String value) validatorValue;
+  final String? Function(String?)? validatorValue;
   final bool showBorder;
   final bool sufixIcon;
   final bool numerickeyboard;
@@ -54,49 +54,41 @@ class _CustomTextfieldState extends State<CustomTextfield> {
         ),
       )
           : null,
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Icon(
-              widget.icon,
-              color: AppColors.secondaryText,
-            ),
+      child: TextFormField(
+        controller: widget.controller,
+        obscureText: _isObscured,
+        textInputAction:
+        widget.istrue ? TextInputAction.next : TextInputAction.go,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return widget.errorMsg;
+          }
+          return widget.validatorValue!(value);
+        },
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            widget.icon,
+            color: AppColors.darkPurple,
           ),
-          Expanded(
-            child: TextFormField(
-              controller: widget.controller,
-              obscureText: _isObscured,
-              textInputAction:
-              widget.istrue ? TextInputAction.next : TextInputAction.go,
-              validator: (value){
-                widget.validatorValue(value!);
-                if(value.isEmpty){
-                  return widget.errorMsg;
-                }
-                return null;
-    },
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: widget.hintText,
-                hintStyle:
-                const TextStyle(color: AppColors.secondaryText, letterSpacing: 0.7),
-                suffixIcon: widget.sufixIcon
-                    ? IconButton(
-                  icon: Icon(
-                    _isObscured ? Icons.visibility : Icons.visibility_off,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isObscured = !_isObscured;
-                    });
-                  },
-                )
-                    : null,
-              ),
+          contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+          border: InputBorder.none,
+          hintText: widget.hintText,
+            errorText: widget.validatorValue!(widget.controller.text),
+          hintStyle:
+          const TextStyle(color: AppColors.secondaryText, letterSpacing: 0.7),
+          suffixIcon: widget.sufixIcon
+              ? IconButton(
+            icon: Icon(
+              _isObscured ? Icons.visibility : Icons.visibility_off,
             ),
-          ),
-        ],
+            onPressed: () {
+              setState(() {
+                _isObscured = !_isObscured;
+              });
+            },
+          )
+              : null,
+        ),
       ),
     );
   }
@@ -150,82 +142,64 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
                 bottom: BorderSide(color: AppColors.lightPurple),
               ),
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Icon(
-                    widget.icon,
-                    color: AppColors.secondaryText,
-                  ),
+            child: TextFormField(
+              controller: widget.controller,
+              obscureText: _isObscured,
+              textInputAction: TextInputAction.next,
+              validator: (value){
+                widget.validator(value!);
+                if(value.isEmpty){
+                return widget.errorMsg;
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                prefixIcon: Icon(
+                  widget.icon,
+                  color: AppColors.darkPurple,
                 ),
-                Expanded(
-                  child: TextFormField(
-                    controller: widget.controller,
-                    obscureText: _isObscured,
-                    textInputAction: TextInputAction.next,
-                    validator: (value){
-                      widget.validator(value!);
-                      if(value.isEmpty){
-                      return widget.errorMsg;
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: widget.hintText,
-                      hintStyle: const TextStyle(
-                          color: AppColors.secondaryText, letterSpacing: 0.7),
-                    ),
-                  ),
-                ),
-              ],
+                contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                border: InputBorder.none,
+                hintText: widget.hintText,
+                hintStyle: AppStyles.Textfield_hintstyle,
+              ),
             ),
           ),
           Container(
             padding: const EdgeInsets.all(10.0),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Icon(
+            child: TextFormField(
+              controller: widget.controller2,
+              obscureText: _isObscured,
+              textInputAction: TextInputAction.go,
+              validator: (value){
+                widget.validator(value!);
+                if(value.isEmpty){
+                  return widget.errorMsg;
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                  prefixIcon: Icon(
                     widget.icon2,
-                    color: AppColors.secondaryText,
+                    color: AppColors.darkPurple,
                   ),
-                ),
-                Expanded(
-                  child: TextFormField(
-                    controller: widget.controller2,
-                    obscureText: _isObscured,
-                    textInputAction: TextInputAction.go,
-                    validator: (value){
-                      widget.validator(value!);
-                      if(value.isEmpty){
-                        return widget.errorMsg;
-                      }
-                      return null;
+                  contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                  border: InputBorder.none,
+                  hintText: widget.hintText2,
+                  hintStyle: const TextStyle(
+                      color: AppColors.secondaryText, letterSpacing: 0.7),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isObscured
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isObscured = !_isObscured;
+                      });
                     },
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: widget.hintText2,
-                        hintStyle: const TextStyle(
-                            color: AppColors.secondaryText, letterSpacing: 0.7),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _isObscured
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _isObscured = !_isObscured;
-                            });
-                          },
-                        )),
-                  ),
-                ),
-              ],
+                  )),
             ),
           ),
         ],
@@ -273,21 +247,19 @@ class NumericTextField extends StatelessWidget {
           VerticalDivider(
             color: AppColors.lightPurple,
           ),
-          Expanded(
-            child: TextField(
-              controller: controller,
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(vertical: 14.0),
-                hintText: hintText,
-                hintStyle: TextStyle(color: Colors.grey,
-                    fontSize: 16.0,
-                    letterSpacing: 0.7),
-              ),
+          TextField(
+            controller: controller,
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.symmetric(vertical: 14.0),
+              hintText: hintText,
+              hintStyle: TextStyle(color: Colors.grey,
+                  fontSize: 16.0,
+                  letterSpacing: 0.7),
             ),
           ),
         ],

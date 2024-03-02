@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   late Animation<double> animation;
 
   startTime() async {
-    var _duration = new Duration(seconds: 10);
+    var _duration = new Duration(seconds: 3);
     return new Timer(_duration, checkFirstSeen);
   }
 
@@ -66,12 +66,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Padding(padding: EdgeInsets.all(24.w),
-                    child:Image.asset('assets/Animations/splashimage.png')),
+                  Center(child: Image.asset('assets/Animations/splashimage.png',height:70,width: 70,)),
                   Text('Petro Card',
                     style: TextStyle(
                         color: Color(0xFF032737),
-                        fontSize: 36.sp,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                     ),
                   ),

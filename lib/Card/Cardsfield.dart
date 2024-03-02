@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Card/MainCard.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:petrocardapppp/utilities/styles.dart';
 
 import '../utilities/colors.dart';
 
@@ -54,93 +55,54 @@ class _CardsfieldState extends State<Cardsfield> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0,),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                   Hero(tag: 'cards',child: Text('Cards',style: TextStyle(fontSize: 20.0.sp,fontWeight: FontWeight.w700,color: AppColors.primaryText),)),
-                  TextButton(onPressed: (){}, child:  Text(
-                      'Manage >',style: TextStyle(fontSize: 14.0.sp,fontWeight: FontWeight.w700,color: AppColors.accentColor),
-                  ))
-                ],
-              ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0,),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Hero(
+                  tag: 'cards',
+                  child: Text(
+                    'Cards',
+                    style: TextStyle(
+                      fontSize: 20.0.sp,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: (){},
+                  child: Text(
+                    'Manage >',
+                    style: TextStyle(
+                      fontSize: 16.0.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.darkPurple.withOpacity(0.7),
+                    ),
+                  ),
+                )
+              ],
             ),
-            SizedBox(
-              height: 230.h,
-              width: 1.sw,
-              child: CardSwiper(
-                cardsCount: _showAddCardButton ? cardList.length : cardList.length - 1,
-                onSwipe: _onSwipe,
-                onUndo: _onUndo,
-                numberOfCardsDisplayed: 2,
-                backCardOffset: const Offset(0, -30),
-                padding: const EdgeInsets.only(top: 50.0),
-                cardBuilder: (
-                    context,
-                    index,
-                    horizontalThresholdPercentage,
-                    verticalThresholdPercentage,
-                    ) =>
-                cardList[index],
-              ),
-            ),
-            SizedBox(height: 20.0.h,),
-          ],
-        ),
-    );
-  }
-  bool _onSwipe(
-      int previousIndex,
-      int? currentIndex,
-      CardSwiperDirection direction,
-      ) {
-    debugPrint(
-      'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top',
-    );
-    return true;
-  }
-
-  bool _onUndo(
-      int? previousIndex,
-      int currentIndex,
-      CardSwiperDirection direction,
-      ) {
-    debugPrint(
-      'The card $currentIndex was undod from the ${direction.name}',
-    );
-    return true;
-  }
-}
-
-class Custombtns extends StatelessWidget {
-  const Custombtns({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 35.h,
-      width: 35.w,
-      decoration:  BoxDecoration(
-        border: Border.all(width: 0.5.w,color: AppColors.black.withAlpha(150)),
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(20.0),
-        bottomRight: Radius.circular(20.0),
+          ),
+          // ListView.builder(
+          //     itemCount: cardList.length,
+          //     scrollDirection: Axis.horizontal,
+          //     itemBuilder: (BuildContext context,int index)
+          // {
+          //   return null;
+          // }
+          PetroCard(
+            cardColor: AppColors.black,
+            cardHolder: 'Mustufa Memon',
+            cardMoney: '3200.50 ₹',
+            startcvv: '2300',
+            endcvv: '1242',
+          ),
+        ],
       ),
-      color: AppColors.lightPurple2,
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.translightPurple2.withOpacity(0.5),
-          blurRadius: 5.0,
-          offset: const Offset(1,5)
-        )
-      ]
-    ),
-    child: const Icon(Icons.mobile_screen_share,color: AppColors.translightPurple,),
     );
   }
 }

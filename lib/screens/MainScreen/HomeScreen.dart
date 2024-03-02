@@ -26,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           SizedBox(height: 70.h,),
            Cardsfield(),
+           SizedBox(height: 15,),
            Appbtns(),
            Expanded(child: 
            Column(children: [

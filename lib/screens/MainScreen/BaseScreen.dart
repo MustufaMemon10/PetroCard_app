@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petrocardapppp/Components/NotificationShade.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/Components/Drawer.dart';
 import 'package:petrocardapppp/Widgets/Home Widget.dart';
@@ -42,37 +40,23 @@ class _BaseScreenState extends State<BaseScreen> with SingleTickerProviderStateM
       }
     });
   }
-  void toggleNotification(){
-    setState(() {
-      isNotificationOpen = !isNotificationOpen;
-      if (isNotificationOpen) {
-        isDrawerOpen = false; // Close drawer when opening notification shade
-      }
-      else{
-        isNotificationOpen = false;
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           HomeWidget(
             isDrawerOpen: isDrawerOpen,
-            isNotificationOpen: isNotificationOpen,
             toggleDrawer: toggleDrawer,
-            toggleNotification: toggleNotification,
           ),
-        if (isDrawerOpen || isNotificationOpen) GestureDetector(
+        if (isDrawerOpen) GestureDetector(
           onTap: () {
-          if (isDrawerOpen) {
-             toggleDrawer();
-             } else if (isNotificationOpen) {
-              toggleNotification();
-                }
-               },
+            if (isDrawerOpen) {
+              toggleDrawer();
+            }
+          },
                child: Container(
                color: AppColors.black.withOpacity(0.4),
              ),
@@ -83,13 +67,6 @@ class _BaseScreenState extends State<BaseScreen> with SingleTickerProviderStateM
             bottom: 0,
             left: isDrawerOpen ? 0 : -450,
             child: const HomeDrawer(),
-          ),
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 300),
-            top: 0,
-            bottom: 0,
-            right: isNotificationOpen ? 0 : -450,
-            child: const NotificationShade(),
           ),
         ],
       ),

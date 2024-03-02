@@ -20,7 +20,6 @@ class btn extends StatefulWidget {
 class _btnState extends State<btn> {
   @override
   Widget build(BuildContext context) {
-        Color iconColor = _adjustColorLuminosity(widget.containerColor);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -35,18 +34,11 @@ class _btnState extends State<btn> {
             ),
             child: Icon(
               widget.icon,
-              color: iconColor,),
+              color: AppColors.black,),
             ),
             SizedBox(height: 8.0.h,),
              Text(widget.btntext,style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.w800,color: AppColors.primaryText.withOpacity(0.8)),),
              ],
     ); 
-  }
-  Color _adjustColorLuminosity(Color color) {
-    // Adjusting luminosity by reducing the brightness
-    double adjustmentAmount = 0.8; // Adjust this value as needed
-    HSLColor hslColor = HSLColor.fromColor(color);
-    double newLuminosity = (hslColor.lightness - adjustmentAmount).clamp(0.0, 1.0);
-    return hslColor.withLightness(newLuminosity).toColor();
   }
 }

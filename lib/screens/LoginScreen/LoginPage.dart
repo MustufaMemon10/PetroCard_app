@@ -84,17 +84,17 @@ class _LoginPageState extends State<LoginPage> {
           child: LoadingAnimationWidget.flickr(
             leftDotColor: AppColors.darkPurple,
             rightDotColor: AppColors.secondaryText,
-            size: 100,
+            size: 50,
           ),
         ):Container(
-          color: AppColors.scaffoldBackgroundColor,
+          color: AppColors.white,
           height: height,
           child: Form(
             key: formKey,
             child: Stack(
               children: [
                 FadeInDown(
-                  duration: const Duration(milliseconds: 1000),
+                  duration: const Duration(milliseconds: 400),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Container(
@@ -104,29 +104,29 @@ class _LoginPageState extends State<LoginPage> {
                       width: width,
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 40.w, vertical: 10.0.h),
+                            horizontal: 30.w, vertical: 10.0.h),
                         child: FadeInUp(
-                          duration: const Duration(milliseconds: 1200),
+                          duration: const Duration(milliseconds: 450),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              FadeInUp(
-                                duration: const Duration(milliseconds: 1000),
+                              FadeInDown(
+                                duration: const Duration(milliseconds: 460),
                                 child: Text(
                                   "Login",
                                   style: TextStyle(
                                     color: AppColors.darkPurple,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 35.sp,
+                                    fontSize: 40.sp,
                                   ),
                                 ),
                               ),
                               const SizedBox(
                                 height: 8,
                               ),
-                              FadeInUp(
-                                duration: const Duration(milliseconds: 1300),
+                              FadeInDown(
+                                duration: const Duration(milliseconds: 470),
                                 child: Text(
                                   "Hey there,",
                                   style: TextStyle(
@@ -139,8 +139,8 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(
                                 height: 8,
                               ),
-                              FadeInUp(
-                                duration: const Duration(milliseconds: 1400),
+                              FadeInDown(
+                                duration: const Duration(milliseconds: 480),
                                 child: Text(
                                   "Welcome Back",
                                   style: TextStyle(
@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                   right: 0,
                   duration: Duration(milliseconds: 2000),
                   child: FadeInUp(
-                    duration: const Duration(milliseconds: 1700),
+                    duration: const Duration(milliseconds: 500),
                     child: Container(
                       height: height,
                       decoration: BoxDecoration(
@@ -174,9 +174,9 @@ class _LoginPageState extends State<LoginPage> {
                           color: AppColors.white,
                           boxShadow: const [
                             BoxShadow(
-                              color: AppColors.primaryText,
-                              blurRadius: 15,
-                              offset: Offset(0, 10),
+                              color: AppColors.darkPurple,
+                              blurRadius: 10,
+                              offset: Offset(4, 4),
                             )
                           ]),
                       child: Padding(
@@ -190,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                               height: 20.0.h,
                             ),
                             FadeInUp(
-                              duration: const Duration(milliseconds: 1900),
+                              duration: const Duration(milliseconds: 520),
                               child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20.r),
@@ -210,14 +210,14 @@ class _LoginPageState extends State<LoginPage> {
                                       icon: Icons.mail_outline,
                                       obscureText: false,
                                       validatorValue: (val) {
-                                        if (val.isEmpty ||
-                                            RegExp(r"\s").hasMatch(val)) {
+                                        if (RegExp(r"\s").hasMatch(val!)) {
                                           return "Email must not be empty";
                                         } else {
                                           if (RegExp(r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
                                               .hasMatch(val)) {
                                           }
                                         }
+                                        return null;
                                       },
                                       errorMsg: 'Enter Valid Email',
                                       hintText: 'Username or email',
@@ -227,10 +227,10 @@ class _LoginPageState extends State<LoginPage> {
                                       icon: Icons.lock_outline,
                                       hintText: 'Password',
                                       validatorValue: (val) {
-                                        if (val.isEmpty ||
-                                            RegExp(r"\s").hasMatch(val)) {
-                                          return 'Use Proper Password';
+                                        if (RegExp(r"\s").hasMatch(val!)|| RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(val)) {
+                                          return "Use Proper Password ";
                                         }
+                                        return null;
                                       },
                                       errorMsg: 'Please Enter Password',
                                       obscureText: showPassword,
@@ -245,7 +245,7 @@ class _LoginPageState extends State<LoginPage> {
                               height: 10.0.h,
                             ),
                             FadeInUp(
-                                duration: const Duration(milliseconds: 2100),
+                                duration: const Duration(milliseconds: 550),
                                 child: Center(
                                     child: TextButton(
                                         onPressed: () {
@@ -270,7 +270,7 @@ class _LoginPageState extends State<LoginPage> {
                               height: 10,
                             ),
                             FadeInUp(
-                              duration: const Duration(milliseconds: 2100),
+                              duration: const Duration(milliseconds: 600),
                               child: GestureDetector(
                                 onTap: () {
                                   handleLogin();
@@ -283,14 +283,7 @@ class _LoginPageState extends State<LoginPage> {
                                     decoration: BoxDecoration(
                                       color: AppColors.darkPurple,
                                       borderRadius: BorderRadius.circular(50.r),
-                                      boxShadow: (const [
-                                        BoxShadow(
-                                          color: AppColors.lightPurple2,
-                                          blurRadius: 5,
-                                          offset: Offset(5, -5),
-                                          blurStyle: BlurStyle.solid,
-                                        ),
-                                      ]),
+
                                     ),
                                     child: Center(
                                       child: Text(
@@ -309,7 +302,7 @@ class _LoginPageState extends State<LoginPage> {
                               height: 20.h,
                             ),
                             FadeInUp(
-                                duration: const Duration(milliseconds: 2200),
+                                duration: const Duration(milliseconds: 630),
                                 child: Align(
                                     alignment: Alignment.bottomCenter,
                                     child: TextButton(
