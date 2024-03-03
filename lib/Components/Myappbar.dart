@@ -56,10 +56,10 @@ class _MyappbarState extends State<Myappbar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.symmetric(vertical: 15.0),
       child: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15.0,),
+          padding: EdgeInsets.symmetric(horizontal: 18.0,),
           height: 0.05.sh,
           width: 1.sw,
           color: Colors.white,
@@ -128,7 +128,7 @@ class _MyappbarState extends State<Myappbar> {
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: Text(
-                      'Petro Card',
+                      'Petro App',
                       style: AppStyles.primaryTitle,
                     ),
                   ),

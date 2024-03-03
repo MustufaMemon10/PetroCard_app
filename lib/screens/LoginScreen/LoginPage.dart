@@ -220,12 +220,13 @@ class _LoginPageState extends State<LoginPage> {
                                         return null;
                                       },
                                       errorMsg: 'Enter Valid Email',
-                                      hintText: 'Username or email',
+                                      hintText: 'Email',
                                       controller: usernameController,
                                     ),
                                     CustomTextfield(
                                       icon: Icons.lock_outline,
                                       hintText: 'Password',
+                                      sufixIcon: true,
                                       validatorValue: (val) {
                                         return null;
                                       },

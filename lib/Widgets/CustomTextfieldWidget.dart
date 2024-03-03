@@ -40,7 +40,9 @@ class _CustomTextfieldState extends State<CustomTextfield> {
   @override
   void initState() {
     super.initState();
-    _isObscured = widget.obscureText;
+    if (widget.obscureText) {
+      _isObscured = true;
+    }
   }
 
   @override
@@ -56,7 +58,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
           : null,
       child: TextFormField(
         controller: widget.controller,
-        obscureText: _isObscured,
+        obscureText: _isObscured ?? false,
         textInputAction:
         widget.istrue ? TextInputAction.next : TextInputAction.go,
         validator: (value) {
@@ -79,7 +81,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
           suffixIcon: widget.sufixIcon
               ? IconButton(
             icon: Icon(
-              _isObscured ? Icons.visibility : Icons.visibility_off,
+              _isObscured ??false ? Icons.visibility : Icons.visibility_off,
             ),
             onPressed: () {
               setState(() {

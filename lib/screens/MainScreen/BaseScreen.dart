@@ -34,7 +34,6 @@ class _BaseScreenState extends State<BaseScreen> with SingleTickerProviderStateM
       isDrawerOpen = !isDrawerOpen;
       if (isDrawerOpen) {
         _animationController.forward();
-        isNotificationOpen = false;
       } else {
         _animationController.reverse();
       }

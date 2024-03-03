@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:petrocardapppp/Widgets/CustomTextfieldWidget.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
@@ -90,7 +91,13 @@ class _SignUppageState extends State<SignUppage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: isLoading? Center(child:CircularProgressIndicator(color: AppColors.black,)) :SingleChildScrollView(
+      body: isLoading? Center(
+        child: LoadingAnimationWidget.flickr(
+          leftDotColor: AppColors.darkPurple,
+          rightDotColor: AppColors.secondaryText,
+          size: 50,
+        ),
+      ):SingleChildScrollView(
         child: InkWell(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -222,10 +229,8 @@ class _SignUppageState extends State<SignUppage> {
                                             if (RegExp(r"\s").hasMatch(val!)) {
                                               return "Email must not be empty";
                                             } else {
-                                              if (val.contains('@') || val.contains('.')||
-                                                  RegExp(r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
-                                                      .hasMatch(val)) {
-                                                return 'Enter a valid Email';
+                                              if (RegExp(r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
+                                                  .hasMatch(val)) {
                                               }
                                             }
                                             return null;

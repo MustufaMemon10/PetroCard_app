@@ -6,6 +6,7 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:petrocardapppp/utilities/styles.dart';
 
 import '../utilities/colors.dart';
+import 'Request/Request_card.dart';
 
 class Cardsfield extends StatefulWidget {
 
@@ -58,35 +59,35 @@ class _CardsfieldState extends State<Cardsfield> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Hero(
-                  tag: 'cards',
-                  child: Text(
-                    'Cards',
-                    style: TextStyle(
-                      fontSize: 20.0.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primaryText,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: (){},
-                  child: Text(
-                    'Manage >',
-                    style: TextStyle(
-                      fontSize: 16.0.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.darkPurple.withOpacity(0.7),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            // child: Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Hero(
+            //       tag: 'cards',
+            //       child: Text(
+            //         'Cards',
+            //         style: TextStyle(
+            //           fontSize: 20.0.sp,
+            //           fontWeight: FontWeight.w700,
+            //           color: AppColors.primaryText,
+            //         ),
+            //       ),
+            //     ),
+            //     TextButton(
+            //       onPressed: (){},
+            //       child: Text(
+            //         'Manage >',
+            //         style: TextStyle(
+            //           fontSize: 16.0.sp,
+            //           fontWeight: FontWeight.w500,
+            //           color: AppColors.darkPurple.withOpacity(0.7),
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // ),
+          // ),
           // ListView.builder(
           //     itemCount: cardList.length,
           //     scrollDirection: Axis.horizontal,
@@ -94,12 +95,40 @@ class _CardsfieldState extends State<Cardsfield> {
           // {
           //   return null;
           // }
-          PetroCard(
-            cardColor: AppColors.black,
-            cardHolder: 'Mustufa Memon',
-            cardMoney: '3200.50 ₹',
-            startcvv: '2300',
-            endcvv: '1242',
+          child:
+          Container(
+            height: 190.h,
+            width: 400.w,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(20.0),
+              border: Border.all(width: 1.0,color: AppColors.darkPurple)
+            ),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.blue,
+                    ),
+                    child: IconButton(
+                      onPressed: (){Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => Request_Screen(),
+                        ),
+                      );},
+                      icon: const Icon(Icons.add,color: Colors.white,),
+                    ),
+                  ),
+                  const SizedBox(height: 8.0,),
+                   Text('Apply Card',style: TextStyle(color: Colors.black45, fontWeight: FontWeight.w400, fontSize: 20.0),)
+                ],
+              ),
+            ),
+          ),
           ),
         ],
       ),
