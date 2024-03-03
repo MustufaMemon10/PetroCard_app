@@ -56,11 +56,13 @@ class _MyappbarState extends State<Myappbar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: SafeArea(
-        child: SizedBox(
-          height: 0.15.sh,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 15.0,),
+          height: 0.05.sh,
           width: 1.sw,
+          color: Colors.white,
           child: Stack(
             children: [
               Container(
@@ -131,7 +133,8 @@ class _MyappbarState extends State<Myappbar> {
                     ),
                   ),
                 ),
-              ), AnimatedPositioned(
+              ),
+              AnimatedPositioned(
                 top: _showWelcomeText ? 0 : -50,
                 left: 0,
                 right: 0,
@@ -147,8 +150,6 @@ class _MyappbarState extends State<Myappbar> {
                         userName.split(' ')[0].substring(1), // Start from index 1 to get the rest of the string
                     style: AppStyles.primaryTitle,
                   ):null,
-
-
                   ),
                 ),
               ),

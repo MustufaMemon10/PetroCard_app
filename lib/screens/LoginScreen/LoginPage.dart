@@ -227,9 +227,6 @@ class _LoginPageState extends State<LoginPage> {
                                       icon: Icons.lock_outline,
                                       hintText: 'Password',
                                       validatorValue: (val) {
-                                        if (RegExp(r"\s").hasMatch(val!)|| RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(val)) {
-                                          return "Use Proper Password ";
-                                        }
                                         return null;
                                       },
                                       errorMsg: 'Please Enter Password',

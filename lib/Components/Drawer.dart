@@ -39,8 +39,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   MaterialPageRoute(builder: (context) => RatingPopup()),
                       (route) => false);},),
               SlidermenuItem(title: 'Feedback', iconData: CupertinoIcons.exclamationmark_bubble,  onTap: (String ) { const HomeDrawer();}),
-              SlidermenuItem(title: 'About us', iconData: CupertinoIcons.personalhotspot,  onTap: (String ) { const HomeDrawer();}),
-              SlidermenuItem(title: 'Log Out', iconData: Icons.arrow_back_ios,  onTap: (String ) {   Navigator.of(context).pushAndRemoveUntil(
+              SlidermenuItem(title: 'About us', iconData: CupertinoIcons.personalhotspot,  onTap: (String )async { const HomeDrawer();}),
+              SlidermenuItem(title: 'Log Out',
+                  iconData: Icons.arrow_back_ios,
+                  onTap: (String ) async{
+                final pref = await SharedPreferences.getInstance();
+                await pref.clear();
+                await pref.setBool('seen',true);
+                Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => LoginPage()),
                       (route) => false);}),
     ]
