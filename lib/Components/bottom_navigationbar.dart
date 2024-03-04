@@ -25,9 +25,10 @@ class _MyNavBarState extends State<MyNavBar> {
         .size
         .width;
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
         margin: const EdgeInsets.only(bottom: 5.0,right: 10.0,left: 10.0),
         height:.075.sh,
-        width: 1.sw,
+        width: 0.6.sw,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -40,7 +41,7 @@ class _MyNavBarState extends State<MyNavBar> {
           borderRadius:  BorderRadius.circular(50.r),
         ),
         child: ListView.builder(
-          itemCount: 4,
+          itemCount: 3,
           scrollDirection: Axis.horizontal,
           padding: EdgeInsets.symmetric(horizontal: width * .02),
           itemBuilder: (context, index) => InkWell(
@@ -140,13 +141,11 @@ class _MyNavBarState extends State<MyNavBar> {
     Icons.location_on_sharp,
     Icons.home_rounded,
     CupertinoIcons.creditcard,
-    Icons.person_rounded,
   ];
 
   List<String> listOfStrings = [
     'Locations',
     'Home',
     'Cards',
-    'Account',
   ];
 }

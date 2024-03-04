@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 
-
-
 class MyDraggableScrollableSheet extends StatelessWidget {
   const MyDraggableScrollableSheet({super.key});
 
@@ -22,9 +20,8 @@ class MyDraggableScrollableSheet extends StatelessWidget {
               topLeft: Radius.circular(30.0.r),
               topRight: Radius.circular(30.0.r),
             ),
-
             color: AppColors.white,
-            boxShadow:  [
+            boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.2),
                 spreadRadius: 5,
@@ -41,7 +38,6 @@ class MyDraggableScrollableSheet extends StatelessWidget {
           ),
           child: Column(
             children: [
-
               ListView.builder(
                 controller: scrollController,
                 itemCount: 50,
@@ -56,7 +52,6 @@ class MyDraggableScrollableSheet extends StatelessWidget {
               ),
             ],
           ),
-
         );
       },
     );

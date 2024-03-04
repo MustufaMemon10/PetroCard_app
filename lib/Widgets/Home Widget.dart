@@ -44,8 +44,8 @@ class HomeWidgetState extends State<HomeWidget> {
                    ),
             ),
             Positioned(
-              left: 0,
-              right: 0,
+              left: 30,
+              right: 30,
               bottom: 10,
               child: MyNavBar(
                 onIndexChanged: (index) {
@@ -68,8 +68,6 @@ class HomeWidgetState extends State<HomeWidget> {
         return const HomeScreen();
       case 2:
         return const CardScreen();
-      case 3:
-        return const UserScreen();
       default:
         return Container();
     }

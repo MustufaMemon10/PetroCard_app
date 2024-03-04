@@ -3,7 +3,9 @@ import 'package:petrocardapppp/utilities/colors.dart';
 
 class AppStyles {
   //login page styles
-  static TextStyle Textfield_hintstyle = TextStyle(color:AppColors.secondaryText, letterSpacing: 0.7);
+  static TextStyle Textfield_hintstyle =
+      TextStyle(color: AppColors.secondaryText, letterSpacing: 0.7);
+
   //card page style
   static TextStyle primaryTitle = TextStyle(
     fontSize: 20.0,
@@ -41,13 +43,13 @@ class AppStyles {
     fontSize: 24.0,
     color: Colors.black.withOpacity(0.8),
   );
+
   //rating page style
   static TextStyle feedmainText = TextStyle(
     fontSize: 24.0,
     color: AppColors.black,
     fontWeight: FontWeight.w700,
     letterSpacing: 0.3,
-
   );
   static TextStyle feedprimaryText = TextStyle(
     fontSize: 20.0,
@@ -61,5 +63,4 @@ class AppStyles {
     fontWeight: FontWeight.w700,
     letterSpacing: 0.4,
   );
-
 }

@@ -56,13 +56,11 @@ class _MyappbarState extends State<Myappbar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
       child: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 18.0,),
-          height: 0.05.sh,
+        child: SizedBox(
+          height: 0.15.sh,
           width: 1.sw,
-          color: Colors.white,
           child: Stack(
             children: [
               Container(
@@ -106,9 +104,9 @@ class _MyappbarState extends State<Myappbar> {
                                 width: 0.4.w,
                                 color: Colors.black.withOpacity(0.5))),
                         child: IconButton(
-                          onPressed: (){},
+                          onPressed: widget.toggleNotification,
                           icon: const Icon(
-                            CupertinoIcons.settings,
+                            CupertinoIcons.bell,
                             color: AppColors.black,
                             size: 24.0,
                           ),
@@ -128,13 +126,12 @@ class _MyappbarState extends State<Myappbar> {
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: Text(
-                      'Petro App',
+                      'Petro Card',
                       style: AppStyles.primaryTitle,
                     ),
                   ),
                 ),
-              ),
-              AnimatedPositioned(
+              ), AnimatedPositioned(
                 top: _showWelcomeText ? 0 : -50,
                 left: 0,
                 right: 0,
@@ -149,7 +146,7 @@ class _MyappbarState extends State<Myappbar> {
                         userName.split(' ')[0].substring(0, 1).toUpperCase() +
                         userName.split(' ')[0].substring(1), // Start from index 1 to get the rest of the string
                     style: AppStyles.primaryTitle,
-                  ):null,
+                     ):null,
                   ),
                 ),
               ),

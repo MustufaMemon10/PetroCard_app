@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:petrocardapppp/utilities/colors.dart';
+import 'package:petrocardapppp/utilities//colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/utilities/styles.dart';
 
 class CustomTextfield extends StatefulWidget {
   final IconData icon;
   final String hintText;
-  final bool obscureText;
   final String errorMsg;
   final TextEditingController controller;
   final String? Function(String?)? validatorValue;
   final bool showBorder;
-  final bool sufixIcon;
   final bool numerickeyboard;
   final bool istrue;
 
@@ -22,8 +20,6 @@ class CustomTextfield extends StatefulWidget {
     required this.hintText,
     required this.controller,
     this.showBorder = true,
-    this.sufixIcon = false,
-    required this.obscureText,
     required this.validatorValue,
     required this.errorMsg,
     this.numerickeyboard = false,
@@ -35,15 +31,7 @@ class CustomTextfield extends StatefulWidget {
 }
 
 class _CustomTextfieldState extends State<CustomTextfield> {
-  late bool _isObscured;
 
-  @override
-  void initState() {
-    super.initState();
-    if (widget.obscureText) {
-      _isObscured = true;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +46,6 @@ class _CustomTextfieldState extends State<CustomTextfield> {
           : null,
       child: TextFormField(
         controller: widget.controller,
-        obscureText: _isObscured ?? false,
         textInputAction:
         widget.istrue ? TextInputAction.next : TextInputAction.go,
         validator: (value) {
@@ -78,18 +65,6 @@ class _CustomTextfieldState extends State<CustomTextfield> {
             errorText: widget.validatorValue!(widget.controller.text),
           hintStyle:
           const TextStyle(color: AppColors.secondaryText, letterSpacing: 0.7),
-          suffixIcon: widget.sufixIcon
-              ? IconButton(
-            icon: Icon(
-              _isObscured ??false ? Icons.visibility : Icons.visibility_off,
-            ),
-            onPressed: () {
-              setState(() {
-                _isObscured = !_isObscured;
-              });
-            },
-          )
-              : null,
         ),
       ),
     );
@@ -99,6 +74,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
 class CustomPassfields extends StatefulWidget {
   final IconData icon;
   final IconData icon2;
+  final bool oneField;
   final String hintText;
   final String hintText2;
   final TextEditingController controller;
@@ -110,6 +86,7 @@ class CustomPassfields extends StatefulWidget {
   const CustomPassfields({
     Key? key,
     required this.icon,
+    this.oneField = false,
     required this.icon2,
     required this.hintText,
     required this.hintText2,
@@ -135,7 +112,44 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: Column(
+      child: widget.oneField?
+      Container(
+        padding: const EdgeInsets.all(10.0),
+        child: TextFormField(
+          controller: widget.controller2,
+          obscureText: _isObscured,
+          textInputAction: TextInputAction.go,
+          validator: (value){
+            widget.validator(value!);
+            if(value.isEmpty){
+              return widget.errorMsg;
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+              prefixIcon: Icon(
+                widget.icon2,
+                color: AppColors.darkPurple,
+              ),
+              contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+              border: InputBorder.none,
+              hintText: widget.hintText2,
+              hintStyle: const TextStyle(
+                  color: AppColors.secondaryText, letterSpacing: 0.7),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _isObscured
+                      ? Icons.visibility
+                      : Icons.visibility_off,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isObscured = !_isObscured;
+                  });
+                },
+              )),
+        ),
+      ): Column(
         children: [
           Container(
             padding: const EdgeInsets.all(10.0),
@@ -151,7 +165,7 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
               validator: (value){
                 widget.validator(value!);
                 if(value.isEmpty){
-                return widget.errorMsg;
+                  return widget.errorMsg;
                 }
                 return null;
               },
@@ -205,7 +219,7 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
             ),
           ),
         ],
-      ),
+      )
     );
   }
 }

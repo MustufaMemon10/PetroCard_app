@@ -39,7 +39,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         Route<dynamic> route) => false);
   }
   }
-
+  void dispose() {
+    super.dispose();
+  }
   @override
   void initState(){
     super.initState();

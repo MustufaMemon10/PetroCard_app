@@ -27,15 +27,6 @@ class _SignUppageState extends State<SignUppage> {
   var data;
   final formKey = GlobalKey<FormState>();
   bool showPasswordFields = false;
-  // void showSnackBar(String message, {required bool isError}) {
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     SnackBar(
-  //       content: Text(message),
-  //       duration: Duration(seconds: 2),
-  //       backgroundColor: isError ? AppColors.red : Colors.green,
-  //     ),
-  //   );
-
 
   Future<void> _handleSingUp() async {
     final form = formKey.currentState;
@@ -211,7 +202,6 @@ class _SignUppageState extends State<SignUppage> {
                                     child: Column(
                                       children: <Widget>[
                                         CustomTextfield(
-                                          obscureText: false,
                                           controller: fullNameController,
                                           validatorValue: (val) {
                                             return null;
@@ -222,7 +212,6 @@ class _SignUppageState extends State<SignUppage> {
                                           icon: Icons.person,
                                         ),
                                         CustomTextfield(
-                                          obscureText: false,
                                           controller: emailController,
                                           showBorder: true,
                                           validatorValue: (val) {
@@ -240,7 +229,6 @@ class _SignUppageState extends State<SignUppage> {
                                           icon: Icons.mail_outline,
                                         ),
                                         CustomTextfield(
-                                          obscureText: false,
                                           controller: NumberController,
                                           showBorder: true,
                                           validatorValue: (val) {

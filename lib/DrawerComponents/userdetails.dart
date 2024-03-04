@@ -21,25 +21,30 @@ class _User_detailsState extends State<User_details> {
       email = setpreference.getString('email')!;
     });
   }
+
   @override
   void initState() {
     getUserName();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CircleAvatar(
-          radius: 33,
-          backgroundColor: Colors.transparent,
-          child: CircleAvatar(
-            radius: 30,
-            backgroundColor: AppColors.darkPurple.withOpacity(0.7),
-            child: Image.asset(
-              'assets/Icons/user.png',
-              height: 40,
-              width: 30,
+        Container(
+          decoration: BoxDecoration(
+              border: Border.all(width: 0.6, color: AppColors.black),
+              shape: BoxShape.circle),
+          child: InkWell(
+            onTap: () {},
+            splashColor: AppColors.accentColor.withOpacity(0.2),
+            child: CircleAvatar(
+              radius: 25,
+              backgroundColor: AppColors.white.withOpacity(0.7),
+              child: Image.asset(
+                'assets/Icons/man.png',
+              ),
             ),
           ),
         ),
