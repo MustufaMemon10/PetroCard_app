@@ -211,7 +211,6 @@ class _SignUppageState extends State<SignUppage> {
                                     child: Column(
                                       children: <Widget>[
                                         CustomTextfield(
-                                          obscureText: false,
                                           controller: fullNameController,
                                           validatorValue: (val) {
                                             return null;
@@ -222,7 +221,6 @@ class _SignUppageState extends State<SignUppage> {
                                           icon: Icons.person,
                                         ),
                                         CustomTextfield(
-                                          obscureText: false,
                                           controller: emailController,
                                           showBorder: true,
                                           validatorValue: (val) {
@@ -240,7 +238,6 @@ class _SignUppageState extends State<SignUppage> {
                                           icon: Icons.mail_outline,
                                         ),
                                         CustomTextfield(
-                                          obscureText: false,
                                           controller: NumberController,
                                           showBorder: true,
                                           validatorValue: (val) {

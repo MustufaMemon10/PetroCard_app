@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = new GlobalKey<FormState>();
   var logindata;
   var data;
-  bool showPassword = false;
+  bool showPassword = true;
   bool isLoading = false;
 
   Future<void> handleLogin() async {
@@ -208,7 +208,6 @@ class _LoginPageState extends State<LoginPage> {
                                   children: <Widget>[
                                     CustomTextfield(
                                       icon: Icons.mail_outline,
-                                      obscureText: false,
                                       validatorValue: (val) {
                                         if (RegExp(r"\s").hasMatch(val!)) {
                                           return "Email must not be empty";
@@ -223,18 +222,9 @@ class _LoginPageState extends State<LoginPage> {
                                       hintText: 'Email',
                                       controller: usernameController,
                                     ),
-                                    CustomTextfield(
-                                      icon: Icons.lock_outline,
-                                      hintText: 'Password',
-                                      sufixIcon: true,
-                                      validatorValue: (val) {
-                                        return null;
-                                      },
-                                      errorMsg: 'Please Enter Password',
-                                      obscureText: showPassword,
-                                      controller: passwordController,
-                                      showBorder: false,
-                                    ),
+                                    CustomPassfields(icon: Icons.lock_outline, icon2: Icons.lock_outline, hintText: 'Password', hintText2: 'Password', controller: passwordController, validator: (val) {
+                              return null;
+                              }, errorMsg: 'Enter password', controller2: passwordController, obscureText: showPassword,oneField: true,)
                                   ],
                                 ),
                               ),
