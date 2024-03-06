@@ -124,14 +124,15 @@ class _UserScreenState extends State<UserScreen> {
                 iconColor: iconColor,
                 icon: FontAwesomeIcons.userTag,
                 textfield: userName,
-              ),    ProfileOptionwidget(
+              ), ProfileOptionwidget(
                 iconColor: iconColor,
-                icon: FontAwesomeIcons.userTag,
+                icon: FontAwesomeIcons.envelope,
                 textfield: email,
               ),    ProfileOptionwidget(
                 iconColor: iconColor,
-                icon: FontAwesomeIcons.userTag,
+                icon: FontAwesomeIcons.key,
                 textfield: password,
+                trailing: true,
               ),    ProfileOptionwidget(
                 iconColor: iconColor,
                 icon: FontAwesomeIcons.userTag,
@@ -151,11 +152,13 @@ class ProfileOptionwidget extends StatelessWidget {
       required this.iconColor,
       required this.icon,
       required this.textfield,
+      this.trailing = false
       });
 
   final Color iconColor;
   final IconData icon;
   final String textfield;
+  final bool trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -175,17 +178,19 @@ class ProfileOptionwidget extends StatelessWidget {
         textfield,
         style: AppStyles.otherDetailsPrimary,
       ),
-      trailing: Container(
+      trailing: trailing ?Container(
         height: 30,
-        width: 30,
+        width: 70,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
+            borderRadius: BorderRadius.circular(30),
             color: Colors.grey.withOpacity(0.2)),
-        child: Icon(
-          FontAwesomeIcons.angleRight,
-          color: Colors.grey,
+        child: Center(
+          child: Text('change',style: TextStyle(
+            color: AppColors.grey,
+          ),
+          ),
         ),
-      ),
+      ): null
     );
   }
 }
