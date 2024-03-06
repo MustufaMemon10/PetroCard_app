@@ -68,108 +68,101 @@ class _MyappbarState extends State<Myappbar> {
             children: [
               Container(
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: widget.toggleDrawer,
-                      splashColor: AppColors.accentColor.withOpacity(0.2),
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: widget.isDrawerOpen
-                            ? null
-                            : BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(15.0),
-                                border: Border.all(
-                                    width: 0.4.w,
-                                    color: Colors.black.withOpacity(0.5))),
-                        child: IconButton(
-                          icon: const Icon(
-                            CupertinoIcons.line_horizontal_3,
-                          ),
-                          iconSize: 24.0,
-                          onPressed: widget.toggleDrawer,
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      splashColor: AppColors.grey.withOpacity(0.2),
-                      child: Container(
-                        height: 40,
-                        width: 40.0,
-                        decoration: BoxDecoration(
-                            color: AppColors.white,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                width: 0.4.w,
-                                color: Colors.black.withOpacity(0.5))),
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => const UserScreen(),
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            CupertinoIcons.bell,
-                            color: AppColors.black,
-                            size: 24.0,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: widget.toggleDrawer,
+                        splashColor: AppColors.accentColor.withOpacity(0.2),
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: widget.isDrawerOpen
+                              ? null
+                              : BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(15.0),
+                              border: Border.all(
+                                  width: 0.4.w,
+                                  color: Colors.black.withOpacity(0.5))),
+                          child: IconButton(
+                            icon: const Icon(
+                              CupertinoIcons.line_horizontal_3,
+                            ),
+                            iconSize: 24.0,
+                            onPressed: widget.toggleDrawer,
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => const UserScreen(),
+                            ),
+                          );
+                        },
+                        splashColor: AppColors.grey.withOpacity(0.2),
+                        child: Container(
+                          height: 35,
+                          width: 35.0,
+                          decoration: BoxDecoration(
+                              color: AppColors.white,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                  width: 1.w,
+                                  color: Colors.black.withOpacity(0.5))),
+                          child: Image.asset('assets/Icons/man.png',),
+                        ),
+                      ),
+                    ]
                 ),
               ),
-              AnimatedPositioned(
-                top: _showWelcomeText ? -50 : 0,
-                left: 0,
-                right: 0,
-                duration: const Duration(milliseconds: 400),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0.h),
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Text(
-                      'Petro Card',
-                      style: AppStyles.primaryTitle,
-                    ),
-                  ),
-                ),
+        AnimatedPositioned(
+          top: _showWelcomeText ? -50 : 0,
+          left: 0,
+          right: 0,
+          duration: const Duration(milliseconds: 400),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0.h),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Text(
+                'Petro Card',
+                style: AppStyles.primaryTitle,
               ),
-              AnimatedPositioned(
-                top: _showWelcomeText ? 0 : -50,
-                left: 0,
-                right: 0,
-                duration: const Duration(milliseconds: 400),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0.h),
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: userName.isNotEmpty
-                        ? Text(
-                            'Welcome ' +
-                                userName
-                                    .split(' ')[0]
-                                    .substring(0, 1)
-                                    .toUpperCase() +
-                                userName.split(' ')[0].substring(1),
-                            // Start from index 1 to get the rest of the string
-                            style: AppStyles.primaryTitle,
-                          )
-                        : null,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
+        AnimatedPositioned(
+          top: _showWelcomeText ? 0 : -50,
+          left: 0,
+          right: 0,
+          duration: const Duration(milliseconds: 400),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0.h),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: userName.isNotEmpty
+                  ? Text(
+                'Welcome ' +
+                    userName
+                        .split(' ')[0]
+                        .substring(0, 1)
+                        .toUpperCase() +
+                    userName.split(' ')[0].substring(1),
+                // Start from index 1 to get the rest of the string
+                style: AppStyles.primaryTitle,
+              )
+                  : null,
+            ),
+          ),
+        ),
+        ],
       ),
+    ),)
+    ,
     );
   }
 }

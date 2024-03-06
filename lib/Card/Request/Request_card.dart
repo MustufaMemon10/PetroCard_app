@@ -1,9 +1,12 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,7 +19,7 @@ class Request_Screen extends StatefulWidget {
 
 class _Request_ScreenState extends State<Request_Screen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController panNameController = TextEditingController();
+  TextEditingController panNumberController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   String _selectedGender = '';
   TextEditingController _dobController = TextEditingController();
@@ -26,18 +29,83 @@ class _Request_ScreenState extends State<Request_Screen> {
   String? _panPhotoPath;
   DateTime? _selectedDate;
   bool _isLoading = false;
+  bool isLoading = false;
+  var logindata;
+  var data;
+  String id = '';
   String email = '';
   String phone = '';
 
   getUserName() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
+      id = sharedPreferences.getString('id') ?? '';
       email = sharedPreferences.getString('email') ?? '';
       phone = sharedPreferences.getString('phone')?? '';
       _emailController.text = email;
       _phoneNumberController.text = phone;
 
     });
+  }
+  Future<void> _handleApplication() async {
+    final form = _formKey.currentState;
+    if (form!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+
+      final login_url = Uri.parse(
+          "https://petrocard.000webhostapp.com/API/apply_card.php");
+
+      try {
+        final response = await http.post(login_url, body: {
+          "doc_img": _panPhotoPath,
+          "status": 'pending',
+          "address": _addressController.text,
+          "gender": _selectedGender,
+          "dob": _dobController.text,
+          "pan_number": panNumberController.text,
+          "id": id,
+        });
+
+        if (response.statusCode == 200) {
+          logindata = jsonDecode(response.body);
+          data = jsonDecode(response.body)['user'];
+          print(logindata);
+          setState(() {
+            isLoading = false;
+          });
+
+          if (logindata['error'] == false) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(logindata['message'].toString()),
+                duration: Duration(seconds: 2),
+                backgroundColor: Colors.green,
+              ),
+            );
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => BaseScreen()),
+                  (route) => false,
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(logindata['message'].toString()),
+                duration: Duration(seconds: 2),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        } else {
+          // Handle HTTP error responses here
+          print('Failed to get response from server.');
+        }
+      } catch (e) {
+        // Handle any exceptions that might occur during the HTTP request
+        print('Error occurred during HTTP request: $e');
+      }
+    }
   }
   @override
   void dispose() {
@@ -147,7 +215,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                                 borderRadius: BorderRadius.circular(20.r),
                                 border: Border.all(width: 1.0, color: AppColors.lightPurple)),
                             child: TextFormField(
-                              controller: panNameController,
+                              controller: panNumberController,
                               textInputAction: TextInputAction.go,
                               decoration: InputDecoration(
                                 hintText:  'Full name as per PAN',
@@ -280,44 +348,41 @@ class _Request_ScreenState extends State<Request_Screen> {
                             ),
                           ),
                           SizedBox(height: 10.0,),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Row(
-                              children: [
-                                Text("Gender"),
-                                Radio(
-                                  value: 'Male',
-                                  activeColor: AppColors.darkPurple,
-                                  groupValue: _selectedGender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value!;
-                                    });
-                                  },
-                                ),
-                                Text('Male'),
-                                Radio(
-                                  value: 'Female',
-                                  groupValue: _selectedGender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value!;
-                                    });
-                                  },
-                                ),
-                                Text('Female'),
-                                Radio(
-                                  value: 'Helicopter',
-                                  groupValue: _selectedGender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value!;
-                                    });
-                                  },
-                                ),
-                                Text('Helicopter🚁'),
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Text("Gender"),
+                              Radio(
+                                value: 'Male',
+                                activeColor: AppColors.darkPurple,
+                                groupValue: _selectedGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedGender = value!;
+                                  });
+                                },
+                              ),
+                              Text('Male'),
+                              Radio(
+                                value: 'Female',
+                                groupValue: _selectedGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedGender = value!;
+                                  });
+                                },
+                              ),
+                              Text('Female'),
+                              Radio(
+                                value: 'Helicopter',
+                                groupValue: _selectedGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedGender = value!;
+                                  });
+                                },
+                              ),
+                              Text('Helicopter'),
+                            ],
                           ),
                           SizedBox(height: 20.0,),
                           Column(
@@ -392,7 +457,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                                   },
                                     child: Container(
                                       height: 35,
-                                      width: 60,
+                                      width: 70,
                                       padding: EdgeInsets.all(10.0),
                                       decoration: BoxDecoration(
                                         color: AppColors.darkPurple,
