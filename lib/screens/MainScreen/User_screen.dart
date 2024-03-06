@@ -16,6 +16,7 @@ class _UserScreenState extends State<UserScreen> {
   String userName = '';
   String email = '';
   String password = '';
+  String phone = '';
   String address = '';
   String DOB = '';
 
@@ -24,6 +25,7 @@ class _UserScreenState extends State<UserScreen> {
     userName = setpreference.getString('name')!;
     email = setpreference.getString('email')!;
     password = setpreference.getString('password')!;
+    phone= setpreference.getString('phone')!;
   }
 
   @override
@@ -77,7 +79,7 @@ class _UserScreenState extends State<UserScreen> {
               SizedBox(
                 height: 10.0.h,
               ),
-              Text(userName ,
+              Text(userName,
                   textAlign: TextAlign.center,
                   style: AppStyles.otherDetailsPrimary),
               SizedBox(
@@ -108,7 +110,7 @@ class _UserScreenState extends State<UserScreen> {
                   child: Text(
                     'Edit Profile',
                     style: TextStyle(
-                      color: isDark ?AppColors.black :AppColors.white,
+                      color: isDark ? AppColors.black : AppColors.white,
                     ),
                   ),
                 ),
@@ -117,36 +119,71 @@ class _UserScreenState extends State<UserScreen> {
                 height: 20.0,
               ),
               Divider(),
-              ListTile(
-                leading: Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: iconColor.withOpacity(0.2)),
-                  child: Icon(
-                    Icons.verified_user,
-                    color: iconColor,
-                  ),
-                ),
-                title: Text(
-                  userName,
-                  style: AppStyles.otherDetailsPrimary,
-                ),
-                trailing: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.grey.withOpacity(0.2)),
-                  child: Icon(
-                    FontAwesomeIcons.angleRight,
-                    color: Colors.grey,
-                  ),
-                ),
-              )
+
+              ProfileOptionwidget(
+                iconColor: iconColor,
+                icon: FontAwesomeIcons.userTag,
+                textfield: userName,
+              ),    ProfileOptionwidget(
+                iconColor: iconColor,
+                icon: FontAwesomeIcons.userTag,
+                textfield: email,
+              ),    ProfileOptionwidget(
+                iconColor: iconColor,
+                icon: FontAwesomeIcons.userTag,
+                textfield: password,
+              ),    ProfileOptionwidget(
+                iconColor: iconColor,
+                icon: FontAwesomeIcons.userTag,
+                textfield: phone,
+              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ProfileOptionwidget extends StatelessWidget {
+  const ProfileOptionwidget(
+      {super.key,
+      required this.iconColor,
+      required this.icon,
+      required this.textfield,
+      });
+
+  final Color iconColor;
+  final IconData icon;
+  final String textfield;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            color: iconColor.withOpacity(0.2)),
+        child: Icon(
+          icon,
+          color: iconColor,
+        ),
+      ),
+      title: Text(
+        textfield,
+        style: AppStyles.otherDetailsPrimary,
+      ),
+      trailing: Container(
+        height: 30,
+        width: 30,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            color: Colors.grey.withOpacity(0.2)),
+        child: Icon(
+          FontAwesomeIcons.angleRight,
+          color: Colors.grey,
         ),
       ),
     );
