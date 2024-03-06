@@ -2,10 +2,10 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/screens/MainScreen/User_screen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/utilities/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class Myappbar extends StatefulWidget {
   final bool isDrawerOpen;
@@ -31,14 +31,15 @@ class _MyappbarState extends State<Myappbar> {
     setState(() {
       userName = setpreference.getString('name')!;
     });
-
   }
+
   void _startAnimations() async {
     await Future.delayed(const Duration(seconds: 1));
     setState(() {
       _showPetroCard = true;
     });
-    await Future.delayed(const Duration(seconds: 2)); // Delay for petro card fade-out
+    await Future.delayed(
+        const Duration(seconds: 2)); // Delay for petro card fade-out
     setState(() {
       _showPetroCard = false;
     });
@@ -47,12 +48,14 @@ class _MyappbarState extends State<Myappbar> {
       _showWelcomeText = true;
     });
   }
+
   @override
   void initState() {
     getUserName();
     super.initState();
     _startAnimations();
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -77,11 +80,11 @@ class _MyappbarState extends State<Myappbar> {
                         decoration: widget.isDrawerOpen
                             ? null
                             : BoxDecoration(
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.circular(15.0),
-                            border: Border.all(
-                                width: 0.4.w,
-                                color: Colors.black.withOpacity(0.5))),
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(
+                                    width: 0.4.w,
+                                    color: Colors.black.withOpacity(0.5))),
                         child: IconButton(
                           icon: const Icon(
                             CupertinoIcons.line_horizontal_3,
@@ -98,13 +101,20 @@ class _MyappbarState extends State<Myappbar> {
                         height: 40,
                         width: 40.0,
                         decoration: BoxDecoration(
-                            color:  AppColors.white,
-                            borderRadius: BorderRadius.circular(15.0),
+                            color: AppColors.white,
+                            shape: BoxShape.circle,
                             border: Border.all(
                                 width: 0.4.w,
                                 color: Colors.black.withOpacity(0.5))),
                         child: IconButton(
-                          onPressed: widget.toggleNotification,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => const UserScreen(),
+                              ),
+                            );
+                          },
                           icon: const Icon(
                             CupertinoIcons.bell,
                             color: AppColors.black,
@@ -117,7 +127,7 @@ class _MyappbarState extends State<Myappbar> {
                 ),
               ),
               AnimatedPositioned(
-                top: _showWelcomeText? -50 : 0,
+                top: _showWelcomeText ? -50 : 0,
                 left: 0,
                 right: 0,
                 duration: const Duration(milliseconds: 400),
@@ -131,22 +141,28 @@ class _MyappbarState extends State<Myappbar> {
                     ),
                   ),
                 ),
-              ), AnimatedPositioned(
+              ),
+              AnimatedPositioned(
                 top: _showWelcomeText ? 0 : -50,
                 left: 0,
                 right: 0,
-                duration:  const Duration(milliseconds: 400),
+                duration: const Duration(milliseconds: 400),
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0.h),
                   child: Align(
                     alignment: Alignment.topCenter,
-                  child: userName.isNotEmpty?
-                   Text(
-                    'Welcome ' +
-                        userName.split(' ')[0].substring(0, 1).toUpperCase() +
-                        userName.split(' ')[0].substring(1), // Start from index 1 to get the rest of the string
-                    style: AppStyles.primaryTitle,
-                     ):null,
+                    child: userName.isNotEmpty
+                        ? Text(
+                            'Welcome ' +
+                                userName
+                                    .split(' ')[0]
+                                    .substring(0, 1)
+                                    .toUpperCase() +
+                                userName.split(' ')[0].substring(1),
+                            // Start from index 1 to get the rest of the string
+                            style: AppStyles.primaryTitle,
+                          )
+                        : null,
                   ),
                 ),
               ),
