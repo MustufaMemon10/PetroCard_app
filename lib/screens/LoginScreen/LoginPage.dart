@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
           setpreference.setString('name', data['name'].toString());
           setpreference.setString('phone', data['phone'].toString());
           setpreference.setString('email', data['email'].toString());
-          setpreference.setString('password', data['password'].toString());
+          setpreference.setString('timestamp', data['timestamp'].toString());
           //setpreference.setString('role', data['role'].toString());
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
