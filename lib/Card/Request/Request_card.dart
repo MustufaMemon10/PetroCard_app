@@ -58,27 +58,41 @@ class _Request_ScreenState extends State<Request_Screen> {
       final login_url =
           Uri.parse("https://petrocard.000webhostapp.com/API/apply_card.php");
       final response = await http.post(login_url, body: {
+        "id": id,
         "doc_img": _panPhotoPath,
         "address": _addressController.text,
         "gender": _selectedGender,
         "dob": _dobController.text,
         "pan_number": panNumberController.text,
-        "id": id,
       });
-
       if (response.statusCode == 200) {
-        try {
-          logindata = jsonDecode(response.body);
-          // Process the decoded data
-        } catch (e) {
-          // Handle JSON decoding error
-          print('Error decoding JSON: $e');
+        logindata = jsonDecode(response.body);
+        data = jsonDecode(response.body)['user'];
+        print(logindata);
+        setState(() {
+          isLoading = false;
+        });
+        if (logindata['error'] == false) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(logindata['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.green, // Customize background color
+            ),
+          );
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => ConfirmationAnimation()),
+              (route) => false);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(logindata['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red, // Customize background color
+            ),
+          );
         }
-      } else {
-        // Handle HTTP error responses here
-        print('Failed to get response from server. Status code: ${response.statusCode}');
       }
-
     }
   }
 
