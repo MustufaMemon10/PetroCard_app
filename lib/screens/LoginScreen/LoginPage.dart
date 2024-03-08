@@ -84,283 +84,285 @@ class _LoginPageState extends State<LoginPage> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: isLoading
-            ? Container(
-                color: AppColors.black.withOpacity(0.4),
-                child: LoadingAnimationWidget.flickr(
-                  leftDotColor: AppColors.darkPurple,
-                  rightDotColor: AppColors.secondaryText,
-                  size: 50,
-                ),
-              )
-            : Container(
-                color: AppColors.white,
-                height: height,
-                child: Form(
-                  key: formKey,
-                  child: Stack(
-                    children: [
-                      FadeInDown(
-                        duration: const Duration(milliseconds: 400),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            padding: EdgeInsets.only(
-                              left: 10.w,
-                              top: 25.0.h,
-                              bottom: 15.h,
-                            ),
-                            height: 0.30.sh,
-                            width: width,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 30.w, vertical: 10.0.h),
-                              child: FadeInUp(
-                                duration: const Duration(milliseconds: 450),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    FadeInDown(
-                                      duration:
-                                          const Duration(milliseconds: 460),
-                                      child: Text(
-                                        "Login",
-                                        style: TextStyle(
-                                          color: AppColors.darkPurple,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 40.sp,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    FadeInDown(
-                                      duration:
-                                          const Duration(milliseconds: 470),
-                                      child: Text(
-                                        "Hey there,",
-                                        style: TextStyle(
-                                          color: AppColors.primaryText,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 30.sp,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    FadeInDown(
-                                      duration:
-                                          const Duration(milliseconds: 480),
-                                      child: Text(
-                                        "Welcome Back",
-                                        style: TextStyle(
-                                          color: AppColors.primaryText,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 18.sp,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+        child: Stack(
+          children: [
+            Container(
+              color: AppColors.white,
+              height: height,
+              child: Form(
+                key: formKey,
+                child: Stack(
+                  children: [
+                    FadeInDown(
+                      duration: const Duration(milliseconds: 400),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          padding: EdgeInsets.only(
+                            left: 10.w,
+                            top: 25.0.h,
+                            bottom: 15.h,
                           ),
-                        ),
-                      ),
-                      AnimatedPositioned(
-                        top: 230,
-                        left: 0,
-                        right: 0,
-                        duration: Duration(milliseconds: 2000),
-                        child: FadeInUp(
-                          duration: const Duration(milliseconds: 500),
-                          child: Container(
-                            height: height,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(50.0.r),
-                                  topRight: Radius.circular(50.0.r),
-                                ),
-                                color: AppColors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: AppColors.darkPurple,
-                                    blurRadius: 10,
-                                    offset: Offset(4, 4),
-                                  )
-                                ]),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 40.w, vertical: 10.0.h),
+                          height: 0.30.sh,
+                          width: width,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30.w, vertical: 10.0.h),
+                            child: FadeInUp(
+                              duration: const Duration(milliseconds: 450),
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 20.0.h,
-                                  ),
-                                  FadeInUp(
-                                    duration: const Duration(milliseconds: 520),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20.r),
-                                          color: AppColors.white,
-                                          border: Border.all(
-                                              color: AppColors.lightPurple),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: AppColors.lightPurple,
-                                              blurRadius: 20,
-                                              offset: Offset(0, 10),
-                                            )
-                                          ]),
-                                      child: Column(
-                                        children: <Widget>[
-                                          CustomTextfield(
-                                            icon: Icons.mail_outline,
-                                            validatorValue: (val) {
-                                              if (RegExp(r"\s")
-                                                  .hasMatch(val!)) {
-                                                return "Invalid email";
-                                              } else {
-                                                if (RegExp(
-                                                        r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
-                                                    .hasMatch(val)) {}
-                                              }
-                                              return null;
-                                            },
-                                            errorMsg: 'Enter Valid Email',
-                                            hintText: 'Email',
-                                            controller: usernameController,
-                                          ),
-                                          CustomPassfields(
-                                            icon: Icons.lock_outline,
-                                            icon2: Icons.lock_outline,
-                                            hintText: 'Password',
-                                            hintText2: 'Password',
-                                            controller: passwordController,
-                                            validator: (val) {
-                                              return null;
-                                            },
-                                            errorMsg: 'Enter password',
-                                            controller2: passwordController,
-                                            obscureText: showPassword,
-                                            oneField: true,
-                                          )
-                                        ],
+                                children: [
+                                  FadeInDown(
+                                    duration: const Duration(milliseconds: 460),
+                                    child: Text(
+                                      "Login",
+                                      style: TextStyle(
+                                        color: AppColors.darkPurple,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30.sp,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 10.0.h,
-                                  ),
-                                  FadeInUp(
-                                      duration:
-                                          const Duration(milliseconds: 550),
-                                      child: Center(
-                                          child: TextButton(
-                                              onPressed: () {
-                                                FocusScope.of(context)
-                                                    .unfocus();
-                                                Navigator.push(
-                                                  context,
-                                                  CupertinoPageRoute(
-                                                    builder: (context) =>
-                                                        const CheckNumber(
-                                                      initialMobileNumber: null,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              child: Text(
-                                                "Forgot Password?",
-                                                style: TextStyle(
-                                                    color: AppColors.darkPurple,
-                                                    fontSize: 13.0.sp,
-                                                    letterSpacing: 0.7),
-                                              )))),
                                   const SizedBox(
-                                    height: 10,
+                                    height: 8,
                                   ),
-                                  FadeInUp(
-                                    duration: const Duration(milliseconds: 600),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        handleLogin();
-                                        FocusScope.of(context).unfocus();
-                                      },
-                                      child: Center(
-                                        child: Container(
-                                          height: 36.h,
-                                          width: 0.7.sw,
-                                          decoration: BoxDecoration(
-                                            color: AppColors.darkPurple,
-                                            borderRadius:
-                                                BorderRadius.circular(50.r),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              "Login",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  letterSpacing: 0.5,
-                                                  fontSize: 14.sp),
-                                            ),
-                                          ),
-                                        ),
+                                  FadeInDown(
+                                    duration: const Duration(milliseconds: 470),
+                                    child: Text(
+                                      "Hey there,",
+                                      style: TextStyle(
+                                        color: AppColors.primaryText,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25.sp,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 20.h,
+                                  const SizedBox(
+                                    height: 8,
                                   ),
-                                  FadeInUp(
-                                      duration:
-                                          const Duration(milliseconds: 630),
-                                      child: Align(
-                                          alignment: Alignment.bottomCenter,
-                                          child: TextButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                  context,
-                                                  CupertinoPageRoute(
-                                                    builder: (context) =>
-                                                        const SignUppage(),
-                                                  ),
-                                                );
-                                              },
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text("Not a member? ",
-                                                      style: TextStyle(
-                                                          color: AppColors
-                                                              .secondaryText,
-                                                          letterSpacing: 0.5,
-                                                          fontSize: 14.0.sp)),
-                                                  Text("Create Account",
-                                                      style: TextStyle(
-                                                          color: AppColors
-                                                              .darkPurple,
-                                                          letterSpacing: 0.5,
-                                                          fontSize: 14.0.sp)),
-                                                ],
-                                              ))))
+                                  FadeInDown(
+                                    duration: const Duration(milliseconds: 480),
+                                    child: Text(
+                                      "Welcome Back",
+                                      style: TextStyle(
+                                        color: AppColors.primaryText,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 15.sp,
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    AnimatedPositioned(
+                      top: 230,
+                      left: 0,
+                      right: 0,
+                      duration: Duration(milliseconds: 2000),
+                      child: FadeInUp(
+                        duration: const Duration(milliseconds: 500),
+                        child: Container(
+                          height: height,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(50.0.r),
+                                topRight: Radius.circular(50.0.r),
+                              ),
+                              color: AppColors.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: AppColors.darkPurple,
+                                  blurRadius: 10,
+                                  offset: Offset(4, 4),
+                                )
+                              ]),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 40.w, vertical: 10.0.h),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 20.0.h,
+                                ),
+                                FadeInUp(
+                                  duration: const Duration(milliseconds: 520),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(20.r),
+                                        color: AppColors.white,
+                                        border: Border.all(
+                                            color: AppColors.lightPurple),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: AppColors.lightPurple,
+                                            blurRadius: 20,
+                                            offset: Offset(0, 10),
+                                          )
+                                        ]),
+                                    child: Column(
+                                      children: <Widget>[
+                                        CustomTextfield(
+                                          icon: Icons.mail_outline,
+                                          validatorValue: (val) {
+                                            if (RegExp(r"\s").hasMatch(val!)) {
+                                              return "Invalid email";
+                                            } else {
+                                              if (RegExp(
+                                                  r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
+                                                  .hasMatch(val)) {}
+                                            }
+                                            return null;
+                                          },
+                                          errorMsg: 'Enter Valid Email',
+                                          hintText: 'Email',
+                                          controller: usernameController,
+                                        ),
+                                        CustomPassfields(
+                                          icon: Icons.lock_outline,
+                                          icon2: Icons.lock_outline,
+                                          hintText: 'Password',
+                                          hintText2: 'Password',
+                                          controller: passwordController,
+                                          validator: (val) {
+                                            return null;
+                                          },
+                                          errorMsg: 'Enter password',
+                                          controller2: passwordController,
+                                          obscureText: showPassword,
+                                          oneField: true,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.0.h,
+                                ),
+                                FadeInUp(
+                                    duration: const Duration(milliseconds: 550),
+                                    child: Center(
+                                        child: TextButton(
+                                            onPressed: () {
+                                              FocusScope.of(context).unfocus();
+                                              Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                  builder: (context) =>
+                                                      const CheckNumber(
+                                                    initialMobileNumber: null,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Text(
+                                              "Forgot Password?",
+                                              style: TextStyle(
+                                                  color: AppColors.darkPurple,
+                                                  fontSize: 13.0.sp,
+                                                  letterSpacing: 0.7),
+                                            )))),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                FadeInUp(
+                                  duration: const Duration(milliseconds: 600),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      handleLogin();
+                                      FocusScope.of(context).unfocus();
+                                    },
+                                    child: Center(
+                                      child: Container(
+                                        height: 36.h,
+                                        width: 0.7.sw,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.darkPurple,
+                                          borderRadius:
+                                              BorderRadius.circular(50.r),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "Login",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                letterSpacing: 0.5,
+                                                fontSize: 14.sp),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                FadeInUp(
+                                    duration: const Duration(milliseconds: 630),
+                                    child: Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                  builder: (context) =>
+                                                      const SignUppage(),
+                                                ),
+                                              );
+                                            },
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text("Not a member? ",
+                                                    style: TextStyle(
+                                                        color: AppColors
+                                                            .secondaryText,
+                                                        letterSpacing: 0.5,
+                                                        fontSize: 14.0.sp)),
+                                                Text("Create Account",
+                                                    style: TextStyle(
+                                                        color: AppColors
+                                                            .darkPurple,
+                                                        letterSpacing: 0.5,
+                                                        fontSize: 14.0.sp)),
+                                              ],
+                                            ))))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+            ),
+            Positioned.fill(
+              child: Container(
+                color: isLoading ? AppColors.black.withOpacity(0.4) : null,
+                child: isLoading
+                    ? Center(
+                        child: LoadingAnimationWidget.flickr(
+                          leftDotColor: AppColors.darkPurple,
+                          rightDotColor: AppColors.white,
+                          size: 50,
+                        ),
+                      )
+                    : null,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -121,7 +121,7 @@ class _SignUppageState extends State<SignUppage> {
                                       style: TextStyle(
                                         color: AppColors.darkPurple,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 40.sp,
+                                        fontSize: 30.sp,
                                       ),
                                     ),
                                   ),
@@ -135,7 +135,7 @@ class _SignUppageState extends State<SignUppage> {
                                       style: TextStyle(
                                         color: AppColors.primaryText,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 35.sp,
+                                        fontSize: 25.sp,
                                       ),
                                     ),
                                   ),
@@ -149,7 +149,7 @@ class _SignUppageState extends State<SignUppage> {
                                       style: TextStyle(
                                         color: AppColors.primaryText,
                                         fontWeight: FontWeight.w400,
-                                        fontSize: 18.sp,
+                                        fontSize: 15.sp,
                                       ),
                                     ),
                                   ),
