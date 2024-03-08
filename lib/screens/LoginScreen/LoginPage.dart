@@ -85,7 +85,8 @@ class _LoginPageState extends State<LoginPage> {
           FocusScope.of(context).unfocus();
         },
         child: isLoading
-            ? Center(
+            ? Container(
+                color: AppColors.black.withOpacity(0.4),
                 child: LoadingAnimationWidget.flickr(
                   leftDotColor: AppColors.darkPurple,
                   rightDotColor: AppColors.secondaryText,

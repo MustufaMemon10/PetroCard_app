@@ -348,7 +348,6 @@ class _Request_ScreenState extends State<Request_Screen> {
                             SizedBox(
                               height: 10.0,
                             ),
-
                             TextFormField(
                                 controller: _emailController,
                                 textCapitalization:
@@ -406,7 +405,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                                     TextCapitalization.characters,
                                 textInputAction: TextInputAction.next,
                                 validator: (value) {
-                                  if (value == null ||value.isEmpty) {
+                                  if (value == null || value.isEmpty) {
                                     return 'Phone Number is required';
                                   }
 
@@ -460,6 +459,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                                   if (value == null || value.isEmpty) {
                                     return 'Address is required';
                                   }
+                                  return null;
                                 },
                                 decoration: InputDecoration(
                                     hintText: 'Address',
@@ -506,7 +506,9 @@ class _Request_ScreenState extends State<Request_Screen> {
                             ),
                             TextFormField(
                               controller: _dobController,
-                              onTap: (){_selectDate(context);},
+                              onTap: () {
+                                _selectDate(context);
+                              },
                               readOnly: true,
                               textInputAction: TextInputAction.next,
                               validator: (value) {
@@ -576,6 +578,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                                 Radio(
                                   value: 'Female',
                                   groupValue: _selectedGender,
+                                  activeColor: AppColors.darkPurple,
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedGender = value!;
@@ -585,6 +588,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                                 Text('Female'),
                                 Radio(
                                   value: 'Helicopter',
+                                  activeColor: AppColors.darkPurple,
                                   groupValue: _selectedGender,
                                   onChanged: (value) {
                                     setState(() {

@@ -79,9 +79,11 @@ class CustomPassfields extends StatefulWidget {
   final String hintText2;
   final TextEditingController controller;
   final String errorMsg;
+  final bool isSufixIcon;
   final Function(String value) validator;
   final TextEditingController controller2;
   final bool obscureText;
+  final bool isBorder;
 
   const CustomPassfields({
     Key? key,
@@ -93,6 +95,8 @@ class CustomPassfields extends StatefulWidget {
     required this.controller,
     required this.validator,
     required this.errorMsg,
+    this.isSufixIcon = true,
+    this.isBorder =false,
     required this.controller2,
     required this.obscureText,
   }) : super(key: key);
@@ -115,6 +119,11 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
       child: widget.oneField?
       Container(
         padding: const EdgeInsets.all(10.0),
+        decoration: widget.isBorder? BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: AppColors.lightPurple),
+          ),
+        ): null,
         child: TextFormField(
           controller: widget.controller2,
           obscureText: _isObscured,
@@ -136,7 +145,7 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
               hintText: widget.hintText2,
               hintStyle: const TextStyle(
                   color: AppColors.secondaryText, letterSpacing: 0.7),
-              suffixIcon: IconButton(
+              suffixIcon: widget.isSufixIcon ?IconButton(
                 icon: Icon(
                   _isObscured
                       ? Icons.visibility
@@ -147,7 +156,7 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
                     _isObscured = !_isObscured;
                   });
                 },
-              )),
+              ):null,),
         ),
       ): Column(
         children: [
