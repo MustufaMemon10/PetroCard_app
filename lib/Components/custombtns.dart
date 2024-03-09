@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import '../Widgets/custombtns_widget.dart';
 
@@ -15,8 +16,8 @@ class _AppbtnsState extends State<Appbtns> {
     return Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children:  [
-                btn(containerColor: AppColors.white.withOpacity(0.8), icon: Icons.add_card_outlined,btntext: 'Add Money'),
-                btn(containerColor: AppColors.white.withOpacity(0.8), icon: Icons.account_balance_wallet_outlined,btntext: 'Balance'),
+                btn(icon: FontAwesomeIcons.moneyCheck,text: 'Add Money',),
+                btn(icon: FontAwesomeIcons.creditCard,text: 'Balance',),
               ],
             );
   }

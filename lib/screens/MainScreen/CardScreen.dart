@@ -14,41 +14,34 @@ class CardScreen extends StatefulWidget {
 class _CardScreenState extends State<CardScreen> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-    body: Container(
-      padding: EdgeInsets.symmetric(vertical: 20.0,horizontal: 20.0),
-      child: Column(
-      children: [
-        SizedBox(height: 70.h,),
-      Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 15.0),
-      child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-      Hero(
-      tag: 'cards',
-      child: Text(
-      'My Card',
-      style: TextStyle(
-      fontSize: 20.0.sp,
-      fontWeight: FontWeight.w700,
-      color: AppColors.primaryText,
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+        child: Column(children: [
+          SizedBox(
+            height: 70.h,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Hero(
+                  tag: 'cards',
+                  child: Text(
+                    'My Card',
+                    style: TextStyle(
+                      fontSize: 20.0.sp,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ]),
       ),
-      ),
-      ),
-      ],
-      ),
-      ),
-        PetroCard(
-          cardColor: AppColors.darkPurple,
-          cardHolder: 'Mustufa Memon',
-          cardMoney: '3200.50 ₹',
-          startcvv: '2300',
-          endcvv: '1242',
-        ),
-        ]
-      ),
-    ),
     );
   }
 }

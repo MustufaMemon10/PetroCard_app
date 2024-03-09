@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
+import 'package:petrocardapppp/utilities/styles.dart';
 
 class btn extends StatefulWidget {
-  final Color containerColor;
   final IconData icon;
-  final String btntext;
+  final String text;
  const btn({
     Key? key,
-    required this.containerColor,
     required this.icon,
-    required this.btntext,
+   required this.text,
   }) : super(key: key);
 
   @override
@@ -20,25 +19,32 @@ class btn extends StatefulWidget {
 class _btnState extends State<btn> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Container(
-              height: 35.h,
-              width: 35.w,
-              padding: EdgeInsets.symmetric(vertical: 8.0,horizontal: 8.0),
-              decoration:  BoxDecoration(
-                border: Border.all(width: 0.5.w,color: AppColors.black.withAlpha(150)),
-              borderRadius: BorderRadius.circular(12.0),
-              color: widget.containerColor,
+    return 
+      Column(
+        children: [
+          InkWell(
+          onTap: (){},
+          child: Container(
+            height: 70,
+            width: 70,
+            decoration: BoxDecoration(
+              color: AppColors.white
+                  .withOpacity(0.2),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(width: .5,color: AppColors.darkPurple),
             ),
-            child: Icon(
-              widget.icon,
-              color: AppColors.black,),
+            child: Center(
+              child: Icon(
+                widget.icon,
+                color: AppColors.darkPurple.withOpacity(0.9),
+                size: 22.0,
+              ),
             ),
-            SizedBox(height: 8.0.h,),
-             Text(widget.btntext,style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.w800,color: AppColors.primaryText.withOpacity(0.8)),),
-             ],
-    ); 
+          ),
+    ),
+          SizedBox(height: 6.0,),
+          Text(widget.text,style: AppStyles.tagText,)
+        ],
+      );
   }
 }

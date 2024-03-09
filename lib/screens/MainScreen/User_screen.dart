@@ -26,7 +26,6 @@ class _UserScreenState extends State<UserScreen> {
   String id = '';
   String userName = '';
   String email = '';
-  String password = '';
   String phone = '';
   String address = '';
   String DOB = '';
@@ -91,6 +90,9 @@ class _UserScreenState extends State<UserScreen> {
       userName = setpreference.getString('name') ?? '';
       email = setpreference.getString('email') ?? '';
       phone = setpreference.getString('phone') ?? '';
+      address = setpreference.getString('address') ?? '';
+      DOB = setpreference.getString('dob') ?? '';
+      gender = setpreference.getString('gender') ?? '';
     });
     await fetchOtherDetails();
   }
@@ -195,7 +197,7 @@ class _UserScreenState extends State<UserScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: isDark
                             ? AppColors.darkPurple
-                            : AppColors.translightPurple2,
+                            : AppColors.translightPurple,
                         side: BorderSide.none,
                         shape: StadiumBorder(),
                       ),
@@ -203,6 +205,7 @@ class _UserScreenState extends State<UserScreen> {
                         'Edit Profile',
                         style: TextStyle(
                           letterSpacing: 0.8,
+                          fontWeight: FontWeight.w600,
                           color: textColor,
                         ),
                       ),

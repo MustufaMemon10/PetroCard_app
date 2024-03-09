@@ -27,7 +27,6 @@ class AppStyles {
     fontWeight: FontWeight.w700,
   );
   static TextStyle tagText = TextStyle(
-    fontStyle: FontStyle.italic,
     color: AppColors.black,
     fontWeight: FontWeight.w500,
   );

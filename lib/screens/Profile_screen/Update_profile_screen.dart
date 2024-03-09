@@ -30,7 +30,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   String phone = '';
   String address = '';
   String DOB = '';
+  String gender = '';
   bool isLoading = false;
+  bool isDark = false;
   var data;
   var logindata;
 
@@ -108,6 +110,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       userName = setpreference.getString('name') ?? '';
       email = setpreference.getString('email') ?? '';
       phone = setpreference.getString('phone') ?? '';
+      address = setpreference.getString('address') ?? '';
+      DOB = setpreference.getString('dob') ?? '';
+      gender = setpreference.getString('gender') ?? '';
       print('id: $id');
       print('name: $userName');
       print('phone : $phone');
@@ -123,7 +128,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       backgroundColor: isDark ? Colors.black : Colors.white,
       appBar: AppBar(
@@ -136,11 +140,21 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         title: Text(
           'Edit Profile',
           style: TextStyle(
-             color: AppColors.darkPurple,
+             color: isDark ? Colors.white70 :AppColors.darkPurple,
               fontSize: 20.0,
               fontWeight: FontWeight.w800),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  isDark = !isDark;
+                });
+              },
+              icon: Icon(isDark ? FontAwesomeIcons.moon : Icons.sunny,
+                  color: isDark ? AppColors.white : AppColors.black))
+        ],
       ),
       body: GestureDetector(
         onTap: () {
@@ -166,6 +180,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   validatorValue: (val) {
                     return null;
                   },
+                  isDark: isDark,
                   errorMsg: 'Please enter full name',
                   Controller: fullNameController,
                   prefixicon: FontAwesomeIcons.user,
@@ -185,6 +200,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     }
                     return null;
                   },
+                  isDark: isDark,
                   errorMsg: 'Enter a valid Email',
                   Controller: emailController,
                   prefixicon: FontAwesomeIcons.envelope,
@@ -200,6 +216,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     }
                     return null;
                   },
+                  isDark: isDark,
                   errorMsg: 'Please enter full name',
                   Controller: _phoneNumberController,
                   prefixicon: FontAwesomeIcons.mobileScreen,
@@ -213,6 +230,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   validatorValue: (val) {
                     return null;
                   },
+                  isDark: isDark,
                   errorMsg: 'Please enter Address',
                   address: true,
                   Controller: _addressController,
@@ -227,6 +245,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   validatorValue: (val) {
                     return null;
                   },
+                  isDark: isDark,
                   errorMsg: 'Please enter Dob',
                   Controller: _dobController,
                   prefixicon: FontAwesomeIcons.calendar,
@@ -245,14 +264,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       FocusScope.of(context).unfocus();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.darkPurple,
+                      backgroundColor:isDark ?AppColors.primaryPurple.withOpacity(0.8) : AppColors.darkPurple,
                       side: BorderSide.none,
                       shape: StadiumBorder(),
                     ),
                     child: Text(
                       'Edit Profile',
                       style: TextStyle(
-                        color: isDark ? AppColors.black : AppColors.white,
+                        color: isDark ?Colors.white38: AppColors.white,
                       ),
                     ),
                   ),
@@ -273,6 +292,7 @@ class ProfileTextfield extends StatelessWidget {
     required this.prefixicon,
     required this.validatorValue,
     required this.errorMsg,
+    required this.isDark,
     this.issufix = false,
     this.address = false,
     required this.hintText,
@@ -283,6 +303,7 @@ class ProfileTextfield extends StatelessWidget {
   final Function(String value) validatorValue;
   final bool address;
   final String errorMsg;
+  final bool isDark;
   final bool issufix;
   final String hintText;
 
@@ -290,7 +311,7 @@ class ProfileTextfield extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: Controller,
-      maxLines: address ? 4 :1,
+      maxLines: address ? 3 :1,
       textInputAction: TextInputAction.next,
       validator: (value){
         validatorValue(value!);
@@ -305,8 +326,7 @@ class ProfileTextfield extends StatelessWidget {
               borderRadius: BorderRadius.circular(100.0),
               borderSide: BorderSide.none),
           filled: true,
-          // Enable filled mode
-          fillColor: Colors.grey[200],
+          fillColor: isDark ? Colors.grey[700]:Colors.grey[200],
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(20.0),
@@ -326,15 +346,15 @@ class ProfileTextfield extends StatelessWidget {
           contentPadding:
               EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
           prefixIcon:
-          address? Padding(padding: EdgeInsets.only(bottom: 25.0),
+          address? Padding(padding: EdgeInsets.only(bottom: 30.0),
               child: Icon(
             prefixicon,
-            color: AppColors.darkPurple,
+            color: isDark ? AppColors.primaryPurple.withOpacity(0.8) : AppColors.darkPurple,
             size: 18.0,
           ),
           ): Icon(
             prefixicon,
-            color: AppColors.darkPurple,
+            color:isDark ? AppColors.primaryPurple.withOpacity(0.8) : AppColors.darkPurple,
             size: 18.0,
           ),
           suffixIcon: issufix
