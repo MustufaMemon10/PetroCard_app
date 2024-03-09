@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:mime/mime.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +29,7 @@ class _Request_ScreenState extends State<Request_Screen> {
   TextEditingController _addressController = TextEditingController();
   TextEditingController _phoneNumberController = TextEditingController();
   TextEditingController upiIdController = TextEditingController();
-  String? _panPhotoPath;
+  File? _panPhotoPath;
   DateTime? _selectedDate;
   bool _isLoading = false;
   bool isLoading = false;
@@ -93,6 +96,75 @@ class _Request_ScreenState extends State<Request_Screen> {
           );
         }
       }
+    }
+  }
+  uploadImageMedia(File fileImage) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final mimeTypeData =
+    lookupMimeType(fileImage.path, headerBytes: [0xFF, 0xD8])?.split('/');
+    final imageUploadRequest =
+    http.MultipartRequest('POST', Uri.parse("https://petrocard.000webhostapp.com/API/apply_card.php"));
+
+    final file = await http.MultipartFile.fromPath('doc_img', fileImage.path,
+        contentType: MediaType(mimeTypeData![0], mimeTypeData[1]));
+
+    imageUploadRequest.fields['id']= id;
+    imageUploadRequest.fields['address']= _addressController.text;
+    imageUploadRequest.fields['dob']= _dobController.text;
+    imageUploadRequest.fields['gender']= _selectedGender;
+    imageUploadRequest.fields['pan_number']= panNumberController.text;
+    imageUploadRequest.files.add(file);
+    try {
+      _isLoading = true;
+
+      final streamedResponse = await imageUploadRequest.send();
+
+      streamedResponse.stream.transform(utf8.decoder).listen((value) {
+        if(streamedResponse.statusCode==200){
+          logindata = jsonDecode(value);
+          data = jsonDecode(value)['user'];
+          print(logindata);
+          setState(() {
+            isLoading = false;
+          });
+          if (logindata['error'] == false) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(logindata['message'].toString()),
+                duration: Duration(seconds: 2),
+                backgroundColor: Colors.green, // Customize background color
+              ),
+            );
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => ConfirmationAnimation()),
+                    (route) => false);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(logindata['message'].toString()),
+                duration: Duration(seconds: 2),
+                backgroundColor: Colors.red, // Customize background color
+              ),
+            );
+          }
+          print(streamedResponse.stream);
+          print(value);
+        }else{
+          setState(() {
+            _isLoading=false;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Something went wrong'),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.green, // Customize background color
+            ),
+          );
+          print(value);
+        }
+      });
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -191,7 +263,7 @@ class _Request_ScreenState extends State<Request_Screen> {
       );
       if (pickedFile != null) {
         setState(() {
-          _panPhotoPath = pickedFile.path;
+          _panPhotoPath = File(pickedFile.path);
         });
       }
     } else if (status == PermissionStatus.denied ||
@@ -254,6 +326,23 @@ class _Request_ScreenState extends State<Request_Screen> {
               child: Column(children: [
                 SizedBox(
                   height: 0.10.sh,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap:(){ Navigator.pop(context);},
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.transparent,
+                            shape: BoxShape.circle,
+                            border: Border.all(width:1.0,color: AppColors.darkPurple)
+                          ),
+                          child: Icon(Icons.arrow_back,color: AppColors.darkPurple),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 InkWell(
                   onTap: () {
@@ -350,8 +439,6 @@ class _Request_ScreenState extends State<Request_Screen> {
                             ),
                             TextFormField(
                                 controller: _emailController,
-                                textCapitalization:
-                                    TextCapitalization.characters,
                                 textInputAction: TextInputAction.next,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -736,7 +823,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    _handleApplication();
+                                    uploadImageMedia(_panPhotoPath!);
                                     FocusScope.of(context).unfocus();
                                   },
                                   splashColor:

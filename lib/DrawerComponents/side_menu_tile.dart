@@ -27,7 +27,7 @@ class SlidermenuItem extends StatelessWidget {
         ListTile(
             title: Text(title,
                 style: const TextStyle(
-                    color: Colors.black, fontFamily: 'BalsamiqSans_Regular')),
+                    color: Colors.black, fontFamily: 'RobotoMono')),
             leading: Icon(iconData, color: AppColors.black),
             onTap: () => onTap?.call(title)),
       ],

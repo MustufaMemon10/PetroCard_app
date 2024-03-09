@@ -121,6 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                                       style: TextStyle(
                                         color: AppColors.darkPurple,
                                         fontWeight: FontWeight.bold,
+                                        fontFamily: "RobotoMono",
                                         fontSize: 30.sp,
                                       ),
                                     ),

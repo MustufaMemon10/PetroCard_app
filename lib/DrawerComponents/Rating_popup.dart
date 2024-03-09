@@ -160,7 +160,9 @@ class _RatingPopupState extends State<RatingPopup> {
                   ),
                 ),
                 child: TextButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
                   child: Text("Not Now",style: TextStyle(
                     color: AppColors.accentColor.withOpacity(0.8),
                     fontSize: 13.0,

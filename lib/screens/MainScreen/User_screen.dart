@@ -45,20 +45,19 @@ class _UserScreenState extends State<UserScreen> {
 
       if (response.statusCode == 200) {
         logindata = jsonDecode(response.body);
-        data = logindata['user'];
-        print(data);
+        data = logindata['data'];
+        print(logindata);
 
         if (!logindata['error']) {
           SharedPreferences setpreference =
-              await SharedPreferences.getInstance();
-          setpreference.setString('id', data['id'].toString());
-          setpreference.setString('req_date', data['req_date'].toString());
-          setpreference.setString('status', data['status'].toString());
-          setpreference.setString('address', data['address'].toString());
-          setpreference.setString('dob', data['dob'].toString());
-          setpreference.setString('gender', data['gender'].toString());
-          setpreference.setString('pan_number', data['pan_number'].toString());
-          print('id : $id');
+          await SharedPreferences.getInstance();
+          setpreference.setString('req_date', data[0]['req_date'].toString());
+          setpreference.setString('status', data[0]['status'].toString());
+          setpreference.setString('address', data[0]['address'].toString());
+          setpreference.setString('dob', data[0]['dob'].toString());
+          setpreference.setString('gender', data[0]['gender'].toString());
+          setpreference.setString(
+              'pan_number', data[0]['pan_number'].toString());
           print('address : $address');
           print('gender : $gender');
           print('dob : $DOB');
@@ -73,7 +72,8 @@ class _UserScreenState extends State<UserScreen> {
         }
       } else {
         print(
-            'Failed to get response from server. Status code: ${response.statusCode}');
+            'Failed to get response from server. Status code: ${response
+                .statusCode}');
       }
     } catch (error) {
       print('Error fetching data: $error');
@@ -91,20 +91,13 @@ class _UserScreenState extends State<UserScreen> {
       userName = setpreference.getString('name') ?? '';
       email = setpreference.getString('email') ?? '';
       phone = setpreference.getString('phone') ?? '';
-      DOB = setpreference.getString('dob') ?? '';
-      address = setpreference.getString('address') ?? '';
-      timestamp = setpreference.getString('timestamp') ?? '';
     });
+    await fetchOtherDetails();
   }
 
   @override
   void initState() {
     super.initState();
-    fetchData();
-  }
-
-  Future<void> fetchData() async {
-    await fetchOtherDetails();
     getUserDetails();
   }
 
@@ -115,186 +108,195 @@ class _UserScreenState extends State<UserScreen> {
         ? AppColors.white.withOpacity(0.4)
         : AppColors.black.withOpacity(0.4);
     var iconColor = isDark ? AppColors.primaryPurple : AppColors.darkPurple;
-    return isLoading
-        ? Container(
-            color: AppColors.black.withOpacity(0.4),
-            child: LoadingAnimationWidget.flickr(
-              leftDotColor: AppColors.darkPurple,
-              rightDotColor: AppColors.secondaryText,
-              size: 50,
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: isDark ? Colors.black : Colors.white,
+          appBar: AppBar(
+            backgroundColor: isDark ? AppColors.black : AppColors.white,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(FontAwesomeIcons.angleLeft,
+                  color: isDark ? AppColors.white : AppColors.black),
             ),
-          )
-        : Scaffold(
-            backgroundColor: isDark ? Colors.black : Colors.white,
-            appBar: AppBar(
-              backgroundColor: isDark ? AppColors.black : AppColors.white,
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(FontAwesomeIcons.angleLeft,
-                    color: isDark ? AppColors.white : AppColors.black),
-              ),
-              title: Center(
-                  child: Text(
-                'Profile',
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 0.8,
-                ),
-              )),
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isDark = !isDark;
-                      });
-                    },
-                    icon: Icon(isDark ? FontAwesomeIcons.moon : Icons.sunny,
-                        color: isDark ? AppColors.white : AppColors.black))
-              ],
-            ),
-            body: SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: 110,
-                      height: 110,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.asset('assets/Icons/man.png')),
-                    ),
-                    SizedBox(
-                      height: 10.0.h,
-                    ),
-                    Text(userName,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          letterSpacing: 0.8,
-                          fontSize: 16.0,
-                          color: textColor,
-                        )),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Text(
-                      email,
+            title: Center(
+                child: Text(
+                  'Profile',
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.8,
+                  ),
+                )),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isDark = !isDark;
+                    });
+                  },
+                  icon: Icon(isDark ? FontAwesomeIcons.moon : Icons.sunny,
+                      color: isDark ? AppColors.white : AppColors.black))
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 110,
+                    height: 110,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.asset('assets/Icons/man.png')),
+                  ),
+                  SizedBox(
+                    height: 10.0.h,
+                  ),
+                  Text(userName,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: lTextColor,
                         letterSpacing: 0.8,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 13.sp,
-                      ),
+                        fontSize: 16.0,
+                        color: textColor,
+                      )),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Text(
+                    email,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: lTextColor,
+                      letterSpacing: 0.8,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 13.sp,
                     ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    SizedBox(
-                      width: 200,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => const UpdateProfileScreen(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: isDark
-                              ? AppColors.darkPurple
-                              : AppColors.translightPurple2,
-                          side: BorderSide.none,
-                          shape: StadiumBorder(),
-                        ),
-                        child: Text(
-                          'Edit Profile',
-                          style: TextStyle(
-                            letterSpacing: 0.8,
-                            color: textColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Divider(),
-                    ProfileOptionwidget(
-                      iconColor: iconColor,
-                      isDark: isDark,
-                      icon: FontAwesomeIcons.userCheck,
-                      textfield: userName,
-                    ),
-                    ProfileOptionwidget(
-                      iconColor: iconColor,
-                      isDark: isDark,
-                      icon: FontAwesomeIcons.envelope,
-                      textfield: email,
-                    ),
-                    ProfileOptionwidget(
-                      iconColor: iconColor,
-                      isDark: isDark,
-                      icon: FontAwesomeIcons.phone,
-                      textfield: phone,
-                    ),
-                    ProfileOptionwidget(
-                      iconColor: iconColor,
-                      isDark: isDark,
-                      icon: FontAwesomeIcons.fingerprint,
-                      textfield: '********',
-                      onTap: () {
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  SizedBox(
+                    width: 200,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => const ChangePasswordScreen(),
+                            builder: (context) => const UpdateProfileScreen(),
                           ),
                         );
                       },
-                      trailing: true,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: isDark
+                            ? AppColors.darkPurple
+                            : AppColors.translightPurple2,
+                        side: BorderSide.none,
+                        shape: StadiumBorder(),
+                      ),
+                      child: Text(
+                        'Edit Profile',
+                        style: TextStyle(
+                          letterSpacing: 0.8,
+                          color: textColor,
+                        ),
+                      ),
                     ),
-                    if (DOB.isNotEmpty)
-                      ProfileOptionwidget(
-                        iconColor: iconColor,
-                        isDark: isDark,
-                        icon: FontAwesomeIcons.calendar,
-                        textfield: DOB,
-                      ),
-                    if (address.isNotEmpty)
-                      ProfileOptionwidget(
-                        iconColor: iconColor,
-                        isDark: isDark,
-                        icon: FontAwesomeIcons.addressBook,
-                        textfield: address,
-                      ),
-                    if (gender.isNotEmpty)
-                      ProfileOptionwidget(
-                        iconColor: iconColor,
-                        isDark: isDark,
-                        icon: FontAwesomeIcons.person,
-                        textfield: gender,
-                      ),
-                    SizedBox(
-                      height: 40.0,
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Divider(),
+                  ProfileOptionwidget(
+                    iconColor: iconColor,
+                    isDark: isDark,
+                    icon: FontAwesomeIcons.userCheck,
+                    textfield: userName,
+                  ),
+                  ProfileOptionwidget(
+                    iconColor: iconColor,
+                    isDark: isDark,
+                    icon: FontAwesomeIcons.envelope,
+                    textfield: email,
+                  ),
+                  ProfileOptionwidget(
+                    iconColor: iconColor,
+                    isDark: isDark,
+                    icon: FontAwesomeIcons.phone,
+                    textfield: phone,
+                  ),
+                  ProfileOptionwidget(
+                    iconColor: iconColor,
+                    isDark: isDark,
+                    icon: FontAwesomeIcons.fingerprint,
+                    textfield: '********',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => const ChangePasswordScreen(),
+                        ),
+                      );
+                    },
+                    trailing: true,
+                  ),
+                  if (DOB.isNotEmpty)
+                    ProfileOptionwidget(
+                      iconColor: iconColor,
+                      isDark: isDark,
+                      icon: FontAwesomeIcons.calendar,
+                      textfield: DOB,
                     ),
-                    Center(
-                      child: Text(timestamp,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: textColor,
-                          )),
-                    )
-                  ],
-                ),
+                  if (address.isNotEmpty)
+                    ProfileOptionwidget(
+                      iconColor: iconColor,
+                      isDark: isDark,
+                      icon: FontAwesomeIcons.addressBook,
+                      textfield: address,
+                    ),
+                  if (gender.isNotEmpty)
+                    ProfileOptionwidget(
+                      iconColor: iconColor,
+                      isDark: isDark,
+                      icon: FontAwesomeIcons.person,
+                      textfield: gender,
+                    ),
+                  SizedBox(
+                    height: 40.0,
+                  ),
+                  Center(
+                    child: Text(timestamp,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: textColor,
+                        )),
+                  )
+                ],
               ),
             ),
-          );
+          ),
+        ),
+        Positioned.fill(
+          child: Container(
+            color: isLoading ? AppColors.black.withOpacity(0.4) : null,
+            child: isLoading
+                ? Center(
+              child: LoadingAnimationWidget.flickr(
+                leftDotColor: AppColors.darkPurple,
+                rightDotColor: AppColors.white,
+                size: 50,
+              ),
+            )
+                : null,
+          ),
+        ),
+      ],
+    );
     // : Scaffold(
     //   backgroundColor: isDark ?AppColors.black:AppColors.backgroundColor,
     //   body: Center(
@@ -352,24 +354,24 @@ class ProfileOptionwidget extends StatelessWidget {
         ),
         trailing: trailing
             ? GestureDetector(
-                onTap: onTap,
-                child: Container(
-                  height: 30,
-                  width: 70,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.grey.withOpacity(0.2)),
-                  child: Center(
-                    child: Text(
-                      'change',
-                      style: TextStyle(
-                        color: AppColors.grey,
-                        letterSpacing: 0.6,
-                      ),
-                    ),
-                  ),
+          onTap: onTap,
+          child: Container(
+            height: 30,
+            width: 70,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: Colors.grey.withOpacity(0.2)),
+            child: Center(
+              child: Text(
+                'change',
+                style: TextStyle(
+                  color: AppColors.grey,
+                  letterSpacing: 0.6,
                 ),
-              )
+              ),
+            ),
+          ),
+        )
             : null);
   }
 }
