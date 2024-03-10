@@ -12,6 +12,8 @@ import 'package:petrocardapppp/screens//Forgot Passwordscreen/Check Number.dart'
 import 'package:petrocardapppp/screens/LoginScreen/Signup.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 
+import '../Admin side/Base_dashboard.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -27,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   var data;
   bool showPassword = true;
   bool isLoading = false;
+  String? role;
 
   Future<void> handleLogin() async {
     final form = formKey.currentState;
@@ -35,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         isLoading = true;
       });
       final login_url =
-          Uri.parse("https://petrocard.000webhostapp.com/API/login.php");
+      Uri.parse("https://petrocard.000webhostapp.com/API/login.php");
       final response = await http.post(login_url, body: {
         "email": usernameController.text,
         "password": passwordController.text,
@@ -49,30 +52,37 @@ class _LoginPageState extends State<LoginPage> {
         });
         if (logindata['error'] == false) {
           SharedPreferences setpreference =
-              await SharedPreferences.getInstance();
+          await SharedPreferences.getInstance();
           setpreference.setString('id', data['id'].toString());
           setpreference.setString('name', data['name'].toString());
           setpreference.setString('phone', data['phone'].toString());
           setpreference.setString('email', data['email'].toString());
           setpreference.setString('timestamp', data['timestamp'].toString());
-          //setpreference.setString('role', data['role'].toString());
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                  builder: (BuildContext context) => BaseScreen()),
-              (Route<dynamic> route) => false);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(logindata['message'].toString()),
-              duration: Duration(seconds: 2),
-              backgroundColor: Colors.red, // Customize background color
-            ),
-          );
+          setpreference.setString('role', data['role'].toString());
+          role = data['role'].toString();
+          if (role == '1') {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (BuildContext context) => BaseScreen()),
+                    (Route<dynamic> route) => false);
+          } else if (role == '0') {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (BuildContext context) => AdminDashboard()),
+                    (Route<dynamic> route) => false);
+          }
+        }else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(logindata['message'].toString()),
+                duration: Duration(seconds: 2),
+                backgroundColor: Colors.red, // Customize background color
+              ),
+            );
+          }
         }
       }
     }
-  }
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;

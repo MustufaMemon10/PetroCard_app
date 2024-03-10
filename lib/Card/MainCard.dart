@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 class PetroMainCard extends StatefulWidget {
@@ -82,7 +81,8 @@ class _PetroMainCardState extends State<PetroMainCard> {
       id = setpreference.getString('id') ?? '';
       userName = setpreference.getString('name') ?? '';
       email = setpreference.getString('email') ?? '';
-
+      card_num = setpreference.getString('card_num') ?? '';
+      validate = setpreference.getString('validate')?? '';
     });
     await fetchCardDetails();
   }
@@ -105,7 +105,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
             color: Colors.black.withOpacity(0.1),
             spreadRadius: 10,
             blurRadius: 7,
-            offset: Offset(0, 7), // changes position of shadow
+            offset: Offset(0, 7),
           ),
         ],
         gradient: LinearGradient(
@@ -113,13 +113,13 @@ class _PetroMainCardState extends State<PetroMainCard> {
           end: Alignment.bottomRight,
           colors: isDark?[
             AppColors.darkPurple.withOpacity(1),
-            AppColors.black.withOpacity(0.1),
+            AppColors.black.withOpacity(0.3),
             AppColors.darkPurple.withOpacity(0.8),
             AppColors.darkPurple.withOpacity(1),
           ]:
-              [   AppColors.lightPurple.withOpacity(0.8),
-                AppColors.white.withOpacity(0.5),
-                AppColors.lightPurple.withOpacity(0.4),
+              [   AppColors.lightPurple2.withOpacity(0.8),
+                AppColors.white.withOpacity(0.3),
+                AppColors.lightPurple2.withOpacity(0.4),
                 AppColors.lightPurple2.withOpacity(1),],
           stops: [0.0, 0.3, 0.6, 1.0],
         ),
@@ -138,7 +138,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
 
           Padding(
             padding: const EdgeInsets.only(top: 15.0,left: 10.0,),
-            child: Text('2021 1022 1988 2012',
+            child: Text(card_num,
             style: TextStyle(
               fontSize: 19.0,
               color: isDark?AppColors.transparent: AppColors.black.withOpacity(0.5),
@@ -152,7 +152,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 5.0,left: 10.0,),
-                child: Text('Mustufa Memon',
+                child: Text(userName,
                   style: TextStyle(
                     fontSize: 19.0,
                     color: isDark ?AppColors.transparent: AppColors.black.withOpacity(0.5),
@@ -161,7 +161,22 @@ class _PetroMainCardState extends State<PetroMainCard> {
                     letterSpacing: 0.9,
                   ),),
               ),
-              Image.asset('assets/Icons/contactless.png',height: 50.0,color: isDark? AppColors.white.withOpacity(0.5): AppColors.black.withOpacity(0.5),)
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0,right: 10.0,),
+                    child: Text(validate,
+                      style: TextStyle(
+                        fontSize: 19.0,
+                        color: isDark ?AppColors.transparent: AppColors.black.withOpacity(0.5),
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'RobotoMono',
+                        letterSpacing: 0.9,
+                      ),),
+                  ),
+                  Image.asset('assets/Icons/contactless.png',height: 50.0,color: isDark? AppColors.white.withOpacity(0.5): AppColors.black.withOpacity(0.5),),
+                ],
+              )
             ],
           )
         ],

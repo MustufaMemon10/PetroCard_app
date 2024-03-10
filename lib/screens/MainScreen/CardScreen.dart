@@ -26,20 +26,21 @@ class _CardScreenState extends State<CardScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Hero(
-                  tag: 'cards',
-                  child: Text(
-                    'My Card',
-                    style: TextStyle(
-                      fontSize: 20.0.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primaryText,
-                    ),
+                Text(
+                  'My Card',
+                  style: TextStyle(
+                    fontSize: 20.0.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryText,
                   ),
                 ),
               ],
             ),
           ),
+          PetroMainCard(),
+          SizedBox(height: 10.0,),
+          Divider(),
+
         ]),
       ),
     );

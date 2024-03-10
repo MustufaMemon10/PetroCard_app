@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petrocardapppp/Components/UserIcon.dart';
 import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -171,7 +172,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   height: 110,
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child: Image.asset('assets/Icons/man.png')),
+                      child: UserIcon()),
                 ),
                 SizedBox(
                   height: 30.0.h,

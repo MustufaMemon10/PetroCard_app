@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:petrocardapppp/screens/Admin%20side/Base_dashboard.dart';
 import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,8 +32,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if(prefs.getString('id') != null) {
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => BaseScreen()), (Route<dynamic> route) => false);
+    if(prefs.getString('id') != null || prefs.getString('role') == 1) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => BaseScreen()), (
+          Route<dynamic> route) => false);
+    }
+      else if(prefs.getString('id') != null || prefs.getString('role') == 0) {
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => AdminDashboard()), (Route<dynamic> route) => false);
     }else{
     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
         builder: (BuildContext context) => LoginPage()), (

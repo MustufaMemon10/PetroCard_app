@@ -108,7 +108,14 @@ class _Request_ScreenState extends State<Request_Screen> {
     final file = await http.MultipartFile.fromPath('doc_img', fileImage.path,
         contentType: MediaType(mimeTypeData![0], mimeTypeData[1]));
 
-    imageUploadRequest.fields['id']= id;
+    print(fileImage.path);
+    print(_dobController.text);
+    print(prefs.getString('id')!);
+    print(_addressController.text);
+    print(_dobController.text);
+    print(_selectedGender);
+    print(panNumberController.text);
+    imageUploadRequest.fields['id']= prefs.getString('id')!;
     imageUploadRequest.fields['address']= _addressController.text;
     imageUploadRequest.fields['dob']= _dobController.text;
     imageUploadRequest.fields['gender']= _selectedGender;
@@ -253,6 +260,15 @@ class _Request_ScreenState extends State<Request_Screen> {
   //   }
   //   return age >= 18;
   // }
+
+  final ImagePicker _picker = ImagePicker();
+  File? _image;
+  Future _getImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = File(pickedFile!.path);
+    });
+  }
 
   Future<void> _pickPhoto() async {
     final status = await Permission.storage.request();
@@ -794,7 +810,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                                     InkWell(
                                       onTap: () {
                                         FocusScope.of(context).unfocus();
-                                        _pickPhoto();
+                                        _getImage();
                                       },
                                       child: Container(
                                         height: 35,
@@ -823,7 +839,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    uploadImageMedia(_panPhotoPath!);
+                                    uploadImageMedia(_image!);
                                     FocusScope.of(context).unfocus();
                                   },
                                   splashColor:

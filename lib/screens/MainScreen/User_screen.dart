@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:petrocardapppp/Components/UserIcon.dart';
 import 'package:petrocardapppp/screens/Forgot%20Passwordscreen/ChangePasswordScreen.dart';
 import 'package:petrocardapppp/screens/Profile_screen/Update_profile_screen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
@@ -36,7 +37,6 @@ class _UserScreenState extends State<UserScreen> {
     setState(() {
       isLoading = true;
     });
-
     try {
       final loginUrl = Uri.parse(
           "https://petrocard.000webhostapp.com/API/fetch_cardrequestapi.php?id=$id");
@@ -48,8 +48,9 @@ class _UserScreenState extends State<UserScreen> {
         print(logindata);
 
         if (!logindata['error']) {
+          print('$id');
           SharedPreferences setpreference =
-          await SharedPreferences.getInstance();
+              await SharedPreferences.getInstance();
           setpreference.setString('req_date', data[0]['req_date'].toString());
           setpreference.setString('status', data[0]['status'].toString());
           setpreference.setString('address', data[0]['address'].toString());
@@ -71,8 +72,7 @@ class _UserScreenState extends State<UserScreen> {
         }
       } else {
         print(
-            'Failed to get response from server. Status code: ${response
-                .statusCode}');
+            'Failed to get response from server. Status code: ${response.statusCode}');
       }
     } catch (error) {
       print('Error fetching data: $error');
@@ -93,6 +93,7 @@ class _UserScreenState extends State<UserScreen> {
       address = setpreference.getString('address') ?? '';
       DOB = setpreference.getString('dob') ?? '';
       gender = setpreference.getString('gender') ?? '';
+      print('$id');
     });
     await fetchOtherDetails();
   }
@@ -125,14 +126,14 @@ class _UserScreenState extends State<UserScreen> {
             ),
             title: Center(
                 child: Text(
-                  'Profile',
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.8,
-                  ),
-                )),
+              'Profile',
+              style: TextStyle(
+                color: textColor,
+                fontSize: 20.0,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.8,
+              ),
+            )),
             actions: [
               IconButton(
                   onPressed: () {
@@ -154,7 +155,7 @@ class _UserScreenState extends State<UserScreen> {
                     height: 110,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: Image.asset('assets/Icons/man.png')),
+                        child: UserIcon()),
                   ),
                   SizedBox(
                     height: 10.0.h,
@@ -289,12 +290,12 @@ class _UserScreenState extends State<UserScreen> {
             color: isLoading ? AppColors.black.withOpacity(0.4) : null,
             child: isLoading
                 ? Center(
-              child: LoadingAnimationWidget.flickr(
-                leftDotColor: AppColors.darkPurple,
-                rightDotColor: AppColors.white,
-                size: 50,
-              ),
-            )
+                    child: LoadingAnimationWidget.flickr(
+                      leftDotColor: AppColors.darkPurple,
+                      rightDotColor: AppColors.white,
+                      size: 50,
+                    ),
+                  )
                 : null,
           ),
         ),
@@ -357,24 +358,24 @@ class ProfileOptionwidget extends StatelessWidget {
         ),
         trailing: trailing
             ? GestureDetector(
-          onTap: onTap,
-          child: Container(
-            height: 30,
-            width: 70,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Colors.grey.withOpacity(0.2)),
-            child: Center(
-              child: Text(
-                'change',
-                style: TextStyle(
-                  color: AppColors.grey,
-                  letterSpacing: 0.6,
+                onTap: onTap,
+                child: Container(
+                  height: 30,
+                  width: 70,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.grey.withOpacity(0.2)),
+                  child: Center(
+                    child: Text(
+                      'change',
+                      style: TextStyle(
+                        color: AppColors.grey,
+                        letterSpacing: 0.6,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-        )
+              )
             : null);
   }
 }

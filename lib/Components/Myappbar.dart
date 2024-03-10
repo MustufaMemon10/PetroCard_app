@@ -2,6 +2,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/Card/Request/Request_card.dart';
+import 'package:petrocardapppp/Components/UserIcon.dart';
 import 'package:petrocardapppp/screens/MainScreen/User_screen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/utilities/styles.dart';
@@ -94,27 +96,54 @@ class _MyappbarState extends State<Myappbar> {
                           ),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => const UserScreen(),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => const Request_Screen(),
+                                ),
+                              );
+                            },
+                            splashColor: AppColors.grey.withOpacity(0.2),
+                            child: Container(
+                              height: 35,
+                              width: 35.0,
+                              decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      width: 1.w,
+                                      color: Colors.black.withOpacity(0.5))),
+                              child: Icon(Icons.add),
                             ),
-                          );
-                        },
-                        splashColor: AppColors.grey.withOpacity(0.2),
-                        child: Container(
-                          height: 35,
-                          width: 35.0,
-                          decoration: BoxDecoration(
-                              color: AppColors.white,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                  width: 1.w,
-                                  color: Colors.black.withOpacity(0.5))),
-                          child: Image.asset('assets/Icons/man.png',),
-                        ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => const UserScreen(),
+                                ),
+                              );
+                            },
+                            splashColor: AppColors.grey.withOpacity(0.2),
+                            child: Container(
+                              height: 35,
+                              width: 35.0,
+                              decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      width: 1.w,
+                                      color: Colors.black.withOpacity(0.5))),
+                              child: UserIcon(),
+                            ),
+                          ),
+
+                        ],
                       ),
                     ]
                 ),
