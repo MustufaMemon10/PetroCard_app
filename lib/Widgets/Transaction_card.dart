@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/utilities/styles.dart';
 
 class TransactionCard extends StatefulWidget {
   final String title;
   final String subTitle;
   final String price;
-  final String letter;
-  final Color color;
   TransactionCard({
-  required this.color,
-  required this.letter,
   required this.price,
   required this.subTitle,
   required this.title,
@@ -22,45 +20,36 @@ class TransactionCard extends StatefulWidget {
 class _TransactionCardState extends State<TransactionCard> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-          height: 62.0,
-          width: 343.0,
-          child: Column(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(children: [
-                  Container(
-                    height: 44.0,
-                    width: 44.0,
-                    decoration: BoxDecoration(
-                      color: widget.color,
-                      borderRadius: BorderRadius.circular(22.0)
-                    ),
-                    child: Center(child: Text(widget.letter,style: TextStyle(fontSize: 30.0,fontWeight: FontWeight.w700,color: Colors.white),)),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Image.asset('assets/Icons/petrol-station.png',height: 20,width: 20.0,),
+              SizedBox(width: 8.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.title,
+                    style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(width: 16.0),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(widget.title,style: AppStyles.otherDetailsPrimary,),
-                      Text(widget.subTitle,style: AppStyles.otherDetailsSecondary,)
-                    ],
-                  )
-                ],),
-                  Row(children: [
-              Text(widget.price+'₹',style: TextStyle(color: Colors.red),)
-            ],),
-              ],
-            ),
-            Divider(
-                color: Colors.grey.withOpacity(0.5),
-                thickness: 0.5,
-                endIndent: 16.0,
-                indent: 16.0,
-              )
-          ],)
+                  Text(
+                    widget.subTitle,
+                    style: TextStyle(fontSize: 12.0,fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Text(
+            '${widget.price}₹',
+            style: TextStyle(color: Colors.red, fontSize: 14.0),
+          ),
+        ],
+      ),
     );
   }
 }

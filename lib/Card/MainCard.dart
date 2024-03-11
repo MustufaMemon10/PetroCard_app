@@ -15,7 +15,7 @@ class PetroMainCard extends StatefulWidget {
 }
 
 class _PetroMainCardState extends State<PetroMainCard> {
-  bool isDark = false;
+  bool isDark = true;
   bool isBalanceHidden = true;
   String id = '';
   String userName = '';
@@ -93,9 +93,8 @@ class _PetroMainCardState extends State<PetroMainCard> {
   }
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 400),
-      height: 190.h,
+    return Container(
+      height: 170.h,
       width: 380.w,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
@@ -113,18 +112,14 @@ class _PetroMainCardState extends State<PetroMainCard> {
           end: Alignment.bottomRight,
           colors: isDark?[
             AppColors.darkPurple.withOpacity(1),
-            AppColors.black.withOpacity(0.3),
-            AppColors.darkPurple.withOpacity(0.8),
-            AppColors.darkPurple.withOpacity(1),
+            AppColors.darkPurple.withOpacity(0.3),
           ]:
-              [   AppColors.lightPurple2.withOpacity(0.8),
-                AppColors.white.withOpacity(0.3),
-                AppColors.lightPurple2.withOpacity(0.4),
-                AppColors.lightPurple2.withOpacity(1),],
-          stops: [0.0, 0.3, 0.6, 1.0],
+              [   AppColors.lightPurple2.withOpacity(1),
+                AppColors.lightPurple2.withOpacity(0.3),],
+          stops: [0.0,1.0],
         ),
       ),
-      padding: EdgeInsets.only(top: 5.0,bottom: 10.0,left: 20.0,right: 5.0),
+      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -133,11 +128,19 @@ class _PetroMainCardState extends State<PetroMainCard> {
             children: [
               Image.asset('assets/Icons/card.png',height: 80,width: 80.0,),
             ],),
-          SizedBox(height: 5.0,),
-          Image.asset('assets/Icons/chip.png',height: 35.0,width: 50.0,color: AppColors.darkPurple,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.asset('assets/Icons/chip.png',height: 35.0,width: 50.0,color: Colors.black,),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Image.asset('assets/Icons/contactless.png',height: 35.0,color: isDark? AppColors.white.withOpacity(0.5): AppColors.black.withOpacity(0.5),),
+              ),
+            ],
+          ),
 
           Padding(
-            padding: const EdgeInsets.only(top: 15.0,left: 10.0,),
+            padding: const EdgeInsets.only(top: 10.0,left: 10.0,right:15.0,),
             child: Text(card_num,
             style: TextStyle(
               fontSize: 19.0,
@@ -151,7 +154,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 5.0,left: 10.0,),
+                padding: const EdgeInsets.only(top: 5.0,left: 10.0,right:15.0,),
                 child: Text(userName,
                   style: TextStyle(
                     fontSize: 19.0,
@@ -161,22 +164,14 @@ class _PetroMainCardState extends State<PetroMainCard> {
                     letterSpacing: 0.9,
                   ),),
               ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5.0,right: 10.0,),
-                    child: Text(validate,
-                      style: TextStyle(
-                        fontSize: 19.0,
-                        color: isDark ?AppColors.transparent: AppColors.black.withOpacity(0.5),
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'RobotoMono',
-                        letterSpacing: 0.9,
-                      ),),
-                  ),
-                  Image.asset('assets/Icons/contactless.png',height: 50.0,color: isDark? AppColors.white.withOpacity(0.5): AppColors.black.withOpacity(0.5),),
-                ],
-              )
+              Text(validate,
+                style: TextStyle(
+                  fontSize: 19.0,
+                  color: isDark ?AppColors.transparent: AppColors.black.withOpacity(0.5),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'RobotoMono',
+                  letterSpacing: 0.9,
+                ),)
             ],
           )
         ],

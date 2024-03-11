@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:petrocardapppp/DrawerComponents/side_menu_tile.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../LoginScreen/LoginPage.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -55,6 +58,15 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ManageCardListScreen()));
               },
             ),
+            SlidermenuItem(title: 'Log Out',
+                iconData: Icons.arrow_back_ios,
+                onTap: (String ) async{
+                  final pref = await SharedPreferences.getInstance();
+                  await pref.clear();
+                  await pref.setBool('seen',true);
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                          (route) => false);}),
           ],
         ),
       ),

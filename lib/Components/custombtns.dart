@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petrocardapppp/screens/MainScreen/Card_balance%20screen/Balance_screen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import '../Widgets/custombtns_widget.dart';
 
@@ -14,11 +15,33 @@ class _AppbtnsState extends State<Appbtns> {
   @override
   Widget build(BuildContext context) {
     return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children:  [
-                btn(icon: FontAwesomeIcons.moneyCheck,text: 'Add Money',),
-                btn(icon: FontAwesomeIcons.creditCard,text: 'Balance',),
-              ],
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Btn(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BalanceScreen(),
+              ),
             );
+          },
+          icon: FontAwesomeIcons.moneyCheck,
+          text: 'Add Money',
+        ),
+        Btn(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BalanceScreen(),
+              ),
+            );
+          },
+          icon: FontAwesomeIcons.creditCard,
+          text: 'Balance',
+        ),
+      ],
+    );
   }
 }

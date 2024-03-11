@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class BalanceScreen extends StatefulWidget {
   @override
   _BalanceScreenState createState() => _BalanceScreenState();
 }
 
 class _BalanceScreenState extends State<BalanceScreen> {
+  String id = '';
+  String userName = '';
+  String passcode = '1234';
+  String enteredPasscode = '';
+  String? balance;
+  bool showError = false;
 
   Future<void> getCardDetails() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
@@ -17,29 +22,24 @@ class _BalanceScreenState extends State<BalanceScreen> {
       balance = setpreference.getString('balance') ?? '';
     });
   }
+
   @override
   void initState() {
     super.initState();
     getCardDetails();
   }
-  String id = '';
-  String userName = '';
-  String passcode = '1234';
-  String enteredPasscode = '';
-  String? balance;
-  bool showError = false;
 
   void verifyPasscode() {
     if (enteredPasscode == passcode) {
       setState(() {
         showError = false;
       });
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => BalanceDetails(balance: balance),
-      //   ),
-      // );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BalanceDetails(balance: balance),
+        ),
+      );
     } else {
       setState(() {
         showError = true;
@@ -87,10 +87,11 @@ class _BalanceScreenState extends State<BalanceScreen> {
     );
   }
 }
-class BalanceDetails extends StatelessWidget {
-  final double balance;
 
-  BalanceDetails({required this.balance});
+class BalanceDetails extends StatelessWidget {
+  final String? balance;
+
+  const BalanceDetails({Key? key, required this.balance}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +101,7 @@ class BalanceDetails extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          'Balance: \$${balance.toStringAsFixed(2)}',
+          'Balance: ${balance ?? "N/A"}',
           style: TextStyle(fontSize: 24.0),
         ),
       ),

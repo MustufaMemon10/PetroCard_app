@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
+import 'package:petrocardapppp/utilities/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:http/http.dart' as http;
@@ -38,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
         isLoading = true;
       });
       final login_url =
-      Uri.parse("https://petrocard.000webhostapp.com/API/login.php");
+          Uri.parse("https://petrocard.000webhostapp.com/API/login.php");
       final response = await http.post(login_url, body: {
         "email": usernameController.text,
         "password": passwordController.text,
@@ -52,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
         });
         if (logindata['error'] == false) {
           SharedPreferences setpreference =
-          await SharedPreferences.getInstance();
+              await SharedPreferences.getInstance();
           setpreference.setString('id', data['id'].toString());
           setpreference.setString('name', data['name'].toString());
           setpreference.setString('phone', data['phone'].toString());
@@ -64,25 +65,26 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                     builder: (BuildContext context) => BaseScreen()),
-                    (Route<dynamic> route) => false);
+                (Route<dynamic> route) => false);
           } else if (role == '0') {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                     builder: (BuildContext context) => AdminDashboard()),
-                    (Route<dynamic> route) => false);
+                (Route<dynamic> route) => false);
           }
-        }else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(logindata['message'].toString()),
-                duration: Duration(seconds: 2),
-                backgroundColor: Colors.red, // Customize background color
-              ),
-            );
-          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(logindata['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red, // Customize background color
+            ),
+          );
         }
       }
     }
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -228,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                                               return "Invalid email";
                                             } else {
                                               if (RegExp(
-                                                  r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
+                                                      r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
                                                   .hasMatch(val)) {}
                                             }
                                             return null;
@@ -363,10 +365,23 @@ class _LoginPageState extends State<LoginPage> {
                 color: isLoading ? AppColors.black.withOpacity(0.4) : null,
                 child: isLoading
                     ? Center(
-                        child: LoadingAnimationWidget.flickr(
-                          leftDotColor: AppColors.darkPurple,
-                          rightDotColor: AppColors.white,
-                          size: 50,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            LoadingAnimationWidget.flickr(
+                              leftDotColor: AppColors.darkPurple,
+                              rightDotColor: AppColors.white,
+                              size: 50,
+                            ),
+                            Text(
+                              'Please wait..',
+                              style: TextStyle(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16.0
+                              )
+                            )
+                          ],
                         ),
                       )
                     : null,

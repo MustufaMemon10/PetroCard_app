@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/Components/UserIcon.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,9 +43,7 @@ class _User_detailsState extends State<User_details> {
             child: CircleAvatar(
               radius: 25,
               backgroundColor: AppColors.white.withOpacity(0.7),
-              child: Image.asset(
-                'assets/Icons/man.png',
-              ),
+              child: UserIcon(),
             ),
           ),
         ),

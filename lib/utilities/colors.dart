@@ -18,6 +18,13 @@ class AppColors {
   static const red = Color(0xFFF44336);//#FFFFFF
   static const black = Color(0xFF000000);
   static const neutralText = Color(0xFF333333);//#333333
+  static const Color darkBackground = Color(0xFF1E1E1E);
+  static const Color darkCardBackground = Color(0xFF292929);
+  static const Color darkAppBarBackground = Color(0xFF121212);
+  static const Color darkTransactionBackground = Color(0xFF121212);
+  static const Color darkAppBarBorderColor = Color(0xFF757575); // Light gray color for app bar border
+  static const Color darkAppBarSplashColor = Color(0xFF616161);
+  static const Color darkPrimaryTitle = Color(0xFFFFFFFF);
   static const boxShadow = Color(0xFF333333);//#333333
   static const Color primaryText = Color(0xFF333333);
   static const Color secondaryText = Color(0xFF999999);

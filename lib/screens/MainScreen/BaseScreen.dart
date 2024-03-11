@@ -42,12 +42,14 @@ class _BaseScreenState extends State<BaseScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = true;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           HomeWidget(
             isDrawerOpen: isDrawerOpen,
+            isDark: isDark,
             toggleDrawer: toggleDrawer,
           ),
         if (isDrawerOpen) GestureDetector(
