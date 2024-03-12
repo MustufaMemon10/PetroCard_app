@@ -75,7 +75,6 @@ class _AdminAppbarState extends State<AdminAppbar> {
                 Container(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
                         onTap: () {
@@ -91,21 +90,9 @@ class _AdminAppbarState extends State<AdminAppbar> {
                           ),
                           child:Icon(
                             Icons.menu_rounded,
-                            size: 24.0,
+                            size: 26.0,
                           )
                         ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => const UserScreen(),
-                            ),
-                          );
-                        },
-                        splashColor: AppColors.grey.withOpacity(0.2),
-                        child: UserIcon(),
                       ),
                     ],
                   ),

@@ -1,6 +1,8 @@
 import 'dart:convert';
-
+import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '';
 import 'package:http/http.dart' as http;
 import 'package:petrocardapppp/utilities/colors.dart';
 
@@ -11,18 +13,28 @@ class ManageUserScreen extends StatefulWidget {
 
 class _ManageUserScreenState extends State<ManageUserScreen> {
   List<Map<String, dynamic>> userData = [];
+  bool isLoading = false;
 
   Future<void> fetchUserData() async {
     try {
+      setState(() {
+        isLoading = true;
+      });
       final response = await http.get(Uri.parse(
-          'https://petrocard.000webhostapp.com/API/Admin/fetchapi.php'));
-      print('Response body: ${response.body}');
+          'https://petrocard.000webhostapp.com/API/Admin/users_details.php'));
       if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
-        setState(() {
-          userData = List<Map<String, dynamic>>.from(
-              data.map((item) => item as Map<String, dynamic>));
-        });
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        if (responseData['error'] == false) {
+          final List<dynamic> usersData = responseData['users'];
+          setState(() {
+            userData = usersData.cast<Map<String, dynamic>>();
+          });
+          setState(() {
+            isLoading = false;
+          });
+        } else {
+          print('Error fetching user data: ${responseData['message']}');
+        }
       } else {
         print('Failed to fetch user data: ${response.statusCode}');
       }
@@ -44,30 +56,166 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: RefreshIndicator(
+      body: isLoading?Container(
+        margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 10.0),
+        child: Column(
+          children: [
+            SizedBox(height: 0.055.sh),
+            CardLoading(height: 100.0,
+              width: 1.sw,
+              animationDuration: Duration (seconds: 1),
+              animationDurationTwo: Duration(seconds: 2),
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            SizedBox(height: 15.0,),
+          CardLoading(height: 100.0,
+            width: 1.sw,
+            animationDuration: Duration (seconds: 1),
+            animationDurationTwo: Duration(seconds: 2),
+            borderRadius: BorderRadius.circular(12.0),
+            ),
+            SizedBox(height: 15.0,),
+            CardLoading(height: 100.0,
+              width: 1.sw,
+              animationDuration: Duration (seconds: 1),
+              animationDurationTwo: Duration(seconds: 2),
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            SizedBox(height: 15.0,),
+            CardLoading(height: 100.0,
+              width: 1.sw,
+              animationDuration: Duration (seconds: 1),
+              animationDurationTwo: Duration(seconds: 2),
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            SizedBox(height: 15.0,),
+            CardLoading(height: 100.0,
+              width: 1.sw,
+              animationDuration: Duration (seconds: 1),
+              animationDurationTwo: Duration(seconds: 2),
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            SizedBox(height: 15.0,),
+            CardLoading(height: 100.0,
+              width: 1.sw,
+              animationDuration: Duration (seconds: 1),
+              animationDurationTwo: Duration(seconds: 2),
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            SizedBox(height: 15.0,),
+          ],
+        ),
+      ):RefreshIndicator(
         onRefresh: _refreshData,
-        child: ListView.separated(
+        child: ListView.builder(
           itemCount: userData.length,
-          separatorBuilder: (context, index) =>
-              Divider(
-                color: Colors.grey,
-                thickness: 1.0,
-              ),
           itemBuilder: (context, index) {
             final user = userData[index];
-            return ListTile(
-              title: Text('User Name: ${user['name']}'),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            return SingleChildScrollView(child: Container(
+              height: 100.0,
+              width: 1.sw,
+              margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 10.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.0),
+                color: AppColors.scaffoldBackgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.grey.withOpacity(0.4),
+                    spreadRadius: 4,
+                    offset: Offset(4,4),
+                  )
+                ]
+              ),
+              child: Stack(
                 children: [
-                  Text('Email: ${user['email']}'),
-                  Text('Phone: ${user['phone']}'),
-                  Text('id : ${user['id']}'),
-                  // Add more fields as needed
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0,top: 10.0,bottom: 10.0),
+                            child: CircleAvatar(
+                              radius: 25.0,
+                              backgroundColor: AppColors.darkPurple.withOpacity(0.1),
+                              child: Image.asset('assets/Icons/man2.png',fit: BoxFit.cover,),
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 16.0,left: 10.0,),
+                                    child: Text('Name: ${user['name']}',style: TextStyle(
+                                      fontFamily: 'RobotoMono',
+                                      color: AppColors.primaryText,fontSize: 20.0,  fontWeight: FontWeight.bold,
+                                    ),),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 10.0,),
+                                child: Text('Email: ${user['email']}',style: TextStyle(
+                                    color: AppColors.secondaryText,fontSize: 16.0,fontWeight: FontWeight.w600
+                                ),),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 10.0,),
+                                child: Text('Phone: ${user['phone']}',style: TextStyle(
+                                    color: AppColors.secondaryText.withOpacity(0.8),fontSize: 14.0,fontWeight: FontWeight.w700
+                                ),),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    top: 5,
+                    right: 10,
+                    child:  Text('Id: ${user['id']}',style: TextStyle(
+                      color: AppColors.secondaryText.withOpacity(0.8),fontSize: 14.0,fontWeight: FontWeight.w700
+                  ),),),
+                  Positioned(
+                      bottom: 10,
+                      right: 10,
+                      child: InkWell(
+                        onTap: ()async{
+                          final userId = user['id']; // Assuming 'id' is the key for user ID
+                          final deleteUrl = 'https://petrocard.000webhostapp.com/API/Admin/deleteapi.php'; // Replace with your delete API URL
+
+                          try {
+                            final response = await http.delete(Uri.parse('$deleteUrl?id=$userId'));
+                            if (response.statusCode == 200) {
+                              // User deleted successfully, refresh the user list
+                              await _refreshData();
+                            } else {
+                              print('Failed to delete user: ${response.statusCode}');
+                            }
+                          } catch (error) {
+                            print('Error deleting user: $error');
+                          }
+                        },
+                        child: Container(
+                    height: 30.0,
+                    width: 30.0,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: AppColors.red.withOpacity(0.2),
+                        border: Border.all(width: 0.4,color: AppColors.black.withOpacity(0.5))
+                    ),
+                    child:Center(child: Icon(Icons.delete_outline,color: AppColors.red,size: 16.0,)),
+                    ),
+                  ),
+                  ),
                 ],
               ),
-              // Add onTap callback if needed
-            );
+            ));
           },
         ),
       ),

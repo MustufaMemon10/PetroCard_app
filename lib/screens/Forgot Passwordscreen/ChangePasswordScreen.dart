@@ -44,14 +44,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 height: .25.sh,
                 width: width,
                 decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      AppColors.translightPurple2,
-                      AppColors.neutralBackground,
-                    ],
-                  ),
+                  color: AppColors.white,
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40.r),

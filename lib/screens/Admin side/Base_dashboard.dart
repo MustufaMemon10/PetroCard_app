@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:petrocardapppp/screens/Admin%20side/DashBoard/MainDashboard.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Manage_Users/Manage_User.dart';
 import 'package:petrocardapppp/screens/Admin%20side/SideBar.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Appbar/Admin_appbar.dart';
 import 'package:petrocardapppp/screens/MainScreen/HomeScreen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/utilities/styles.dart';
+
+import 'Manage_Card_request/Manage_Request.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({Key? key}) : super(key: key);
@@ -18,8 +21,8 @@ class AdminDashboard extends StatefulWidget {
 class _AdminDashboardState extends State<AdminDashboard> {
   bool isSideBarOpen = false;
   bool isExpanded = false;
-  int _selectedIndex = 0;
-  int currentIndex = 0;
+  int _selectedIndex = 1;
+  int currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   isExpanded = false;
                 });
               },
-              child:  ManageUserScreen(),
+              child:Container(margin: EdgeInsets.only(top: 0.085.sh),child: _buildScreenBasedOnIndex()),
           ),
           AnimatedPositioned(
             left: 0,
@@ -48,20 +51,23 @@ class _AdminDashboardState extends State<AdminDashboard> {
             ),
           ),
           AnimatedPositioned(
-            left: isSideBarOpen ? -10 : -150, // Adjust this value as needed
+            left: isSideBarOpen ? -10 : -150,
             duration: Duration(milliseconds: 400),
             child: AnimatedContainer(
               duration: Duration(milliseconds: 400),
-              width: isExpanded ?200 :140,
+              width: isExpanded ?200 :115,
               height: MediaQuery.of(context).size.height,
               child: SideBarMenu(
                 onTap: (index) {
                   setState(() {
                     _selectedIndex = index;
                     currentIndex = index;
+                    setState(() {
+                      isSideBarOpen = false;
+                    });
                   });
                 },
-                ontap: (){
+                ontap: () {
                   setState(() {
                     isExpanded = !isExpanded;
                   });
@@ -79,11 +85,15 @@ class _AdminDashboardState extends State<AdminDashboard> {
   Widget _buildScreenBasedOnIndex() {
     switch (currentIndex) {
       case 0:
-        return ManageUserScreen();
+        return MainDashBoardScreen();
       case 1:
-        return ManageUserScreen ();
+        return MainDashBoardScreen();
       case 2:
         return  ManageUserScreen();
+      case 3:
+        return ManageRequestsScreen();
+      case 4:
+        return ManageRequestsScreen();
       default:
         return Container();
     }
