@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Manage_Users/Manage_User.dart';
 import 'package:petrocardapppp/screens/Admin%20side/SideBar.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Appbar/Admin_appbar.dart';
+import 'package:petrocardapppp/screens/MainScreen/HomeScreen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/utilities/styles.dart';
 
@@ -18,26 +19,21 @@ class _AdminDashboardState extends State<AdminDashboard> {
   bool isSideBarOpen = false;
   bool isExpanded = false;
   int _selectedIndex = 0;
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          SizedBox(
-            height: 1.sh,
-            width: 1.sw,
-            child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isSideBarOpen = false;
-                    isExpanded = false;
-                  });
-                },
-                child: Container(
-                  child: ManageUserScreen(),
-                  color: AppColors.scaffoldBackgroundColor,
-                )),
+          GestureDetector(
+              onTap: () {
+                setState(() {
+                  isSideBarOpen = false;
+                  isExpanded = false;
+                });
+              },
+              child:  ManageUserScreen(),
           ),
           AnimatedPositioned(
             left: 0,
@@ -59,7 +55,13 @@ class _AdminDashboardState extends State<AdminDashboard> {
               width: isExpanded ?200 :140,
               height: MediaQuery.of(context).size.height,
               child: SideBarMenu(
-                onTap: () {
+                onTap: (index) {
+                  setState(() {
+                    _selectedIndex = index;
+                    currentIndex = index;
+                  });
+                },
+                ontap: (){
                   setState(() {
                     isExpanded = !isExpanded;
                   });
@@ -73,4 +75,18 @@ class _AdminDashboardState extends State<AdminDashboard> {
       ),
     );
   }
+
+  Widget _buildScreenBasedOnIndex() {
+    switch (currentIndex) {
+      case 0:
+        return ManageUserScreen();
+      case 1:
+        return ManageUserScreen ();
+      case 2:
+        return  ManageUserScreen();
+      default:
+        return Container();
+    }
+  }
 }
+

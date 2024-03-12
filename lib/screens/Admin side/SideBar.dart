@@ -9,15 +9,19 @@ class SideBarMenu extends StatelessWidget {
     required this.selectedIndex,
     required this.onTap,
     required this.isExpanded,
+     required this.ontap,
     super.key});
+
   final int selectedIndex;
   bool isExpanded = false;
-  final Function onTap;
+  final Function(int) onTap;
+  final Function ontap;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child:  Stack(
+        child: Stack(
           children: [
             NavigationRail(
                 extended: isExpanded,
@@ -32,9 +36,13 @@ class SideBarMenu extends StatelessWidget {
                 selectedLabelTextStyle:
                 TextStyle(color: AppColors.darkPurple),
                 destinations: [
-                  NavigationRailDestination(icon: CircleAvatar(backgroundColor: Colors.white,child: Image.asset('assets/Icons/man.png',height: 36,width: 36,)),label: Text('userName'),),
+                  NavigationRailDestination(icon: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Image.asset(
+                        'assets/Icons/man.png', height: 36, width: 36,)),
+                    label: Text('userName'),),
                   NavigationRailDestination(
-                      icon:  SvgPicture.asset(
+                      icon: SvgPicture.asset(
                         'assets/svgs/home.svg',
                         height: 23.0,
                         width: 23.0,
@@ -50,15 +58,19 @@ class SideBarMenu extends StatelessWidget {
                       ),
                       label: Text('Home')),
                   NavigationRailDestination(
+
                       icon: Icon(Icons.logout_sharp), label: Text('LogOut'))
                 ],
                 selectedIndex: selectedIndex),
-            Positioned(right: 5,top: 5,
-            child: IconButton(
-              onPressed: (){onTap();},
-              icon: isExpanded?Icon(Icons.arrow_back_ios):Icon(Icons.arrow_forward_ios),
-              iconSize: 18.0,
-            ),
+            Positioned(right: 5, top: 5,
+              child: IconButton(
+                onPressed: () {
+                  ontap();
+                },
+                icon: isExpanded ? Icon(Icons.arrow_back_ios) : Icon(
+                    Icons.arrow_forward_ios),
+                iconSize: 18.0,
+              ),
             )
           ],
         ),
