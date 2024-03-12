@@ -26,7 +26,7 @@ class Myappbar extends StatefulWidget {
 
 class _MyappbarState extends State<Myappbar> {
   String userName = '';
-  bool _showPetroCard = false;
+  bool _showPetroApp = false;
   bool _showWelcomeText = false;
 
   getUserName() async {
@@ -39,12 +39,12 @@ class _MyappbarState extends State<Myappbar> {
   void _startAnimations() async {
     await Future.delayed(const Duration(seconds: 1));
     setState(() {
-      _showPetroCard = true;
+      _showPetroApp = true;
     });
     await Future.delayed(
         const Duration(seconds: 2)); // Delay for petro card fade-out
     setState(() {
-      _showPetroCard = false;
+      _showPetroApp = false;
     });
     await Future.delayed(const Duration(seconds: 1));
     setState(() {
@@ -153,7 +153,7 @@ class _MyappbarState extends State<Myappbar> {
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: Text(
-                        'Petro Card',
+                        'Petro App',
                         style:TextStyle(   fontSize: 20.0,
                           fontWeight: FontWeight.w600,
                           color: widget.isDark ? AppColors.darkPrimaryTitle : AppColors.black,

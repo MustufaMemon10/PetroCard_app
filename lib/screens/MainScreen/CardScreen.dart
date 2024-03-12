@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Card/MainCard.dart';
 import '../../utilities/colors.dart';
@@ -12,6 +13,25 @@ class CardScreen extends StatefulWidget {
 }
 
 class _CardScreenState extends State<CardScreen> {
+  String userName = '';
+  String email = '';
+  String card_num = '';
+  String validate = '';
+  String balance = '';
+  Future<void> getCardDetails() async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
+    setState(() {
+      userName = setpreference.getString('name') ?? '';
+      email = setpreference.getString('email') ?? '';
+      card_num = setpreference.getString('card_num') ?? '';
+      validate = setpreference.getString('validate') ?? '';
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    getCardDetails();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +57,7 @@ class _CardScreenState extends State<CardScreen> {
               ],
             ),
           ),
-          PetroMainCard(),
+          PetroMainCard(userName: userName,card_num: card_num,validate: validate,),
           SizedBox(height: 10.0,),
           Divider(),
 

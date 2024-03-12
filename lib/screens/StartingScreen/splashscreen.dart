@@ -43,20 +43,26 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('id') != null || prefs.getString('role') == 1) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => BaseScreen()),
-      );
-    } else if (prefs.getString('id') != null || prefs.getString('role') == 0) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => AdminDashboard()),
-      );
+    String? id = prefs.getString('id');
+    String? role = prefs.getString('role');
+
+    if (id != null) {
+      if (role == '0') {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (BuildContext context) => AdminDashboard()),
+        );
+      } else if (role == '1') {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (BuildContext context) => BaseScreen()),
+        );
+      }
     } else {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
       );
     }
   }
+
 
   // Future<void> checkFirstSeen() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();

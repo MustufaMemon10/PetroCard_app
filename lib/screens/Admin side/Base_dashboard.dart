@@ -1,180 +1,75 @@
 import 'package:flutter/material.dart';
-import 'package:petrocardapppp/DrawerComponents/side_menu_tile.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:petrocardapppp/screens/Admin%20side/Manage_Users/Manage_User.dart';
+import 'package:petrocardapppp/screens/Admin%20side/SideBar.dart';
+import 'package:petrocardapppp/screens/Admin%20side/Appbar/Admin_appbar.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../LoginScreen/LoginPage.dart';
+import 'package:petrocardapppp/utilities/styles.dart';
 
 class AdminDashboard extends StatefulWidget {
-  const AdminDashboard({super.key});
+  const AdminDashboard({Key? key}) : super(key: key);
 
   @override
   State<AdminDashboard> createState() => _AdminDashboardState();
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
-
+  bool isSideBarOpen = false;
+  bool isExpanded = false;
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        title: Text('Admin Panel'),
-      ),
-      drawer: Drawer(
-        backgroundColor: AppColors.primaryPurple,
-        child: ListView(
-          children: [
-            DrawerHeader(
-              child: Text('Admin Menu'),
-              decoration: BoxDecoration(
-                color: Colors.blue,
+      body: Stack(
+        children: [
+          SizedBox(
+            height: 1.sh,
+            width: 1.sw,
+            child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isSideBarOpen = false;
+                    isExpanded = false;
+                  });
+                },
+                child: Container(
+                  child: ManageUserScreen(),
+                  color: AppColors.scaffoldBackgroundColor,
+                )),
+          ),
+          AnimatedPositioned(
+            left: 0,
+            right: 0,
+            duration: Duration(milliseconds: 400),
+            child: AdminAppbar(
+              onTap: () {
+                setState(() {
+                  isSideBarOpen = !isSideBarOpen;
+                });
+              },
+            ),
+          ),
+          AnimatedPositioned(
+            left: isSideBarOpen ? -10 : -150, // Adjust this value as needed
+            duration: Duration(milliseconds: 400),
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 400),
+              width: isExpanded ?200 :140,
+              height: MediaQuery.of(context).size.height,
+              child: SideBarMenu(
+                onTap: () {
+                  setState(() {
+                    isExpanded = !isExpanded;
+                  });
+                },
+                isExpanded: isExpanded,
+                selectedIndex: _selectedIndex,
               ),
             ),
-            ListTile(
-              title: Text('Manage Users'),
-              onTap: () {
-                Navigator.pop(context);
-                // Navigate to the manage users screen
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ManageUsersScreen()));
-              },
-            ),
-            ListTile(
-              title: Text('Manage Card Requests'),
-              onTap: () {
-                Navigator.pop(context);
-                // Navigate to the manage card requests screen
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ManageCardRequestsScreen()));
-              },
-            ),
-            ListTile(
-              title: Text('Manage Card List'),
-              onTap: () {
-                Navigator.pop(context);
-                // Navigate to the manage card list screen
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ManageCardListScreen()));
-              },
-            ),
-            SlidermenuItem(title: 'Log Out',
-                iconData: Icons.arrow_back_ios,
-                onTap: (String ) async{
-                  final pref = await SharedPreferences.getInstance();
-                  await pref.clear();
-                  await pref.setBool('seen',true);
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                          (route) => false);}),
-          ],
-        ),
-      ),
-      body: Center(
-        child: Text('Welcome to Admin Panel'),
-      ),
-    );
-  }
-}
-class ManageUsersScreen extends StatefulWidget {
-  const ManageUsersScreen({super.key});
-
-  @override
-  State<ManageUsersScreen> createState() => _ManageUsersScreenState();
-}
-
-class _ManageUsersScreenState extends State<ManageUsersScreen> {
-  var data;
-  var logindata;
-  bool isLoading = false;
-  Future<List<dynamic>> fetchUsers() async {
-    final loginUrl = Uri.parse("https://petrocard.000webhostapp.com/API/users_details.php");
-    final response = await http.get(loginUrl);
-    if (response.statusCode == 200) {
-      final logindata = jsonDecode(response.body);
-      if (!logindata['error']) {
-        final data = logindata['data'];
-        SharedPreferences setpreference = await SharedPreferences.getInstance();
-        setpreference.setString('id', data['id'].toString());
-        setpreference.setString('name', data['name'].toString());
-        setpreference.setString('phone', data['phone'].toString());
-        setpreference.setString('email', data['email'].toString());
-        setpreference.setString('timestamp', data['timestamp'].toString());
-        return [data];
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(logindata['message'].toString()),
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.red,
           ),
-        );
-        // Return an empty list
-        return [];
-      }
-    } else {
-      throw Exception('Failed to load users');
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(
-        title: Text('Manage Users'),
-      ),
-      body: FutureBuilder<List<dynamic>>(
-        future: fetchUsers(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            List<dynamic> users = snapshot.data!;
-            return ListView.builder(
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                var user = users[index];
-                return ListTile(
-                  title: Text(user['name']),
-                  subtitle: Text(user['email']),
-                  // Add more fields as needed
-                );
-              },
-            );
-          }
-        },
-      )
-
-    );
-  }
-}
-
-
-class ManageCardRequestsScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Manage Card Requests'),
-      ),
-      body: Center(
-        child: Text('Manage Card Requests Screen'),
-      ),
-    );
-  }
-}
-
-class ManageCardListScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Manage Card List'),
-      ),
-      body: Center(
-        child: Text('Manage Card List Screen'),
+        ],
       ),
     );
   }

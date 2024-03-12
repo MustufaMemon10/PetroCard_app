@@ -42,7 +42,7 @@ class _BaseScreenState extends State<BaseScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = true;
+    bool isDark = false;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(

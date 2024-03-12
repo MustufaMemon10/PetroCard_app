@@ -18,6 +18,28 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isDark = false;
+  bool isLoading = false;
+  void _startAnimations() async {
+    await Future.delayed(const Duration(seconds: 1));
+    setState(() {
+      isLoading = true;
+    });
+    await Future.delayed(
+        const Duration(seconds: 2));
+    setState(() {
+      isLoading = false;
+    });
+    await Future.delayed(const Duration(seconds: 1));
+    setState(() {
+      isLoading = true;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _startAnimations();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -72,7 +72,16 @@ class _LoginPageState extends State<LoginPage> {
                     builder: (BuildContext context) => AdminDashboard()),
                 (Route<dynamic> route) => false);
           }
-        } else {
+        }else if(response.statusCode == 205){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('BSDK NET on kar'),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red, // Customize background color
+            ),
+          );
+        }
+        else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(logindata['message'].toString()),
