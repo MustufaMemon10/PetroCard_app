@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/Card/Request/Request_Card_Screen.dart';
 import 'package:petrocardapppp/Components/Myappbar.dart';
 import 'package:petrocardapppp/Components/bottom_navigationbar.dart';
 import 'package:petrocardapppp/screens/MainScreen/CardScreen.dart';
 import 'package:petrocardapppp/screens/MainScreen/HomeScreen.dart';
 import 'package:petrocardapppp/screens/MainScreen/Location_screen.dart';
+
 class HomeWidget extends StatefulWidget {
   final bool isDrawerOpen;
   final VoidCallback toggleDrawer;
@@ -23,13 +25,13 @@ class HomeWidget extends StatefulWidget {
 
 class HomeWidgetState extends State<HomeWidget> {
   int _currentIndex = 1;
+  bool hasCard = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body:
-      Stack(
+      body: Stack(
         children: [
           SizedBox(
             height: 1.sh,
@@ -40,7 +42,9 @@ class HomeWidgetState extends State<HomeWidget> {
             top: 0,
             left: 0,
             right: 0,
-            child: Myappbar(isDrawerOpen: widget.isDrawerOpen,isDark: widget.isDark,
+            child: Myappbar(
+              isDrawerOpen: widget.isDrawerOpen,
+              isDark: widget.isDark,
               toggleDrawer: widget.toggleDrawer,
             ),
           ),
@@ -58,20 +62,25 @@ class HomeWidgetState extends State<HomeWidget> {
           ),
         ],
       ),
-
     );
   }
 
   Widget _buildScreenBasedOnIndex() {
-    switch (_currentIndex) {
-      case 0:
-        return const LocationScreen();
-      case 1:
+    if (_currentIndex == 0) {
+      return const LocationScreen();
+    } else if (_currentIndex == 1) {
+      if (hasCard) {
         return const HomeScreen();
-      case 2:
+      } else {
+        return const Request_Screen();
+      }
+    } else if (_currentIndex == 2) {
+      if (hasCard) {
         return const CardScreen();
-      default:
-        return Container();
+      } else {
+        return const Request_Screen();
+      }
     }
+    return Container(); // Return an empty container if index is not 0, 1, or 2
   }
 }

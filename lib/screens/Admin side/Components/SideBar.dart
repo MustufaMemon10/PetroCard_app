@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../utilities/colors.dart';
+import '../../../utilities/colors.dart';
 
 class SideBarMenu extends StatelessWidget {
   SideBarMenu(
@@ -44,12 +42,12 @@ class SideBarMenu extends StatelessWidget {
                   label: Text('userName'),
                 ),
                 NavigationRailDestination(
-                    icon: SvgPicture.asset(
-                      'assets/svgs/analytics-icon.svg',
-                      height: 23.0,
-                      width: 23.0,
+                    icon: Image.asset(
+                      'assets/Icons/activity.png',
+                      height: 28,
+                      width: 28,
                     ),
-                    label: Text('Home')),
+                    label: Text('Dashboard')),
                 NavigationRailDestination(
                     icon: Image.asset(
                       'assets/Icons/group2.png',
@@ -58,12 +56,33 @@ class SideBarMenu extends StatelessWidget {
                     ),
                     label: Text('Users')),
                 NavigationRailDestination(
-                    icon: SvgPicture.asset(
-                      'assets/svgs/credit-card.svg',
+                    icon: Image.asset(
+                      'assets/Icons/interview.png',
+                      height: 25.0,
+                      width: 25.0,
+                    ),
+                    label: Text('Card Request')),
+                NavigationRailDestination(
+                    icon: Image.asset(
+                      'assets/Icons/credit-card.png',
+                      height: 25.0,
+                      width: 25.0,
+                    ),
+                    label: Text('Assign Card')),
+                NavigationRailDestination(
+                    icon: Image.asset(
+                      'assets/Icons/rate.png',
+                      height: 32.0,
+                      width: 32.0,
+                    ),
+                    label: Text('Feedbacks')),
+                NavigationRailDestination(
+                    icon: Image.asset(
+                      'assets/Icons/complain.png',
                       height: 27.0,
                       width: 27.0,
                     ),
-                    label: Text('Card Request')),
+                    label: Text('Complaints')),
                 NavigationRailDestination(
                     icon: Image.asset(
                       'assets/Icons/logout.png',
@@ -76,7 +95,7 @@ class SideBarMenu extends StatelessWidget {
               onDestinationSelected: onTap,
             ),
             Positioned(
-              right: 5,
+              right:0,
               top: 5,
               child: IconButton(
                 onPressed: () {

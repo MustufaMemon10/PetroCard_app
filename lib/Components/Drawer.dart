@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/DrawerComponents/Rating_popup.dart';
 import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/DrawerComponents/side_menu_tile.dart';
@@ -9,13 +8,15 @@ import 'package:petrocardapppp/DrawerComponents/userdetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeDrawer extends StatefulWidget {
-  const HomeDrawer({super.key});
-
+  final Function onTap;
+  const HomeDrawer({
+    required this.onTap,
+    super.key});
   @override
   State<HomeDrawer> createState() => _HomeDrawerState();
 }
 class _HomeDrawerState extends State<HomeDrawer> {
-  int selectedIndex = 0; // Track the selected index
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +36,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 height: 20,
               ),
               const User_details(),
-              SlidermenuItem(title: 'Rate Us', iconData: CupertinoIcons.star, onTap: (String ) { Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => RatingPopup()),
-                      (route) => false);},),
-              SlidermenuItem(title: 'Feedback', iconData: CupertinoIcons.exclamationmark_bubble,  onTap: (String ) { const HomeDrawer();}),
-              SlidermenuItem(title: 'About us', iconData: CupertinoIcons.personalhotspot,  onTap: (String )async { const HomeDrawer();}),
+              SlidermenuItem(title: 'Feedback', iconData: CupertinoIcons.star, onTap: () {widget.onTap();},),
+              SlidermenuItem(title: 'Complaint', iconData: CupertinoIcons.exclamationmark_bubble,  onTap:(){}),
+              SlidermenuItem(title: 'About us', iconData: CupertinoIcons.personalhotspot,  onTap: ()async {}),
               SlidermenuItem(title: 'Log Out',
-                  iconData: Icons.arrow_back_ios,
-                  onTap: (String ) async{
+                  iconData: Icons.logout_rounded,
+                  onTap: () async{
                 final pref = await SharedPreferences.getInstance();
                 await pref.clear();
                 await pref.setBool('seen',true);

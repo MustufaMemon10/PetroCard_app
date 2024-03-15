@@ -62,4 +62,19 @@ class AppStyles {
     fontWeight: FontWeight.w700,
     letterSpacing: 0.4,
   );
+
+  //manage user style
+  static const labelStyle = TextStyle(
+    color: AppColors.secondaryText,
+    fontSize: 16.0,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'RobotoMono',
+  );
+
+  static const valueStyle = TextStyle(
+    color: AppColors.secondaryText,
+    fontSize: 16.0,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'RobotoMono',
+  );
 }

@@ -48,8 +48,8 @@ class _BtnState extends State<Btn> {
   Widget build(BuildContext context) {
     return isLoading
         ? CardLoading(
-            height: 60,
-            width: 70,
+            height: 50.h,
+            width: 50.w,
             borderRadius: BorderRadius.circular(12.0),
           )
         : Column(

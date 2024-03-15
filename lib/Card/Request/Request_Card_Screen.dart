@@ -52,58 +52,12 @@ class _Request_ScreenState extends State<Request_Screen> {
     });
   }
 
-  Future<void> _handleApplication() async {
-    final form = _formKey.currentState;
-    if (form!.validate()) {
-      setState(() {
-        isLoading = true;
-      });
-      final login_url =
-          Uri.parse("https://petrocard.000webhostapp.com/API/apply_card.php");
-      final response = await http.post(login_url, body: {
-        "id": id,
-        "doc_img": _panPhotoPath,
-        "address": _addressController.text,
-        "gender": _selectedGender,
-        "dob": _dobController.text,
-        "pan_number": panNumberController.text,
-      });
-      if (response.statusCode == 200) {
-        logindata = jsonDecode(response.body);
-        data = jsonDecode(response.body)['user'];
-        print(logindata);
-        setState(() {
-          isLoading = false;
-        });
-        if (logindata['error'] == false) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(logindata['message'].toString()),
-              duration: Duration(seconds: 2),
-              backgroundColor: Colors.green, // Customize background color
-            ),
-          );
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => ConfirmationAnimation()),
-              (route) => false);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(logindata['message'].toString()),
-              duration: Duration(seconds: 2),
-              backgroundColor: Colors.red, // Customize background color
-            ),
-          );
-        }
-      }
-    }
-  }
   uploadImageMedia(File fileImage) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final mimeTypeData =
-    lookupMimeType(fileImage.path, headerBytes: [0xFF, 0xD8])?.split('/');
-    final imageUploadRequest =
-    http.MultipartRequest('POST', Uri.parse("https://petrocard.000webhostapp.com/API/apply_card.php"));
+        lookupMimeType(fileImage.path, headerBytes: [0xFF, 0xD8])?.split('/');
+    final imageUploadRequest = http.MultipartRequest('POST',
+        Uri.parse("https://petrocard.000webhostapp.com/API/apply_card.php"));
 
     final file = await http.MultipartFile.fromPath('doc_img', fileImage.path,
         contentType: MediaType(mimeTypeData![0], mimeTypeData[1]));
@@ -115,11 +69,11 @@ class _Request_ScreenState extends State<Request_Screen> {
     print(_dobController.text);
     print(_selectedGender);
     print(panNumberController.text);
-    imageUploadRequest.fields['id']= prefs.getString('id')!;
-    imageUploadRequest.fields['address']= _addressController.text;
-    imageUploadRequest.fields['dob']= _dobController.text;
-    imageUploadRequest.fields['gender']= _selectedGender;
-    imageUploadRequest.fields['pan_number']= panNumberController.text;
+    imageUploadRequest.fields['id'] = prefs.getString('id')!;
+    imageUploadRequest.fields['address'] = _addressController.text;
+    imageUploadRequest.fields['dob'] = _dobController.text;
+    imageUploadRequest.fields['gender'] = _selectedGender;
+    imageUploadRequest.fields['pan_number'] = panNumberController.text;
     imageUploadRequest.files.add(file);
     try {
       _isLoading = true;
@@ -127,7 +81,7 @@ class _Request_ScreenState extends State<Request_Screen> {
       final streamedResponse = await imageUploadRequest.send();
 
       streamedResponse.stream.transform(utf8.decoder).listen((value) {
-        if(streamedResponse.statusCode==200){
+        if (streamedResponse.statusCode == 200) {
           logindata = jsonDecode(value);
           data = jsonDecode(value)['user'];
           print(logindata);
@@ -143,8 +97,9 @@ class _Request_ScreenState extends State<Request_Screen> {
               ),
             );
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => ConfirmationAnimation()),
-                    (route) => false);
+                MaterialPageRoute(
+                    builder: (context) => ConfirmationAnimation()),
+                (route) => false);
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -156,9 +111,9 @@ class _Request_ScreenState extends State<Request_Screen> {
           }
           print(streamedResponse.stream);
           print(value);
-        }else{
+        } else {
           setState(() {
-            _isLoading=false;
+            _isLoading = false;
           });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -175,59 +130,7 @@ class _Request_ScreenState extends State<Request_Screen> {
     }
   }
 
-  // Future<void> _handleApplication() async {
-  //   final form = _formKey.currentState;
-  //   if (form!.validate()) {
-  //     setState(() {
-  //       isLoading = true;
-  //     });
-  //     final login_url =
-  //         Uri.parse("https://petrocard.000webhostapp.com/API/apply_card.php");
-  //     try {
-  //       final response = await http.post(login_url, body: {
-  //         "doc_img": _panPhotoPath,
-  //         "address": _addressController.text,
-  //         "gender": _selectedGender,
-  //         "dob": _dobController.text,
-  //         "pan_number": panNumberController.text,
-  //         "id": id,
-  //       });
-  //       if (response.statusCode == 200) {
-  //         final decodedResponse = jsonDecode(response.body);
-  //         if (decodedResponse['error'] == false) {
-  //           final data = decodedResponse['user'];
-  //           ScaffoldMessenger.of(context).showSnackBar(
-  //             SnackBar(
-  //               content: Text(decodedResponse['message'].toString()),
-  //               duration: Duration(seconds: 2),
-  //               backgroundColor: Colors.green,
-  //             ),
-  //           );
-  //           Navigator.of(context).pushAndRemoveUntil(
-  //             MaterialPageRoute(builder: (context) => ConfirmationAnimation()),
-  //             (route) => false,
-  //           );
-  //         } else {
-  //           ScaffoldMessenger.of(context).showSnackBar(
-  //             SnackBar(
-  //               content: Text(decodedResponse['message'].toString()),
-  //               duration: Duration(seconds: 2),
-  //               backgroundColor: Colors.red,
-  //             ),
-  //           );
-  //         }
-  //       } else {
-  //         print('HTTP request failed with status: ${response.statusCode}');
-  //       }
-  //     } catch (e) {
-  //       print('Error occurred during HTTP request: $e');
-  //     } finally {
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //     }
-  //   }
-  // }
+  //
 
   @override
   void dispose() {
@@ -251,18 +154,19 @@ class _Request_ScreenState extends State<Request_Screen> {
   }
 
   //
-  // bool _isAgeValid(DateTime dob) {
-  //   DateTime now = DateTime.now();
-  //   int age = now.year - dob.year;
-  //   if (now.month < dob.month ||
-  //       (now.month == dob.month && now.day < dob.day)) {
-  //     age--;
-  //   }
-  //   return age >= 18;
-  // }
+  bool _isAgeValid(DateTime dob) {
+    DateTime now = DateTime.now();
+    int age = now.year - dob.year;
+    if (now.month < dob.month ||
+        (now.month == dob.month && now.day < dob.day)) {
+      age--;
+    }
+    return age >= 18;
+  }
 
   final ImagePicker _picker = ImagePicker();
   File? _image;
+
   Future _getImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
@@ -347,14 +251,17 @@ class _Request_ScreenState extends State<Request_Screen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InkWell(
-                        onTap:(){ Navigator.pop(context);},
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                               color: AppColors.transparent,
-                            shape: BoxShape.circle,
-                            border: Border.all(width:1.0,color: AppColors.darkPurple)
-                          ),
-                          child: Icon(Icons.arrow_back,color: AppColors.darkPurple),
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                  width: 1.0, color: AppColors.darkPurple)),
+                          child: Icon(Icons.arrow_back,
+                              color: AppColors.darkPurple),
                         ),
                       )
                     ],
@@ -705,167 +612,72 @@ class _Request_ScreenState extends State<Request_Screen> {
                             SizedBox(
                               height: 20.0,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  'Payment Option:',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 24.0),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 15.0),
-                                  child: Text(
-                                    'Your UPI Id',
+                                Text('Add your PAN',
                                     style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0),
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                TextFormField(
-                                  controller: upiIdController,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Upi Id required';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.grey[200],
-                                    hintStyle: const TextStyle(
-                                        color: AppColors.secondaryText,
-                                        letterSpacing: 0.7),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 10.0, horizontal: 20.0),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: AppColors.darkPurple),
-                                      // Customize focused border color
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: AppColors.red),
-                                      // Customize error border color
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    labelText: 'Enter UPI Id',
-                                    floatingLabelStyle:
-                                        TextStyle(color: AppColors.darkPurple),
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                        borderSide: BorderSide.none),
-                                    suffix: _isLoading
-                                        ? SizedBox(
-                                            width: 20.0,
-                                            height: 20.0,
-                                            child: CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                Colors.blue,
-                                              ),
-                                              strokeWidth: 1.5,
-                                              color: AppColors.accentColor,
-                                            ),
-                                          )
-                                        : InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                _isLoading = !_isLoading;
-                                              });
-                                            },
-                                            child: Text(
-                                              'Verify',
-                                              style: TextStyle(
-                                                  fontSize: 12.0,
-                                                  color: AppColors.accentColor,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                  ),
-                                ),
+                                        color: AppColors.black,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16.0)),
                                 SizedBox(
-                                  height: 20,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text('Add your PAN',
-                                        style: TextStyle(
-                                            color: AppColors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 16.0)),
-                                    SizedBox(
-                                      width: 15.0,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        FocusScope.of(context).unfocus();
-                                        _getImage();
-                                      },
-                                      child: Container(
-                                        height: 35,
-                                        width: 70,
-                                        padding: EdgeInsets.all(10.0),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.darkPurple,
-                                          borderRadius:
-                                              BorderRadius.circular(28.0),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'Upload',
-                                            style: TextStyle(
-                                                color: AppColors.white,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 14.0),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 20,
+                                  width: 15.0,
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    uploadImageMedia(_image!);
                                     FocusScope.of(context).unfocus();
+                                    _getImage();
                                   },
-                                  splashColor:
-                                      AppColors.accentColor.withOpacity(0.2),
-                                  child: Center(
-                                    child: Container(
-                                      height: 35.h,
-                                      width: 200.w,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.darkPurple,
-                                        borderRadius:
-                                            BorderRadius.circular(50.r),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "Submit",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              letterSpacing: 0.5,
-                                              fontSize: 14.sp),
-                                        ),
+                                  child: Container(
+                                    height: 35,
+                                    width: 70,
+                                    padding: EdgeInsets.all(10.0),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.darkPurple,
+                                      borderRadius: BorderRadius.circular(28.0),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Upload',
+                                        style: TextStyle(
+                                            color: AppColors.white,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14.0),
                                       ),
                                     ),
                                   ),
-                                ),
+                                )
                               ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                uploadImageMedia(_image!);
+                                FocusScope.of(context).unfocus();
+                              },
+                              splashColor:
+                                  AppColors.accentColor.withOpacity(0.2),
+                              child: Center(
+                                child: Container(
+                                  height: 35.h,
+                                  width: 200.w,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.darkPurple,
+                                    borderRadius: BorderRadius.circular(50.r),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Submit",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          letterSpacing: 0.5,
+                                          fontSize: 14.sp),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ]),
                     ),

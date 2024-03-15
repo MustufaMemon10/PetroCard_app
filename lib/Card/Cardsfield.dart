@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Widgets/custombtns_widget.dart';
 import '../screens/MainScreen/Card_balance screen/Balance_screen.dart';
 import '../utilities/colors.dart';
-import 'Request/Request_card.dart';
+import 'Request/Request_Card_Screen.dart';
 
 class Cardsfield extends StatefulWidget {
   Cardsfield({Key? key}) : super(key: key);
@@ -25,7 +25,6 @@ class _CardsfieldState extends State<Cardsfield> {
   String email = '';
   String card_num = '';
   String validate = '';
-  String balance = '';
 
   Future<void> getCardDetails() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
@@ -49,38 +48,6 @@ class _CardsfieldState extends State<Cardsfield> {
         PetroMainCard(userName: userName,card_num: card_num,validate: validate,),
         SizedBox(height: 20.0.h,),
         Appbtns(),
-        // SizedBox(
-        //   height: 15,
-        // ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //   children: [
-        //     btn(
-        //       onTap: () {
-        //         Navigator.push(
-        //           context,
-        //           MaterialPageRoute(
-        //             builder: (context) => BalanceScreen(),
-        //           ),
-        //         );
-        //       },
-        //       icon: FontAwesomeIcons.moneyCheck,
-        //       text: 'Add Money',
-        //     ),
-        //     btn(
-        //       onTap: () {
-        //         Navigator.push(
-        //           context,
-        //           MaterialPageRoute(
-        //             builder: (context) => BalanceScreen(),
-        //           ),
-        //         );
-        //       },
-        //       icon: FontAwesomeIcons.creditCard,
-        //       text: 'Balance',
-        //     ),
-        //   ],
-        // ),
       ],
     );
   }

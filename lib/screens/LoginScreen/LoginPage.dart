@@ -13,7 +13,7 @@ import 'package:petrocardapppp/screens//Forgot Passwordscreen/Check Number.dart'
 import 'package:petrocardapppp/screens/LoginScreen/Signup.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 
-import '../Admin side/Base_dashboard.dart';
+import '../Admin side/Components/Base_dashboard.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -47,7 +47,6 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200) {
         logindata = jsonDecode(response.body);
         data = jsonDecode(response.body)['user'];
-        print(data);
         setState(() {
           isLoading = false;
         });
@@ -98,6 +97,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    Color bcolor = AppColors.lightPurple;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
@@ -222,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                                             BorderRadius.circular(20.r),
                                         color: AppColors.white,
                                         border: Border.all(
-                                            color: AppColors.lightPurple),
+                                            color: bcolor),
                                         boxShadow: const [
                                           BoxShadow(
                                             color: AppColors.lightPurple,
@@ -371,25 +371,18 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Positioned.fill(
               child: Container(
-                color: isLoading ? AppColors.black.withOpacity(0.4) : null,
+                color: isLoading ? AppColors.white.withOpacity(0.5) : null,
                 child: isLoading
                     ? Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            LoadingAnimationWidget.flickr(
-                              leftDotColor: AppColors.darkPurple,
-                              rightDotColor: AppColors.white,
+                            LoadingAnimationWidget.halfTriangleDot(
+                              color: AppColors.darkPurple,
+                              // leftDotColor: AppColors.darkPurple,
+                              // rightDotColor: AppColors.white,
                               size: 50,
                             ),
-                            Text(
-                              'Please wait..',
-                              style: TextStyle(
-                                color: AppColors.black,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16.0
-                              )
-                            )
                           ],
                         ),
                       )

@@ -5,7 +5,7 @@ import 'package:petrocardapppp/utilities/colors.dart';
 class SlidermenuItem extends StatelessWidget {
   final String title;
   final IconData iconData;
-  final Function(String)? onTap;
+  final VoidCallback onTap;
   final bool isSetting;
 
   const SlidermenuItem(
@@ -29,7 +29,7 @@ class SlidermenuItem extends StatelessWidget {
                 style: const TextStyle(
                     color: Colors.black, fontFamily: 'RobotoMono')),
             leading: Icon(iconData, color: AppColors.black),
-            onTap: () => onTap?.call(title)),
+            onTap: onTap),
       ],
     );
   }

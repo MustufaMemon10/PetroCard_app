@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:petrocardapppp/screens/Admin%20side/Assign_Card/AssingCardScreen.dart';
+import 'package:petrocardapppp/screens/Admin%20side/Components/SideBar.dart';
 import 'package:petrocardapppp/screens/Admin%20side/DashBoard/MainDashboard.dart';
+import 'package:petrocardapppp/screens/Admin%20side/Feedback/FeedbackScreen.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Manage_Users/Manage_User.dart';
-import 'package:petrocardapppp/screens/Admin%20side/SideBar.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Appbar/Admin_appbar.dart';
-import 'package:petrocardapppp/screens/MainScreen/HomeScreen.dart';
-import 'package:petrocardapppp/utilities/colors.dart';
-import 'package:petrocardapppp/utilities/styles.dart';
+import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Manage_Card_request/Manage_Request.dart';
+import '../Manage_Card_request/Manage_Request.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({Key? key}) : super(key: key);
@@ -58,12 +58,20 @@ class _AdminDashboardState extends State<AdminDashboard> {
               width: isExpanded ?200 :115,
               height: MediaQuery.of(context).size.height,
               child: SideBarMenu(
-                onTap: (index) {
+                onTap: (index) async {
+                  if(index == 7){
+                    final pref = await SharedPreferences.getInstance();
+                    await pref.clear();
+                    await pref.setBool('seen',true);
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                            (route) => false);}
                   setState(() {
                     _selectedIndex = index;
                     currentIndex = index;
                     setState(() {
                       isSideBarOpen = false;
+                      isExpanded = false;
                     });
                   });
                 },
@@ -84,8 +92,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   Widget _buildScreenBasedOnIndex() {
     switch (currentIndex) {
-      case 0:
-        return MainDashBoardScreen();
       case 1:
         return MainDashBoardScreen();
       case 2:
@@ -93,6 +99,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
       case 3:
         return ManageRequestsScreen();
       case 4:
+        return AssingCardScreen();
+      case 5:
+        return FeedbackScreen();
+      case 6:
         return ManageRequestsScreen();
       default:
         return Container();

@@ -33,12 +33,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(15.0.r),
-                      boxShadow: const[
-                        BoxShadow(
-                            color: AppColors.lightPurple,
-                            offset: Offset(4 , 6)
-                        ),
-                      ]
+                      border: Border.all(color: AppColors.black.withOpacity(0.7),width: 0.8)
                   ),
                   child: TextField(
                     decoration: InputDecoration(
@@ -53,12 +48,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(15.0.r),
-                      boxShadow: const[
-                        BoxShadow(
-                            color: AppColors.lightPurple,
-                            offset: Offset(4 , 6)
-                        ),
-                      ]
+                      border: Border.all(color: AppColors.black.withOpacity(0.7),width: 0.8),
                   ),
                   child: TextField(
                     decoration: InputDecoration(
@@ -70,23 +60,25 @@ class _LocationScreenState extends State<LocationScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 10.0.h,
+                  height: 20.0.h,
                 ),
                 Container(
                   height: 35.h,
                   width: 0.6.sw,
                   decoration: BoxDecoration(
-                    color: AppColors.lightPurple,
-                    borderRadius: BorderRadius.circular(15.0.r),
-                    boxShadow: const[
-                      BoxShadow(
-                        color: AppColors.black,
-                        offset: Offset(4 , 6)
-                      ),
-                    ]
+                    color: AppColors.darkPurple.withOpacity(0.8),
+                    borderRadius: BorderRadius.circular(30.0.r),
+                    border: Border.all(color: AppColors.white.withOpacity(0.5),width: 0.8)
                   ),
-                  child: Text(
-                    ""
+                  child: Center(
+                    child: Text(
+                      'Search',
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700
+                      ),
+                    ),
                   ),
                 )
               ],

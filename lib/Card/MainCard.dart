@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 import 'package:card_loading/card_loading.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +23,7 @@ class PetroMainCard extends StatefulWidget {
 }
 
 class _PetroMainCardState extends State<PetroMainCard> {
-  bool isDark = true;
+  bool isDark = false;
   bool isBalanceHidden = true;
   String id = '';
   var data;
@@ -41,11 +42,10 @@ class _PetroMainCardState extends State<PetroMainCard> {
       if (response.statusCode == 200) {
         logindata = jsonDecode(response.body);
         data = logindata['data'];
-        print(logindata);
 
         if (!logindata['error']) {
           SharedPreferences setpreference =
-              await SharedPreferences.getInstance();
+          await SharedPreferences.getInstance();
           setpreference.setString('card_id', data[0]['card_id'].toString());
           setpreference.setString('card_num', data[0]['card_num'].toString());
           setpreference.setString('addedtime', data[0]['addedtime'].toString());
@@ -79,7 +79,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
     setState(() {
       id = setpreference.getString('id') ?? '';
     });
-      await fetchCardDetails();
+    await fetchCardDetails();
   }
 
   @override
@@ -92,134 +92,123 @@ class _PetroMainCardState extends State<PetroMainCard> {
   Widget build(BuildContext context) {
     return isLoading
         ? CardLoading(
-            height: 170.h,
-            borderRadius: BorderRadius.circular(20.0),
-            animationDuration: Duration(seconds: 2),
-            animationDurationTwo: Duration(seconds: 2),
-            cardLoadingTheme: CardLoadingTheme.defaultTheme,
-            curve: Curves.bounceOut,
-            width: 380.w,
-          )
+      height: 190.h,
+      borderRadius: BorderRadius.circular(20.0),
+      animationDuration: Duration(seconds: 2),
+      animationDurationTwo: Duration(seconds: 2),
+      cardLoadingTheme: CardLoadingTheme.defaultTheme,
+      curve: Curves.bounceOut,
+      width: 380.w,
+    )
         : Container(
-            height: 170.h,
-            width: 380.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              border: Border.all(
-                  width: 0.4, color: AppColors.white.withOpacity(0.7)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  spreadRadius: 10,
-                  blurRadius: 7,
-                  offset: Offset(0, 7),
+      height: 0.250.sh,
+      width: 380.w,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0.r),
+        border: Border.all(
+            width: 0.4, color: AppColors.white.withOpacity(0.7)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 10,
+            blurRadius: 7,
+            offset: Offset(0, 7),
+          ),
+        ],
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark
+              ? [
+            AppColors.darkPurple.withOpacity(1),
+            AppColors.darkPurple.withOpacity(0.3),
+          ]
+              : [
+            AppColors.lightPurple2.withOpacity(1),
+            AppColors.lightPurple2.withOpacity(0.3),
+          ],
+          stops: [0.0, 1.0],
+        ),
+      ),
+      padding: EdgeInsets.symmetric(vertical: 5.0.h, horizontal: 10.0.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Image.asset(
+                'assets/Icons/card.png',
+                height: 80,
+                width: 80.0,
+              ),
+            ],
+          ),
+          Padding(
+            padding:  EdgeInsets.only(bottom: 12.0.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  'assets/Icons/chip (2).png',
+                  height: 35.0.h,
+                  width: 50.0.h,
+                  color: Colors.white70,
+                ),
+                Padding(
+                  padding:  EdgeInsets.only(right: 8.0.w),
+                  child: Image.asset(
+                    'assets/Icons/contactless.png',
+                    height: 35.0.h,
+                    color: isDark
+                        ? AppColors.black.withOpacity(0.7)
+                        : AppColors.white.withOpacity(0.5),
+                  ),
                 ),
               ],
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: isDark
-                    ? [
-                        AppColors.darkPurple.withOpacity(1),
-                        AppColors.darkPurple.withOpacity(0.3),
-                      ]
-                    : [
-                        AppColors.lightPurple2.withOpacity(1),
-                        AppColors.lightPurple2.withOpacity(0.3),
-                      ],
-                stops: [0.0, 1.0],
-              ),
             ),
-            padding: EdgeInsets.symmetric(vertical: 7.0, horizontal: 10.0),
+          ),
+          Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 5.0.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  widget.card_num,
+                  style: TextStyle(
+                    fontSize: 19.0.sp,
+                    color: isDark
+                        ? AppColors.transparent
+                        : AppColors.black.withOpacity(0.5),
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'RobotoMono',
+                    letterSpacing: 0.9,
+                  ),
+                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset(
-                      'assets/Icons/card.png',
-                      height: 80,
-                      width: 80.0,
+                    Text(
+                      widget.userName,
+                      style: TextStyle(
+                        fontSize: 19.0.sp,
+                        color: isDark
+                            ? AppColors.transparent
+                            : AppColors.grey.withOpacity(0.5),
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'RobotoMono',
+                        letterSpacing: 0.9,
+                      ),
                     ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.asset(
-                        'assets/Icons/chip.png',
-                        height: 35.0,
-                        width: 50.0,
-                        color: Colors.black,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Image.asset(
-                          'assets/Icons/contactless.png',
-                          height: 35.0,
-                          color: isDark
-                              ? AppColors.white.withOpacity(0.5)
-                              : AppColors.black.withOpacity(0.5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 5.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.card_num,
-                        style: TextStyle(
-                          fontSize: 19.0,
-                          color: isDark
-                              ? AppColors.transparent
-                              : AppColors.black.withOpacity(0.5),
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'RobotoMono',
-                          letterSpacing: 0.9,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            widget.userName,
-                            style: TextStyle(
-                              fontSize: 19.0,
-                              color: isDark
-                                  ? AppColors.transparent
-                                  : AppColors.black.withOpacity(0.5),
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'RobotoMono',
-                              letterSpacing: 0.9,
-                            ),
-                          ),
-                          Text(
-                            widget.validate,
-                            style: TextStyle(
-                              fontSize: 19.0,
-                              color: isDark
-                                  ? AppColors.transparent
-                                  : AppColors.black.withOpacity(0.5),
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'RobotoMono',
-                              letterSpacing: 0.9,
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
 
+                  ],
+                )
               ],
             ),
-          );
+          ),
+
+        ],
+      ),
+    );
   }
 }
