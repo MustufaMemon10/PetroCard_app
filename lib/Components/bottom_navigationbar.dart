@@ -70,7 +70,7 @@ class _MyNavBarState extends State<MyNavBar> {
                     width: index == _currentindex ? width * .32 : 0,
                     decoration: BoxDecoration(
                       color: index == _currentindex
-                          ? AppColors.lightPurple.withOpacity(.2)
+                          ? AppColors.lightPurple2.withOpacity(.2)
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(50),
                     ),

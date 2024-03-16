@@ -31,18 +31,17 @@ class _PetroMainCardState extends State<PetroMainCard> {
   bool isLoading = false;
 
   Future<void> fetchCardDetails() async {
-    setState(() {
-      isLoading = true;
-    });
     try {
       final loginUrl = Uri.parse(
           "https://petrocard.000webhostapp.com/API/card_data_fetchapi.php?id=$id");
       final response = await http.get(loginUrl);
 
       if (response.statusCode == 200) {
+        setState(() {
+          isLoading = true;
+        });
         logindata = jsonDecode(response.body);
         data = logindata['data'];
-
         if (!logindata['error']) {
           SharedPreferences setpreference =
           await SharedPreferences.getInstance();
@@ -52,6 +51,9 @@ class _PetroMainCardState extends State<PetroMainCard> {
           setpreference.setString('validate', data[0]['validate'].toString());
           setpreference.setString('balance', data[0]['balance'].toString());
           setpreference.setString('status', data[0]['status'].toString());
+          setState(() {
+            isLoading = false;
+          });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -67,10 +69,6 @@ class _PetroMainCardState extends State<PetroMainCard> {
       }
     } catch (error) {
       print('Error fetching data: $error');
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
     }
   }
 
@@ -125,7 +123,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
           ]
               : [
             AppColors.lightPurple2.withOpacity(1),
-            AppColors.lightPurple2.withOpacity(0.3),
+            AppColors.lightPurple2.withOpacity(0.4),
           ],
           stops: [0.0, 1.0],
         ),

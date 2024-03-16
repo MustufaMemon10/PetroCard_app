@@ -30,9 +30,9 @@ class HomeWidget extends StatefulWidget {
 class HomeWidgetState extends State<HomeWidget> {
   int _currentIndex = 1;
   bool hasCard = true;
-  String? userId;
+  String userId = '';
   Future<void> checkHasCard(String id) async {
-    bool cardStatus = await ApiHelper.checkHasCard(userId!);
+    bool cardStatus = await ApiHelper.checkHasCard(userId);
     setState(() {
       hasCard = cardStatus;
     });

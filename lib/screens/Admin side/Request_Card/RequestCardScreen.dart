@@ -14,9 +14,9 @@ class RequestCardScreen extends StatefulWidget {
 
 class _RequestCardScreenState extends State<RequestCardScreen> {
   bool hasRequested = false;
-  String? id;
+  String userId = '';
   Future<void> checkHasRequested(String id) async {
-    bool requestStatus = await ApiHelper.checkRequested(id!);
+    bool requestStatus = await ApiHelper.checkRequested(userId);
     setState(() {
       hasRequested = requestStatus;
     });
@@ -24,9 +24,9 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
   Future<void> getId() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     setState(() {
-      id = setpreference.getString('id') ?? '';
+      userId = setpreference.getString('id') ?? '';
     });
-    await checkHasRequested(id!);
+    await checkHasRequested(userId);
   }
   @override
   Widget build(BuildContext context) {

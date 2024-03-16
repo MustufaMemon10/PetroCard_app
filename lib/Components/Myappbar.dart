@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Card/Request/Request_Card_Screen.dart';
 import 'package:petrocardapppp/Components/UserIcon.dart';
+import 'package:petrocardapppp/screens/API/ApiHelper.dart';
 import 'package:petrocardapppp/screens/MainScreen/User_screen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/utilities/styles.dart';
@@ -13,6 +14,7 @@ class Myappbar extends StatefulWidget {
   final bool isDrawerOpen;
   final VoidCallback toggleDrawer;
   final bool isDark;
+
   const Myappbar({
     Key? key,
     required this.isDark,
@@ -26,14 +28,25 @@ class Myappbar extends StatefulWidget {
 
 class _MyappbarState extends State<Myappbar> {
   String userName = '';
+  String userId = '';
   bool _showPetroApp = false;
   bool _showWelcomeText = false;
+  bool hasCard = false;
 
-  getUserName() async {
+  Future<void> checkHasCard(String id) async {
+    bool cardStatus = await ApiHelper.checkHasCard(userId);
+    setState(() {
+      hasCard = cardStatus;
+    });
+  }
+
+  getUserDetails() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     setState(() {
-      userName = setpreference.getString('name')!;
+      userName = setpreference.getString('name') ?? '';
+      userId = setpreference.getString('id') ?? '';
     });
+    await checkHasCard(userId);
   }
 
   void _startAnimations() async {
@@ -54,7 +67,7 @@ class _MyappbarState extends State<Myappbar> {
 
   @override
   void initState() {
-    getUserName();
+    getUserDetails();
     super.initState();
     _startAnimations();
   }
@@ -81,18 +94,22 @@ class _MyappbarState extends State<Myappbar> {
                       children: [
                         InkWell(
                           onTap: widget.toggleDrawer,
-                          splashColor: widget.isDark ? AppColors.darkAppBarSplashColor.withOpacity(0.2) : AppColors.accentColor.withOpacity(0.2),
+                          splashColor: widget.isDark
+                              ? AppColors.darkAppBarSplashColor.withOpacity(0.2)
+                              : AppColors.accentColor.withOpacity(0.2),
                           child: Container(
                             height: 40,
                             width: 40,
                             decoration: widget.isDrawerOpen
                                 ? null
                                 : BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(15.0),
-                                border: Border.all(
-                                    width: 0.4.w,
-                                    color: widget.isDark ? AppColors.darkAppBarBorderColor : Colors.black.withOpacity(0.5))),
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    border: Border.all(
+                                        width: 0.4.w,
+                                        color: widget.isDark
+                                            ? AppColors.darkAppBarBorderColor
+                                            : Colors.black.withOpacity(0.5))),
                             child: IconButton(
                               icon: const Icon(
                                 CupertinoIcons.line_horizontal_3,
@@ -104,29 +121,27 @@ class _MyappbarState extends State<Myappbar> {
                         ),
                         Row(
                           children: [
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (context) => const Request_Screen(),
-                                  ),
-                                );
-                              },
-                              splashColor: widget.isDark ? AppColors.darkAppBarSplashColor.withOpacity(0.2) : AppColors.grey.withOpacity(0.2),
-                              child: Container(
-                                height: 35,
-                                width: 35.0,
-                                decoration: BoxDecoration(
-                                    color: AppColors.white,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                        width: 1.w,
-                                        color: widget.isDark ? AppColors.darkAppBarBorderColor : Colors.black.withOpacity(0.5))),
-                                child: Icon(Icons.add),
-                              ),
+                            if (hasCard)
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) =>
+                                          const Request_Screen(),
+                                    ),
+                                  );
+                                },
+                                splashColor: widget.isDark
+                                    ? AppColors.darkAppBarSplashColor
+                                        .withOpacity(0.2)
+                                    : AppColors.grey.withOpacity(0.2),
+                                child: Image.asset('assets/Icons/up-and-down (1).png',height: 28,width: 35,)
+                                ),
+
+                            SizedBox(
+                              width: 10.0,
                             ),
-                            SizedBox(width: 10.0,),
                             InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -136,13 +151,15 @@ class _MyappbarState extends State<Myappbar> {
                                   ),
                                 );
                               },
-                              splashColor: widget.isDark ? AppColors.darkAppBarSplashColor.withOpacity(0.2) : AppColors.grey.withOpacity(0.2),
+                              splashColor: widget.isDark
+                                  ? AppColors.darkAppBarSplashColor
+                                      .withOpacity(0.2)
+                                  : AppColors.grey.withOpacity(0.2),
                               child: UserIcon(),
                             ),
                           ],
                         ),
-                      ]
-                  ),
+                      ]),
                 ),
                 AnimatedPositioned(
                   top: _showWelcomeText ? -50 : 0,
@@ -155,10 +172,13 @@ class _MyappbarState extends State<Myappbar> {
                       alignment: Alignment.topCenter,
                       child: Text(
                         'Petro App',
-                        style:TextStyle(   fontSize: 20.0,
+                        style: TextStyle(
+                          fontSize: 20.0,
                           fontWeight: FontWeight.w600,
-                          color: widget.isDark ? AppColors.darkPrimaryTitle : AppColors.black,
-                      ),
+                          color: widget.isDark
+                              ? AppColors.darkPrimaryTitle
+                              : AppColors.black,
+                        ),
                       ),
                     ),
                   ),
@@ -174,26 +194,29 @@ class _MyappbarState extends State<Myappbar> {
                       alignment: Alignment.topCenter,
                       child: userName.isNotEmpty
                           ? Text(
-                        'Welcome ' +
-                            userName
-                                .split(' ')[0]
-                                .substring(0, 1)
-                                .toUpperCase() +
-                            userName.split(' ')[0].substring(1),
-                        // Start from index 1 to get the rest of the string
-                        style:TextStyle( fontSize: 20.0,
-                          fontWeight: FontWeight.w600,
-                          color: widget.isDark ? AppColors.darkPrimaryTitle : AppColors.black,
-                        ),
-                      )
+                              'Welcome ' +
+                                  userName
+                                      .split(' ')[0]
+                                      .substring(0, 1)
+                                      .toUpperCase() +
+                                  userName.split(' ')[0].substring(1),
+                              // Start from index 1 to get the rest of the string
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w600,
+                                color: widget.isDark
+                                    ? AppColors.darkPrimaryTitle
+                                    : AppColors.black,
+                              ),
+                            )
                           : null,
                     ),
                   ),
                 ),
               ],
             ),
-          ),)
-        ,
+          ),
+        ),
       ),
     );
   }

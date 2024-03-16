@@ -198,8 +198,9 @@ class _UserScreenState extends State<UserScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: isDark
                             ? AppColors.darkPurple
-                            : AppColors.translightPurple,
-                        side: BorderSide.none,
+                            : AppColors.white,
+                        elevation: 0,
+                        side: BorderSide(width: 0.8,color: isDark ? AppColors.white:AppColors.black),
                         shape: StadiumBorder(),
                       ),
                       child: Text(
