@@ -93,7 +93,7 @@
               pinned: true,
               centerTitle: false,
               stretch: true,
-              expandedHeight: 0.510.sh,
+              expandedHeight: 0.540.sh,
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
                   padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0.w),

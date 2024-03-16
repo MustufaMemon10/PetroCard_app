@@ -130,6 +130,11 @@ class _Request_ScreenState extends State<Request_Screen> {
   }
 
   //
+@override
+  void initState() {
+    getUserName();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -361,6 +366,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                             ),
                             TextFormField(
                                 controller: _emailController,
+                                readOnly: true,
                                 textInputAction: TextInputAction.next,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -413,6 +419,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                                 textCapitalization:
                                     TextCapitalization.characters,
                                 textInputAction: TextInputAction.next,
+                                readOnly: true,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Phone Number is required';
@@ -570,9 +577,9 @@ class _Request_ScreenState extends State<Request_Screen> {
                             SizedBox(
                               height: 10.0,
                             ),
+                            Text("Gender"),
                             Row(
                               children: [
-                                Text("Gender"),
                                 Radio(
                                   value: 'Male',
                                   activeColor: AppColors.darkPurple,

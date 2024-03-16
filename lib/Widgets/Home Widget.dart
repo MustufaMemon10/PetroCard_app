@@ -7,6 +7,7 @@ import 'package:petrocardapppp/screens/MainScreen/HomeScreen.dart';
 import 'package:petrocardapppp/screens/MainScreen/Location_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Card/Request/Request_Card_Screen.dart';
 import '../Card/Request_Card/RequestCardScreen.dart';
 import '../screens/API/ApiHelper.dart';
 
@@ -99,9 +100,9 @@ class HomeWidgetState extends State<HomeWidget> {
       case 0:
         return const LocationScreen();
       case 1:
-        return hasCard ? const HomeScreen() : const RequestCardScreen();
+        return hasCard ? const Request_Screen() : const Request_Screen();
       case 2:
-        return hasCard ? const CardScreen() : const RequestCardScreen();
+        return hasCard ? const RequestCardScreen() : const RequestCardScreen();
       default:
         return Container();
     }

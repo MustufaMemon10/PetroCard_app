@@ -34,11 +34,11 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
         isLoading = true;
       });
       final response = await http.get(Uri.parse(
-          'https://petrocard.000webhostapp.com/API/Admin/fetch_cardrequestapi.php'));
+          'https://petrocard.000webhostapp.com/API/Admin/fetchallrequests.php'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         if (responseData['error'] == false) {
-          final List<dynamic> RequestsData = responseData['data'];
+          final List<dynamic> RequestsData = responseData['requests'];
           setState(() {
             requestData = RequestsData.cast<Map<String, dynamic>>();
             isAdditionalCardVisibleList =
@@ -48,6 +48,7 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
           setState(() {
             isLoading = false;
           });
+          print('Error fetching user data: ${response.body}');
         } else {
           print('Error fetching user data: ${responseData['message']}');
         }
@@ -130,7 +131,6 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                             children: [
                               SingleChildScrollView(
                                 child: Container(
-                                  height: 270.0,
                                   width: 1.sw,
                                   margin: EdgeInsets.symmetric(
                                       vertical: 10.0, horizontal: 10.0),
@@ -283,6 +283,7 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                               padding:
                                                   EdgeInsets.only(left: 20.0),
                                               child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     'PAN Number:',
@@ -296,17 +297,17 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                                     ),
                                                   ),
                                                   SizedBox(width: 5.0),
-                                                  Text(
-                                                    '${request['pan_number']}',
-                                                    style: TextStyle(
-                                                      color: AppColors
-                                                          .secondaryText,
-                                                      fontSize: 16.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily: 'RobotoMono',
-                                                    ),
-                                                  ),
+                                                 Expanded(child:  Text(
+                                                   '${request['pan_number']}',
+                                                   style: TextStyle(
+                                                     color: AppColors
+                                                         .secondaryText,
+                                                     fontSize: 16.0,
+                                                     fontWeight:
+                                                     FontWeight.bold,
+                                                     fontFamily: 'RobotoMono',
+                                                   ),
+                                                 ),)
                                                 ],
                                               ),
                                             ),
@@ -369,10 +370,12 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                                   SizedBox(width: 30.0),
                                                   GestureDetector(
                                                     onTap: () {
-                                                      setState(() {
-                                                        isClicked[index] =
-                                                            !isClicked[index];
-                                                      });
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) => ViewImage(imageUrl: imageUrl),
+                                                        ),
+                                                      );
                                                     },
                                                     child: Container(
                                                       height: 20.0.h,
@@ -618,6 +621,7 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                                               15.0),
                                                     ),
                                                     child: Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .spaceEvenly,
@@ -632,16 +636,16 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                                                 FontWeight.bold,
                                                           ),
                                                         ),
-                                                        Text(
+                                                        Expanded(child: Text(
                                                           '${request['email']}',
                                                           style: TextStyle(
                                                             color: AppColors
                                                                 .darkPurple,
                                                             fontSize: 16,
                                                             fontWeight:
-                                                                FontWeight.bold,
+                                                            FontWeight.bold,
                                                           ),
-                                                        ),
+                                                        ),)
                                                       ],
                                                     ),
                                                   ),
@@ -780,3 +784,32 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
               ));
   }
 }
+
+class ViewImage extends StatefulWidget {
+  final String imageUrl;
+  ViewImage({required this.imageUrl,});
+
+  @override
+  State<ViewImage> createState() => _ViewImageState();
+}
+
+class _ViewImageState extends State<ViewImage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('View Image',style: TextStyle(color: Colors.black),),
+      ),
+      body: PhotoView(
+        imageProvider:
+        NetworkImage(widget.imageUrl),
+        loadingBuilder:
+            (context, event) => Center(
+          child:
+          CircularProgressIndicator(),
+        ),
+      ),
+    );
+  }
+}
+
