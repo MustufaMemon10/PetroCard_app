@@ -60,14 +60,14 @@ class _MyNavBarState extends State<MyNavBar> {
                   duration: const Duration(seconds: 1),
                   curve: Curves.fastLinearToSlowEaseIn,
                   width: index == _currentindex
-                      ? width * .32
+                      ? width * .36
                       : width * .18,
                   alignment: Alignment.center,
                   child: AnimatedContainer(
                     duration: const Duration(seconds: 1),
                     curve: Curves.fastLinearToSlowEaseIn,
                     height: index == _currentindex ? width * .12 : 0,
-                    width: index == _currentindex ? width * .32 : 0,
+                    width: index == _currentindex ? width * .40 : 0,
                     decoration: BoxDecoration(
                       color: index == _currentindex
                           ? AppColors.lightPurple2.withOpacity(.2)
@@ -81,7 +81,7 @@ class _MyNavBarState extends State<MyNavBar> {
                   curve: Curves.fastLinearToSlowEaseIn,
                   width: index == _currentindex
                       ? width * .31
-                      : width * .18,
+                      : width * .20,
                   alignment: Alignment.center,
                   child: Stack(
                     children: [
