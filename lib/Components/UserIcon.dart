@@ -4,7 +4,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utilities/colors.dart';
 
 class UserIcon extends StatefulWidget {
-  const UserIcon({super.key});
+   bool isDark= false;
+   UserIcon({
+    Key ? key,
+    required this.isDark,
+    }): super(key: key);
 
   @override
   State<UserIcon> createState() => _UserIconState();
@@ -29,7 +33,7 @@ class _UserIconState extends State<UserIcon> {
       height: 35,
       width: 35.0,
       decoration: BoxDecoration(
-          color: AppColors.white,
+          color: widget.isDark ? AppColors.black : AppColors.white,
           shape: BoxShape.circle,
       ),
       child: Gender == 'Male'?
@@ -37,7 +41,7 @@ class _UserIconState extends State<UserIcon> {
           :Gender == 'Female'
           ? Image.asset('assets/Icons/woman.png'):
       Gender == ''?
-      Image.asset('assets/Icons/usericon.png',)
+      Image.asset('assets/Icons/usericon.png',color: widget.isDark? AppColors.white: AppColors.black,)
           : null,
     );
   }

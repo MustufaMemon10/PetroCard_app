@@ -103,17 +103,18 @@ class _MyappbarState extends State<Myappbar> {
                             decoration: widget.isDrawerOpen
                                 ? null
                                 : BoxDecoration(
-                                    color: AppColors.white,
+                                    color: widget.isDark ? AppColors.black: AppColors.white,
                                     borderRadius: BorderRadius.circular(15.0),
                                     border: Border.all(
                                         width: 0.4.w,
                                         color: widget.isDark
-                                            ? AppColors.darkAppBarBorderColor
+                                            ? AppColors.white
                                             : Colors.black.withOpacity(0.5))),
                             child: IconButton(
                               icon: const Icon(
                                 CupertinoIcons.line_horizontal_3,
                               ),
+                              color: widget.isDark ? Colors.white : AppColors.black,
                               iconSize: 24.0,
                               onPressed: widget.toggleDrawer,
                             ),
@@ -136,9 +137,9 @@ class _MyappbarState extends State<Myappbar> {
                                     ? AppColors.darkAppBarSplashColor
                                         .withOpacity(0.2)
                                     : AppColors.grey.withOpacity(0.2),
-                                child: Image.asset('assets/Icons/up-and-down (1).png',height: 28,width: 35,)
-                                ),
-
+                                child: widget.isDark ? Image.asset('assets/Icons/up-and-down (1).png',height: 28,width: 35,)
+                              :Image.asset('assets/Icons/up-and-down.png',height: 28,width: 35,),
+                              ),
                             SizedBox(
                               width: 10.0,
                             ),
@@ -152,10 +153,10 @@ class _MyappbarState extends State<Myappbar> {
                                 );
                               },
                               splashColor: widget.isDark
-                                  ? AppColors.darkAppBarSplashColor
+                                  ? AppColors.black
                                       .withOpacity(0.2)
-                                  : AppColors.grey.withOpacity(0.2),
-                              child: UserIcon(),
+                                  : AppColors.white,
+                              child: UserIcon(isDark: widget.isDark,),
                             ),
                           ],
                         ),

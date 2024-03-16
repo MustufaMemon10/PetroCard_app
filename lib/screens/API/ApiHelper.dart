@@ -38,7 +38,7 @@ class ApiHelper {
         final responseData = jsonDecode(response.body);
         SharedPreferences setpreference =
         await SharedPreferences.getInstance();
-        setpreference.setString('status',['status'].toString());
+        setpreference.setString('reqStatus',['status'].toString());
         if (!responseData['error']) {
           return true;
         } else {

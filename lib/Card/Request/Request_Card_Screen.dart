@@ -61,7 +61,6 @@ class _Request_ScreenState extends State<Request_Screen> {
 
     final file = await http.MultipartFile.fromPath('doc_img', fileImage.path,
         contentType: MediaType(mimeTypeData![0], mimeTypeData[1]));
-
     print(fileImage.path);
     print(_dobController.text);
     print(prefs.getString('id')!);
@@ -93,7 +92,7 @@ class _Request_ScreenState extends State<Request_Screen> {
               SnackBar(
                 content: Text(logindata['message'].toString()),
                 duration: Duration(seconds: 2),
-                backgroundColor: Colors.green, // Customize background color
+                backgroundColor: Colors.green,
               ),
             );
             Navigator.of(context).pushAndRemoveUntil(

@@ -4,7 +4,6 @@
   import 'package:flutter_screenutil/flutter_screenutil.dart';
   import 'package:petrocardapppp/Card/Cardsfield.dart';
   import 'package:petrocardapppp/Widgets/Transaction_card.dart';
-  import 'package:petrocardapppp/screens/Admin%20side/Request_Card/RequestCardScreen.dart';
   import 'package:petrocardapppp/utilities/colors.dart';
   import 'package:shared_preferences/shared_preferences.dart';
 
@@ -111,7 +110,20 @@
                 child: SizedBox(),
                 preferredSize: Size.fromHeight(-10.0),
               ),
-              flexibleSpace: TransactionText(isDark: isDark,),
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.darkTransactionBackground : AppColors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)), // Rounded top corners
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primaryPurple.withOpacity(0.2),
+                      offset: Offset(10, 5), // Adjust elevation offset
+                      blurRadius: 5, // Adjust blur radius
+                    ),
+                  ],
+                ),
+                child: TransactionText(isDark: isDark),
+              ),
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(

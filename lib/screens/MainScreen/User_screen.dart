@@ -111,6 +111,7 @@ class _UserScreenState extends State<UserScreen> {
         ? AppColors.white.withOpacity(0.4)
         : AppColors.black.withOpacity(0.4);
     var iconColor = isDark ? AppColors.primaryPurple : AppColors.darkPurple;
+    var cColor = isDark ? AppColors.black : AppColors.white;
     return Stack(
       children: [
         Scaffold(
@@ -150,12 +151,14 @@ class _UserScreenState extends State<UserScreen> {
               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
               child: Column(
                 children: [
-                  SizedBox(
+                  Container(
                     width: 110,
                     height: 110,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: UserIcon()),
+                    decoration: BoxDecoration(
+                      color: cColor,
+                      shape: BoxShape.circle
+                    ),
+                    child: UserIcon(isDark: isDark),
                   ),
                   SizedBox(
                     height: 10.0.h,

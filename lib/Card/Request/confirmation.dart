@@ -18,71 +18,86 @@ class _ConfirmationAnimationState extends State<ConfirmationAnimation> {
       height: 1.sh,
       width: 1.sw,
       color: AppColors.white,
+      padding: EdgeInsets.symmetric(horizontal: 15.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Lottie.asset(
-              'assets/Animations/applied successfully animation.json',
-              repeat: true,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Center(
+              child: Lottie.asset(
+                'assets/Animations/applied successfully animation.json',
+                repeat: false,reverse: true,
+              ),
             ),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          Text(
-            "Request is Successfully Applied",
-            style: TextStyle(
-                fontSize: 18.0.sp,
-                color: AppColors.primaryText,
-                fontWeight: FontWeight.w600),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Text('We will inform you when your request is accepted',
+            SizedBox(
+              height: 20.0,
+            ),
+            Text(
+              "Request is Successfully Applied",
               style: TextStyle(
-                  fontSize: 14.0.sp,
-                  color: AppColors.secondaryText,
-                  fontWeight: FontWeight.w400)),
-          SizedBox(
-            height: 70,
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.darkPurple,
-                  ),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => BaseScreen()),
-                          (Route<dynamic> route) => false);
-                    },
-                    icon: Icon(
-                      Icons.arrow_forward_ios_sharp,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                Text(
-                  'Go back',
-                  style: TextStyle(
-                      color: AppColors.black, fontWeight: FontWeight.w500),
-                )
-              ],
+                  fontSize: 18.0.sp,
+                  color: AppColors.primaryText,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.w600),
             ),
-          ),
-        ],
-      ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left:25.0),
+              child: Text('We will inform you when your request is accepted',
+                  style: TextStyle(
+                      fontSize: 14.0.sp,
+                      color: AppColors.secondaryText,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.w400)),
+            ),
+            SizedBox(
+              height: 70,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      BaseScreen()),
+                              (Route<dynamic> route) => false);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              AppColors.lightPurple2.withOpacity(0.7),
+                          elevation: 0,
+                          side: BorderSide(width: 1, color: AppColors.black),
+                          shape: CircleBorder(),
+                        ),
+                        child: Icon(
+                          Icons.arrow_forward_ios_sharp,
+                          size: 16.0,
+                          color: AppColors.black,
+                        ),
+                      )),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  Text(
+                    'Go back',
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        color: AppColors.black,
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.none),
+                  )
+                ],
+              ),
+            ),
+          ]),
     );
   }
 }

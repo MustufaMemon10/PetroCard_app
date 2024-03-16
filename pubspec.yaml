@@ -42,8 +42,8 @@ flutter:
   assets:
   - assets/Animations/splashimage.png
   - assets/Animations/
-  - assets/Icons/
   - assets/Images/
+  - assets/Icons/
   - assets/svgs/
 fonts:
   - family: RobotoMono

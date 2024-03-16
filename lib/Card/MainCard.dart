@@ -54,14 +54,6 @@ class _PetroMainCardState extends State<PetroMainCard> {
           setState(() {
             isLoading = false;
           });
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(logindata['message'].toString()),
-              duration: Duration(seconds: 2),
-              backgroundColor: Colors.red,
-            ),
-          );
         }
       } else {
         print(

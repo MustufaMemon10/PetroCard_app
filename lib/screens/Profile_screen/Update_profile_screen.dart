@@ -170,9 +170,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 SizedBox(
                   width: 110,
                   height: 110,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: UserIcon()),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      shape: BoxShape.circle
+                    ),
+                    child: UserIcon(isDark: isDark,),
+                  ),
                 ),
                 SizedBox(
                   height: 30.0.h,

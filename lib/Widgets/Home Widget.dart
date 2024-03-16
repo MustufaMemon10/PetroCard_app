@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/Card/Request/Request_Card_Screen.dart';
 import 'package:petrocardapppp/Components/Myappbar.dart';
 import 'package:petrocardapppp/Components/bottom_navigationbar.dart';
 import 'package:petrocardapppp/screens/MainScreen/CardScreen.dart';
@@ -8,8 +7,8 @@ import 'package:petrocardapppp/screens/MainScreen/HomeScreen.dart';
 import 'package:petrocardapppp/screens/MainScreen/Location_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Card/Request_Card/RequestCardScreen.dart';
 import '../screens/API/ApiHelper.dart';
-import '../screens/Admin side/Request_Card/RequestCardScreen.dart';
 
 class HomeWidget extends StatefulWidget {
   final bool isDrawerOpen;
@@ -29,25 +28,33 @@ class HomeWidget extends StatefulWidget {
 
 class HomeWidgetState extends State<HomeWidget> {
   int _currentIndex = 1;
-  bool hasCard = true;
+  bool hasCard = false;
   String userId = '';
-  Future<void> checkHasCard(String id) async {
-    bool cardStatus = await ApiHelper.checkHasCard(userId);
-    setState(() {
-      hasCard = cardStatus;
-    });
-  }
   @override
   void initState() {
     super.initState();
-    getId();
+    _fetchUserIdAndCardStatus();
   }
-  Future<void> getId() async {
-    SharedPreferences setpreference = await SharedPreferences.getInstance();
-    setState(() {
-      userId = setpreference.getString('id') ?? '';
-    });
-    await checkHasCard(userId!);
+  Future<void> checkHasCard(String id) async {
+    try {
+      bool cardStatus = await ApiHelper.checkHasCard(userId);
+      setState(() {
+        hasCard = cardStatus;
+      });
+    } catch (e) {
+      print('Error checking card status: $e');
+    }
+  }
+  Future<void> _fetchUserIdAndCardStatus() async {
+    try {
+      SharedPreferences setpreference = await SharedPreferences.getInstance();
+      setState(() {
+        userId = setpreference.getString('id') ?? '';
+      });
+      await checkHasCard(userId);
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -88,21 +95,15 @@ class HomeWidgetState extends State<HomeWidget> {
   }
 
   Widget _buildScreenBasedOnIndex() {
-    if (_currentIndex == 0) {
-      return const LocationScreen();
-    } else if (_currentIndex == 1) {
-      if (hasCard) {
-        return const HomeScreen();
-      } else {
-        return const RequestCardScreen(); // Change to check request screen
-      }
-    } else if (_currentIndex == 2) {
-      if (hasCard) {
-        return const CardScreen();
-      } else {
-        return const RequestCardScreen();
-      }
+    switch (_currentIndex) {
+      case 0:
+        return const LocationScreen();
+      case 1:
+        return hasCard ? const HomeScreen() : const RequestCardScreen();
+      case 2:
+        return hasCard ? const CardScreen() : const RequestCardScreen();
+      default:
+        return Container();
     }
-    return Container(); // Return an empty container if index is not 0, 1, or 2
   }
 }
