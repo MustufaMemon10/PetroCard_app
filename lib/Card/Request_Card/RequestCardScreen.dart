@@ -16,6 +16,7 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
   bool hasRequested = false;
   String userId = '';
   String status = '';
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -32,6 +33,9 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
   }
 
   Future<void> _checkHasRequested(String id) async {
+    setState(() {
+      isLoading = true;
+    });
     bool requestStatus = await ApiHelper.checkRequested(userId);
     setState(() {
       hasRequested = requestStatus;
@@ -57,18 +61,14 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
   @override
   Widget build(BuildContext context) {
     return
-
       Center(
         child:status == 'pending'
-            ? Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/Icons/expired.png'),
-            const SizedBox(height: 20),
-            Text('Request is pending. We will inform you.'),
-          ],
-        ): status == ''
-            ?TextButton(
+            ?
+            Center(
+              child: Image.asset('assets/Icons/expired.png',height: 50,width: 50,
+        ),
+            ): status == ''
+            ? TextButton(
           onPressed: () {
             Navigator.push(
               context,

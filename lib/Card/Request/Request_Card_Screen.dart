@@ -157,7 +157,6 @@ class _Request_ScreenState extends State<Request_Screen> {
     }
   }
 
-  //
   bool _isAgeValid(DateTime dob) {
     DateTime now = DateTime.now();
     int age = now.year - dob.year;
@@ -178,50 +177,6 @@ class _Request_ScreenState extends State<Request_Screen> {
     });
   }
 
-  Future<void> _pickPhoto() async {
-    final status = await Permission.storage.request();
-    if (status == PermissionStatus.granted) {
-      final pickedFile = await ImagePicker().pickImage(
-        source:
-            _panPhotoPath != null ? ImageSource.gallery : ImageSource.camera,
-      );
-      if (pickedFile != null) {
-        setState(() {
-          _panPhotoPath = File(pickedFile.path);
-        });
-      }
-    } else if (status == PermissionStatus.denied ||
-        status == PermissionStatus.restricted) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Text("Permission Required"),
-          content: Text("Please grant access to the storage to upload photos."),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text("OK"),
-            ),
-          ],
-        ),
-      );
-    } else if (status == PermissionStatus.permanentlyDenied) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Text("Permission Denied"),
-          content:
-              Text("Please enable access to the storage in the app settings."),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text("OK"),
-            ),
-          ],
-        ),
-      );
-    }
-  }
 
   // bool _validateForm() {
   //   if (_selectedGender.isEmpty || _panPhotoPath == null ||
