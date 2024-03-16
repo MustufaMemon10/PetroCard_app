@@ -61,13 +61,6 @@ class _Request_ScreenState extends State<Request_Screen> {
 
     final file = await http.MultipartFile.fromPath('doc_img', fileImage.path,
         contentType: MediaType(mimeTypeData![0], mimeTypeData[1]));
-    print(fileImage.path);
-    print(_dobController.text);
-    print(prefs.getString('id')!);
-    print(_addressController.text);
-    print(_dobController.text);
-    print(_selectedGender);
-    print(panNumberController.text);
     imageUploadRequest.fields['id'] = prefs.getString('id')!;
     imageUploadRequest.fields['address'] = _addressController.text;
     imageUploadRequest.fields['dob'] = _dobController.text;

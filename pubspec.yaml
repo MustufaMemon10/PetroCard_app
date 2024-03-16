@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   lottie: ^2.5.0
-  http: ^0.13.4
+  http: ^1.0.0
   flutter_svg: ^0.22.0
   cupertino_icons: ^1.0.2
   shared_preferences: ^2.2.2
@@ -30,6 +30,7 @@ dependencies:
   card_loading: ^0.3.2
   photo_view: ^0.14.0
   intl: ^0.19.0
+  google_fonts: ^5.1.0
   awesome_notifications: ^0.9.2
 dev_dependencies:
   flutter_test:

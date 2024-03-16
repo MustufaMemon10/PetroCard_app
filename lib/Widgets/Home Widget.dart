@@ -1,15 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:petrocardapppp/Components/Myappbar.dart';
 import 'package:petrocardapppp/Components/bottom_navigationbar.dart';
 import 'package:petrocardapppp/screens/MainScreen/CardScreen.dart';
 import 'package:petrocardapppp/screens/MainScreen/HomeScreen.dart';
 import 'package:petrocardapppp/screens/MainScreen/Location_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:http/http.dart' as http;
 import '../Card/Request/Request_Card_Screen.dart';
 import '../Card/Request_Card/RequestCardScreen.dart';
 import '../screens/API/ApiHelper.dart';
+import '../utilities/colors.dart';
 
 class HomeWidget extends StatefulWidget {
   final bool isDrawerOpen;
@@ -31,35 +35,50 @@ class HomeWidgetState extends State<HomeWidget> {
   int _currentIndex = 1;
   bool hasCard = false;
   String userId = '';
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
-    _fetchUserIdAndCardStatus();
+    checkHasCard();
   }
-  Future<void> checkHasCard(String id) async {
+  Future<void> checkHasCard() async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
+    final apiUrl = 'https://petrocard.000webhostapp.com/API/checkUserhasCard.php';
     try {
-      bool cardStatus = await ApiHelper.checkHasCard(userId);
-      setState(() {
-        hasCard = cardStatus;
-      });
-    } catch (e) {
-      print('Error checking card status: $e');
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        body: {'id': setpreference.getString('id')},
+      );
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        if (responseData['error']== true) {
+
+        }
+      } else {
+        // Handle API call failure
+      }
+    } catch (error) {
+      print('Error calling API: $error');
     }
   }
-  Future<void> _fetchUserIdAndCardStatus() async {
-    try {
-      SharedPreferences setpreference = await SharedPreferences.getInstance();
-      setState(() {
-        userId = setpreference.getString('id') ?? '';
-      });
-      await checkHasCard(userId);
-    } catch (e) {
-      print('Error fetching data: $e');
-    }
-  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  isLoading
+        ? Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          LoadingAnimationWidget.halfTriangleDot(
+            color: AppColors.darkPurple,
+            // leftDotColor: AppColors.darkPurple,
+            // rightDotColor: AppColors.white,
+            size: 50,
+          ),
+        ],
+      ),
+    )
+        : Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
@@ -100,9 +119,9 @@ class HomeWidgetState extends State<HomeWidget> {
       case 0:
         return const LocationScreen();
       case 1:
-        return hasCard ? const HomeScreen() : const RequestCardScreen();
+        return hasCard ? const HomeScreen() :  RequestCardScreen(userId: userId,);
       case 2:
-        return hasCard ? const CardScreen() : const RequestCardScreen();
+        return hasCard ? const CardScreen() :  RequestCardScreen(userId: userId,);
       default:
         return Container();
     }

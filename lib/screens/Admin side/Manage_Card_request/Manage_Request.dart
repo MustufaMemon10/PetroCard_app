@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:card_loading/card_loading.dart';
+import 'package:petrocardapppp/screens/Admin%20side/Assign_Card/AssingCardScreen.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Components/RequestUserIcon.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../utilities/styles.dart';
 
 class ManageRequestsScreen extends StatefulWidget {
   @override
@@ -29,6 +33,7 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
   }
 
   Future<void> fetchUserData() async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
     try {
       setState(() {
         isLoading = true;
@@ -48,7 +53,6 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
           setState(() {
             isLoading = false;
           });
-          print('Error fetching user data: ${response.body}');
         } else {
           print('Error fetching user data: ${responseData['message']}');
         }
@@ -59,7 +63,6 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
       print('Error fetching user data: $error');
     }
   }
-
 
   @override
   void initState() {
@@ -283,7 +286,8 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                               padding:
                                                   EdgeInsets.only(left: 20.0),
                                               child: Row(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     'PAN Number:',
@@ -297,17 +301,20 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                                     ),
                                                   ),
                                                   SizedBox(width: 5.0),
-                                                 Expanded(child:  Text(
-                                                   '${request['pan_number']}',
-                                                   style: TextStyle(
-                                                     color: AppColors
-                                                         .secondaryText,
-                                                     fontSize: 16.0,
-                                                     fontWeight:
-                                                     FontWeight.bold,
-                                                     fontFamily: 'RobotoMono',
-                                                   ),
-                                                 ),)
+                                                  Expanded(
+                                                    child: Text(
+                                                      '${request['pan_number']}',
+                                                      style: TextStyle(
+                                                        color: AppColors
+                                                            .secondaryText,
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontFamily:
+                                                            'RobotoMono',
+                                                      ),
+                                                    ),
+                                                  )
                                                 ],
                                               ),
                                             ),
@@ -373,7 +380,10 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                                       Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
-                                                          builder: (context) => ViewImage(imageUrl: imageUrl),
+                                                          builder: (context) =>
+                                                              ViewImage(
+                                                                  imageUrl:
+                                                                      imageUrl),
                                                         ),
                                                       );
                                                     },
@@ -430,44 +440,68 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
-                                                height: 35,
-                                                width: 60,
+                                                height: 38,
+                                                width: 75,
                                                 decoration: BoxDecoration(
-                                                    color: Colors.white
-                                                        .withOpacity(0.9),
+                                                    color: AppColors.white,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            12.0),
-                                                    border: Border.all(
-                                                        width: 0.4.w,
-                                                        color: Colors.black
-                                                            .withOpacity(
-                                                                0.5)),
+                                                            25.0),
                                                     boxShadow: [
                                                       BoxShadow(
-                                                        color: Colors
-                                                            .grey.shade50,
-                                                        offset:
-                                                            Offset(-6, -6),
-                                                        blurRadius: 10,
-                                                        spreadRadius: 1,
+                                                        color: AppColors.black
+                                                            .withOpacity(0.2),
+                                                        offset: Offset(5, 1),
+                                                        blurRadius: 4,
                                                       ),
                                                     ]),
                                                 child: Center(
                                                   child: Text(
                                                     '${request['status']}',
                                                     style: TextStyle(
-                                                      color: Colors.green,
+                                                      color:
+                                                          ('${request['status']}') ==
+                                                                  'pending'
+                                                              ? Colors.orange
+                                                              : Colors.green,
                                                       fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
                                                   ),
                                                 )),
-
+                                            if ('${request['status']}' ==
+                                                'pending')
+                                              ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                          AssignCardScreen(userName: '${request['name']}',),
+                                                      ),
+                                                    );
+                                                  },
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        AppColors.white,
+                                                    side: BorderSide.none,
+                                                    shape: StadiumBorder(),
+                                                  ),
+                                                  child: Text(
+                                                    'Assign',
+                                                    style: TextStyle(
+                                                      color:
+                                                          AppColors.darkPurple,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ))
                                           ],
                                         ),
                                       )
@@ -621,7 +655,9 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                                               15.0),
                                                     ),
                                                     child: Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .spaceEvenly,
@@ -636,16 +672,19 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                                                 FontWeight.bold,
                                                           ),
                                                         ),
-                                                        Expanded(child: Text(
-                                                          '${request['email']}',
-                                                          style: TextStyle(
-                                                            color: AppColors
-                                                                .darkPurple,
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                            FontWeight.bold,
+                                                        Expanded(
+                                                          child: Text(
+                                                            '${request['email']}',
+                                                            style: TextStyle(
+                                                              color: AppColors
+                                                                  .darkPurple,
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
                                                           ),
-                                                        ),)
+                                                        )
                                                       ],
                                                     ),
                                                   ),
@@ -787,7 +826,10 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
 
 class ViewImage extends StatefulWidget {
   final String imageUrl;
-  ViewImage({required this.imageUrl,});
+
+  ViewImage({
+    required this.imageUrl,
+  });
 
   @override
   State<ViewImage> createState() => _ViewImageState();
@@ -798,18 +840,25 @@ class _ViewImageState extends State<ViewImage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('View Image',style: TextStyle(color: Colors.black),),
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.arrow_back_ios_new_outlined),
+          iconSize: 14.0,
+          color: AppColors.black,
+        ),
+        title: Text(
+          'View Image',
+          style: AppStyles.primaryTitle,
+        ),
       ),
-      body: PhotoView(
-        imageProvider:
-        NetworkImage(widget.imageUrl),
-        loadingBuilder:
-            (context, event) => Center(
-          child:
-          CircularProgressIndicator(),
+      body: Container(
+        child: PhotoView(
+          imageProvider: NetworkImage(widget.imageUrl),
+          loadingBuilder: (context, event) => Center(
+            child: CircularProgressIndicator(),
+          ),
         ),
       ),
     );
   }
 }
-

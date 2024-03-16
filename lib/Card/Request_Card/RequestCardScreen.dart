@@ -1,84 +1,106 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:petrocardapppp/Card/Request/Request_Card_Screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 import '../../screens/API/ApiHelper.dart';
+import '../../utilities/colors.dart';
 
 class RequestCardScreen extends StatefulWidget {
-  const RequestCardScreen({Key? key}) : super(key: key);
+  final String userId;
+
+  const RequestCardScreen({Key? key, required this.userId}) : super(key: key);
 
   @override
   State<RequestCardScreen> createState() => _RequestCardScreenState();
 }
 
 class _RequestCardScreenState extends State<RequestCardScreen> {
-  bool hasRequested = false;
-  String userId = '';
   String status = '';
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _fetchData();
+    _checkHasRequested();
   }
 
-  Future<void> _getId() async {
+  Future<void> _checkHasRequested() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
-    setState(() {
-      userId = setpreference.getString('id') ?? '';
-    });
-    await _checkHasRequested(userId);
-  }
-
-  Future<void> _checkHasRequested(String id) async {
-    setState(() {
-      isLoading = true;
-    });
-    bool requestStatus = await ApiHelper.checkRequested(userId);
-    setState(() {
-      hasRequested = requestStatus;
-    });
-    await _getStatus();
-  }
-
-  Future<void> _getStatus() async {
-    SharedPreferences setpreference = await SharedPreferences.getInstance();
-    setState(() {
-      status = setpreference.getString('reqStatus') ?? '';
-    });
-  }
-  Future<void> _fetchData() async {
+    final apiUrl =
+        'https://petrocard.000webhostapp.com/API/checkUserHasRequested.php';
     try {
-      await _getId();
-      await _checkHasRequested(userId);
-      await _getStatus();
-    } catch (e) {
-      print('Error fetching data: $e');
+      setState(() {
+        isLoading = true;
+      });
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        body: {'id': setpreference.getString('id') ?? ''}, // Use userId here
+      );
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        print("responseData");
+        print(responseData);
+        setpreference.setString('reqStatus',
+            responseData['status'].toString()); // Set the actual status
+        setState(() {
+          isLoading = false;
+          status = setpreference.getString('reqStatus')!;
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to fetch data'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.red, // Customize background color
+          ),
+        );
+      }
+    } catch (error) {
+      print('Error calling API: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error calling API'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.red, // Customize background color
+        ),
+      );
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    return
-      Center(
-        child:status == 'pending'
-            ?
-            Center(
-              child: Image.asset('assets/Icons/expired.png',height: 50,width: 50,
-        ),
-            ): status == ''
-            ? TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => const Request_Screen(),
-              ),
-            );
-          },
-          child: Text('REQUEST FOR CARD'),
-        ): null,
-      );
+    return Center(
+      child: isLoading
+          ? LoadingAnimationWidget.halfTriangleDot(
+              color: AppColors.darkPurple,
+              // leftDotColor: AppColors.darkPurple,
+              // rightDotColor: AppColors.white,
+              size: 50,
+            )
+          : status == "pending"
+              ? Image.asset(
+                  'assets/Icons/expired.png',
+                  height: 50,
+                  width: 50,
+                )
+              : status.isEmpty
+                  ? TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => const Request_Screen(),
+                          ),
+                        );
+                      },
+                      child: Text('REQUEST FOR CARD'),
+                    )
+                  : Text('Unhandled status: $status'),
+    );
   }
 }

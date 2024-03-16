@@ -99,10 +99,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
       case 3:
         return ManageRequestsScreen();
       case 4:
-        return AssingCardScreen();
-      case 5:
         return FeedbackScreen();
-      case 6:
+      case 5:
         return ManageRequestsScreen();
       default:
         return Container();

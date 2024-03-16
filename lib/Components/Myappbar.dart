@@ -98,7 +98,6 @@ class _MyappbarState extends State<Myappbar> {
                               ? AppColors.darkAppBarSplashColor.withOpacity(0.2)
                               : AppColors.accentColor.withOpacity(0.2),
                           child: Container(
-                            height: 40,
                             width: 40,
                             decoration: widget.isDrawerOpen
                                 ? null
