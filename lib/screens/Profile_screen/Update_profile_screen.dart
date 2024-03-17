@@ -43,13 +43,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         setState(() {
           isLoading = true;
         });
-  
-        // Extracting values from controllers
         String fullName = fullNameController.text;
         String email = emailController.text;
         String phoneNumber = _phoneNumberController.text;
   
-        // Debugging: Print parameters before sending the request
         print('Full Name: $fullName');
         print('Email: $email');
         print('Phone: $phoneNumber');

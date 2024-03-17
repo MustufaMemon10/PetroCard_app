@@ -8,7 +8,6 @@
   import 'package:shared_preferences/shared_preferences.dart';
 
   import '../../Widgets/Transaction Text.dart';
-  import '../API/ApiHelper.dart';
 
   class HomeScreen extends StatefulWidget {
     const HomeScreen({Key? key});
@@ -44,18 +43,16 @@
     void initState() {
       super.initState();
       _startAnimations();
-      getId();
     }
 
     Future<void> fetchTransactionDetails(String id) async {
+      SharedPreferences setpreference = await SharedPreferences.getInstance();
       final apiUrl = 'https://petrocard.000webhostapp.com/API/fetchalltranscations.php';
-
       try {
         final response = await http.post(
           Uri.parse(apiUrl),
-          body: {'id': id},
+          body: {'id': setpreference.getString('id')},
         );
-
         if (response.statusCode == 200) {
           final responseData = jsonDecode(response.body);
           if (!responseData['error']) {
@@ -73,13 +70,6 @@
         print('Error fetching user data: $error');
       }
     }
-    Future<void> getId() async {
-      SharedPreferences setpreference = await SharedPreferences.getInstance();
-      setState(() {
-        userId = setpreference.getString('id') ?? '';
-      });
-      await fetchTransactionDetails(userId!);
-    }
     @override
     Widget build(BuildContext context) {
       return Scaffold(
@@ -93,7 +83,7 @@
               pinned: true,
               centerTitle: false,
               stretch: true,
-              expandedHeight: 0.540.sh,
+              expandedHeight: 0.500.sh,
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
                   padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0.w),
@@ -128,8 +118,16 @@
             SliverList(
               delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                  final transaction = transactions[index]; // Assuming you have a list of transactions
-                  return Padding(
+                      final transaction = transactions[index];
+                      if(transactions.isEmpty)
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('No Transaction',style: TextStyle(color: Colors.black),),
+                        ],
+                      );
+                 return  Padding(
                     padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 10.w),
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
@@ -151,6 +149,7 @@
                       ),
                     ),
                   );
+                      return null;
                 },
                 childCount: transactions.length,
               ),

@@ -48,31 +48,25 @@ class _BtnState extends State<Btn> {
   Widget build(BuildContext context) {
     return isLoading
         ? CardLoading(
-            height: 50.h,
-            width: 50.w,
-            borderRadius: BorderRadius.circular(12.0),
+            height: 30.h,
+            width: 30.w,
+            borderRadius: BorderRadius.circular(16.0),
           )
         : Column(
             children: [
-              GestureDetector(
-                onTap: widget.onTap,
-                child: AnimatedContainer(
-                    duration: Duration(milliseconds: 100),
-                    height: 60,
-                    width: 70,
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(
-                            width: 0.4.w, color: Colors.black.withOpacity(0.5)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade50,
-                            offset: Offset(-6, -6),
-                            blurRadius: 10,
-                            spreadRadius: 1,
-                          ),
-                        ]),
+              SizedBox(
+                height: 60.h,
+                width: 70.w,
+                child: ElevatedButton(
+                    onPressed: widget.onTap,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.white,
+                      side: BorderSide(
+                        color: AppColors.lightPurple2,
+                        width: 1.0,
+                      ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+                    ),
                     child: Icon(
                       widget.icon,
                       size: 22.0,
@@ -85,7 +79,7 @@ class _BtnState extends State<Btn> {
                 style: TextStyle(
                   fontSize: 16.0, // Adjust font size as needed
                   color: AppColors.primaryText, // Use card text color
-                  fontWeight: FontWeight.bold, // Adjust font weight as needed
+                  fontWeight: FontWeight.w600, // Adjust font weight as needed
                 ),
               )
             ],

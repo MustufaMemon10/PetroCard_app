@@ -81,15 +81,15 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
               // leftDotColor: AppColors.darkPurple,
               // rightDotColor: AppColors.white,
               size: 50,
-            )
-          : status == "pending"
+            ):
+          status == "pending"
               ? Image.asset(
                   'assets/Icons/expired.png',
                   height: 50,
                   width: 50,
-                )
-              : status.isEmpty
-                  ? TextButton(
+                ):
+              status.isEmpty ?
+                  TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -100,7 +100,8 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
                       },
                       child: Text('REQUEST FOR CARD'),
                     )
-                  : Text('Unhandled status: $status'),
+                  : null,
+
     );
   }
 }

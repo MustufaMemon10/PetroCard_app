@@ -27,7 +27,7 @@ class _AppbtnsState extends State<Appbtns> {
             );
           },
           icon: FontAwesomeIcons.moneyCheck,
-          text: 'Add Money',
+          text: 'Recharge',
         ),
         Btn(
           onTap: () {

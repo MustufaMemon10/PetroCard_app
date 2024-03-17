@@ -1,25 +1,23 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/Card/Recharge/Recharge_Screen.dart';
 import 'package:petrocardapppp/Card/Request/Request_Card_Screen.dart';
 import 'package:petrocardapppp/Components/UserIcon.dart';
-import 'package:petrocardapppp/screens/API/ApiHelper.dart';
 import 'package:petrocardapppp/screens/MainScreen/User_screen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
-import 'package:petrocardapppp/utilities/styles.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Myappbar extends StatefulWidget {
   final bool isDrawerOpen;
   final VoidCallback toggleDrawer;
   final bool isDark;
-
+  final bool hasCard;
   const Myappbar({
     Key? key,
     required this.isDark,
     required this.isDrawerOpen,
     required this.toggleDrawer,
+    required this.hasCard,
   }) : super(key: key);
 
   @override
@@ -31,24 +29,6 @@ class _MyappbarState extends State<Myappbar> {
   String userId = '';
   bool _showPetroApp = false;
   bool _showWelcomeText = false;
-  bool hasCard = false;
-
-  Future<void> checkHasCard(String id) async {
-    bool cardStatus = await ApiHelper.checkHasCard(userId);
-    setState(() {
-      hasCard = cardStatus;
-    });
-  }
-
-  getUserDetails() async {
-    SharedPreferences setpreference = await SharedPreferences.getInstance();
-    setState(() {
-      userName = setpreference.getString('name') ?? '';
-      userId = setpreference.getString('id') ?? '';
-    });
-    await checkHasCard(userId);
-  }
-
   void _startAnimations() async {
     await Future.delayed(const Duration(seconds: 1));
     setState(() {
@@ -67,7 +47,6 @@ class _MyappbarState extends State<Myappbar> {
 
   @override
   void initState() {
-    getUserDetails();
     super.initState();
     _startAnimations();
   }
@@ -121,14 +100,14 @@ class _MyappbarState extends State<Myappbar> {
                         ),
                         Row(
                           children: [
-                            if (hasCard)
+                            if (widget.hasCard)
                               InkWell(
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     CupertinoPageRoute(
                                       builder: (context) =>
-                                          const Request_Screen(),
+                                          const RechargeCardScreen(),
                                     ),
                                   );
                                 },
@@ -136,8 +115,8 @@ class _MyappbarState extends State<Myappbar> {
                                     ? AppColors.darkAppBarSplashColor
                                         .withOpacity(0.2)
                                     : AppColors.grey.withOpacity(0.2),
-                                child: widget.isDark ? Image.asset('assets/Icons/up-and-down (1).png',height: 28,width: 35,)
-                              :Image.asset('assets/Icons/up-and-down.png',height: 28,width: 35,),
+                                child: widget.isDark ? Image.asset('assets/Icons/up-and-down.png',height: 28,width: 35,color: AppColors.lightPurple2,)
+                              :Image.asset('assets/Icons/up-and-down (1).png',height: 28,width: 35,)
                               ),
                             SizedBox(
                               width: 10.0,

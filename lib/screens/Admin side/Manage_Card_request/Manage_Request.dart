@@ -32,8 +32,7 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
     return null;
   }
 
-  Future<void> fetchUserData() async {
-    SharedPreferences setpreference = await SharedPreferences.getInstance();
+  Future<void> fetchRequestData() async {
     try {
       setState(() {
         isLoading = true;
@@ -67,11 +66,11 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
   @override
   void initState() {
     super.initState();
-    fetchUserData();
+    fetchRequestData();
   }
 
   Future<void> _refreshData() async {
-    await fetchUserData();
+    await fetchRequestData();
   }
 
   @override
@@ -83,7 +82,7 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(height: 0.055.sh),
+                      SizedBox(height: 0.050.sh),
                       CardLoading(
                         height: 270,
                         width: 1.sw,
@@ -481,7 +480,7 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                                       context,
                                                       MaterialPageRoute(
                                                         builder: (context) =>
-                                                          AssignCardScreen(userName: '${request['name']}',),
+                                                          AssignCardScreen(userName: '${request['name']}',req_id: '${request['req_id']}',),
                                                       ),
                                                     );
                                                   },

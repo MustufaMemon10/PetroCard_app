@@ -21,9 +21,9 @@ class Request_Screen extends StatefulWidget {
 }
 
 class _Request_ScreenState extends State<Request_Screen> {
-  final _formKey = GlobalKey<FormState>();
-  TextEditingController panNumberController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
+    TextEditingController panNumberController = TextEditingController();
+    TextEditingController _emailController = TextEditingController();
   String _selectedGender = '';
   TextEditingController _dobController = TextEditingController();
   TextEditingController _addressController = TextEditingController();

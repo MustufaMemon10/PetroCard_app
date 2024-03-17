@@ -143,23 +143,23 @@ class _PetroMainCardState extends State<PetroMainCard> {
                   'assets/Icons/chip (2).png',
                   height: 35.0.h,
                   width: 50.0.h,
-                  color: Colors.white70,
+                  color: Colors.black87,
                 ),
                 Padding(
                   padding:  EdgeInsets.only(right: 8.0.w),
                   child: Image.asset(
                     'assets/Icons/contactless.png',
-                    height: 35.0.h,
+                    height: 50.0.h,
                     color: isDark
-                        ? AppColors.black.withOpacity(0.7)
-                        : AppColors.white.withOpacity(0.5),
+                        ? AppColors.white.withOpacity(0.7)
+                        : AppColors.black.withOpacity(0.6),
                   ),
                 ),
               ],
             ),
           ),
           Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 5.0.w),
+            padding:  EdgeInsets.symmetric(horizontal: 10.0.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -184,7 +184,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
                         fontSize: 19.0.sp,
                         color: isDark
                             ? AppColors.transparent
-                            : AppColors.grey.withOpacity(0.5),
+                            : AppColors.black.withOpacity(0.5),
                         fontWeight: FontWeight.w600,
                         fontFamily: 'RobotoMono',
                         letterSpacing: 0.9,

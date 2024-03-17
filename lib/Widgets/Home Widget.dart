@@ -52,10 +52,16 @@ class HomeWidgetState extends State<HomeWidget> {
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         if (responseData['error']== true) {
-
+          setState(() {
+            hasCard = true;
+          });
+        }
+        else{
+          setState(() {
+            hasCard = false;
+          });
         }
       } else {
-        // Handle API call failure
       }
     } catch (error) {
       print('Error calling API: $error');
@@ -92,6 +98,7 @@ class HomeWidgetState extends State<HomeWidget> {
             left: 0,
             right: 0,
             child: Myappbar(
+              hasCard: hasCard,
               isDrawerOpen: widget.isDrawerOpen,
               isDark: widget.isDark,
               toggleDrawer: widget.toggleDrawer,
