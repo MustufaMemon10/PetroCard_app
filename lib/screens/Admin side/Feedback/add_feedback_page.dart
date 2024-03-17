@@ -146,6 +146,7 @@ class _AddFeedbackPageState extends State<AddFeedbackPage> {
                     if (val!.isEmpty) {
                       return "Please enter Comment";
                     }
+                    return null;
                   },
                   controller: messageController,
                   decoration: InputDecoration(

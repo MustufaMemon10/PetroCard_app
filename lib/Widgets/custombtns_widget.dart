@@ -70,7 +70,7 @@ class _BtnState extends State<Btn> {
                     child: Icon(
                       widget.icon,
                       size: 22.0,
-                      color: AppColors.primaryPurple,
+                      color: AppColors.black,
                     )),
               ),
               SizedBox(height: 10.0),
