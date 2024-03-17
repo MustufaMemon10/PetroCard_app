@@ -4,7 +4,6 @@ import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/Components/Drawer.dart';
 import 'package:petrocardapppp/Widgets/Home Widget.dart';
 
-import '../../DrawerComponents/Rating_popup.dart';
 import '../Admin side/Feedback/add_feedback_page.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -17,8 +16,6 @@ class BaseScreen extends StatefulWidget {
 class _BaseScreenState extends State<BaseScreen>
     with SingleTickerProviderStateMixin {
   bool isDrawerOpen = false;
-  bool isNotificationOpen = false;
-  bool isFeedopen = false;
   late AnimationController _animationController;
 
   @override
@@ -46,16 +43,6 @@ class _BaseScreenState extends State<BaseScreen>
       }
     });
   }
-
-  void openRatingPopup() {
-    setState(() {
-      isFeedopen = !isFeedopen;
-    });
-    if (isDrawerOpen) {
-      isDrawerOpen = false;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     bool isDark = false;
@@ -79,20 +66,6 @@ class _BaseScreenState extends State<BaseScreen>
                 color: AppColors.black.withOpacity(0.4),
               ),
             ),
-          if (isFeedopen)
-            AnimatedPositioned(
-                child: Container(
-                    height: 1.sh,
-                    width: 1.sw,
-                    color: AppColors.black.withOpacity(0.4),
-                    child: Center(child: RatingPopup(
-                      onTap: () {
-                        setState(() {
-                          isFeedopen = false;
-                        });
-                      },
-                    ))),
-                duration: Duration(milliseconds: 200)),
           AnimatedPositioned(
             duration: const Duration(milliseconds: 300),
             top: 0,

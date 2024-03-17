@@ -14,7 +14,6 @@ class User_details extends StatefulWidget {
 class _User_detailsState extends State<User_details> {
   String userName = '';
   String email = '';
-
   getUserName() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     setState(() {
@@ -43,7 +42,7 @@ class _User_detailsState extends State<User_details> {
             child: CircleAvatar(
               radius: 25,
               backgroundColor: AppColors.white.withOpacity(0.7),
-              child: UserIcon(isDark : true),
+              child: UserIcon(isDark : false),
             ),
           ),
         ),

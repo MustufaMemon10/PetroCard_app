@@ -55,8 +55,8 @@ class _BtnState extends State<Btn> {
         : Column(
             children: [
               SizedBox(
-                height: 60.h,
-                width: 70.w,
+                height: 50.h,
+                width: 60.w,
                 child: ElevatedButton(
                     onPressed: widget.onTap,
                     style: ElevatedButton.styleFrom(

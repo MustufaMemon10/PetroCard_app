@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -24,7 +25,7 @@ class _AddComplaintsPageState extends State<AddComplaintsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor ,
+        backgroundColor: AppColors.darkPurple ,
         title: Text('Add Complaints'),
         titleTextStyle: TextStyle(color: Colors.white,fontSize: 20),
         shadowColor: Colors.white,
@@ -36,7 +37,7 @@ class _AddComplaintsPageState extends State<AddComplaintsPage> {
               borderRadius: const BorderRadius.all(Radius.circular(20)),
               color: Colors.white.withAlpha(20),
             ),
-            child: Icon(Icons.arrow_back, color:Colors.white, size: 20),
+            child: Icon(Icons.arrow_back_ios_new, color:Colors.white, size: 20),
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -71,6 +72,7 @@ class _AddComplaintsPageState extends State<AddComplaintsPage> {
                     if (val!.isEmpty) {
                       return "Please enter message";
                     }
+                    return null;
                   },
                   controller: messageController,
                   decoration: InputDecoration(
@@ -141,7 +143,7 @@ class _AddComplaintsPageState extends State<AddComplaintsPage> {
             SnackBar(
               content: Text(logindata['message'].toString()),
               duration: Duration(seconds: 2),
-              backgroundColor: Colors.red, // Customize background color
+              backgroundColor: Colors.green, // Customize background color
             ),
           );
           Navigator.of(context).pop();

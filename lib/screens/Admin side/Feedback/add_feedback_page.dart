@@ -30,7 +30,7 @@ class _AddFeedbackPageState extends State<AddFeedbackPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor ,
+        backgroundColor: AppColors.darkPurple ,
         title: Text('Add Feedback'),
         titleTextStyle: TextStyle(color: Colors.white,fontSize: 20),
         shadowColor: Colors.white,
@@ -42,7 +42,7 @@ class _AddFeedbackPageState extends State<AddFeedbackPage> {
               borderRadius: const BorderRadius.all(Radius.circular(20)),
               color: Colors.white.withAlpha(20),
             ),
-            child: Icon(Icons.arrow_back, color:Colors.white, size: 20),
+            child: Icon(Icons.arrow_back_ios_new, color:Colors.white, size: 20),
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -131,26 +131,8 @@ class _AddFeedbackPageState extends State<AddFeedbackPage> {
                     ),
                     SizedBox(height: 8.0.h,),
                     SizedBox(height: 10.h,),
-
                   ],
                 ),
-              ),
-              Container(
-                  width: double.infinity,
-                  height:32.h,
-                  padding: EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                  ),
-                  child: TextButton(
-                    onPressed: (){},
-                    child: Text("Rate Us",style: TextStyle(
-                      color: AppColors.accentColor.withOpacity(0.8),
-                      fontSize: 14.0,
-                      letterSpacing: 0.7,
-                      fontWeight: FontWeight.w500,
-                    ),),
-                  )
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),

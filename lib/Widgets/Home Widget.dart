@@ -10,9 +10,7 @@ import 'package:petrocardapppp/screens/MainScreen/HomeScreen.dart';
 import 'package:petrocardapppp/screens/MainScreen/Location_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import '../Card/Request/Request_Card_Screen.dart';
-import '../Card/Request_Card/RequestCardScreen.dart';
-import '../screens/API/ApiHelper.dart';
+import '../Card/Request_Card/CheckRequest.dart';
 import '../utilities/colors.dart';
 
 class HomeWidget extends StatefulWidget {

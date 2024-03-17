@@ -44,7 +44,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
               }),
               SlidermenuItem(title: 'About us', iconData: CupertinoIcons.personalhotspot,  onTap: ()async {}),
               SlidermenuItem(title: 'Log Out',
-                  iconData: Icons.logout_rounded,
+                  iconData: Icons.logout,
                   onTap: () async{
                 final pref = await SharedPreferences.getInstance();
                 await pref.clear();
