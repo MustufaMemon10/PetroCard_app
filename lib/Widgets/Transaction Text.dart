@@ -34,7 +34,6 @@ class TransactionText extends StatelessWidget {
               color: isDark ? AppColors.white : AppColors.black, // Use isDark to determine the icon color
             ),
             onPressed: () {
-              _showPopupMenu(context);
             },
           )
         ],

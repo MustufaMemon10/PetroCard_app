@@ -23,15 +23,19 @@ class PetroMainCard extends StatefulWidget {
 class _PetroMainCardState extends State<PetroMainCard> {
   bool isDark = false;
   bool isBalanceHidden = true;
-  String id = '';
+  String userId = '';
   var data;
   var logindata;
   bool isLoading = false;
 
-  Future<void> fetchCardDetails() async {
+  Future<void> _fetchCardDetails() async {
     try {
+      SharedPreferences setpreference = await SharedPreferences.getInstance();
+      setState(() {
+        userId = setpreference.getString('id')!;
+      });
       final loginUrl = Uri.parse(
-          "https://petrocard.000webhostapp.com/API/card_data_fetchapi.php?id=$id");
+          "https://petrocard.000webhostapp.com/API/card_data_fetchapi.php?id=$userId");
       final response = await http.get(loginUrl);
 
       if (response.statusCode == 200) {
@@ -61,19 +65,10 @@ class _PetroMainCardState extends State<PetroMainCard> {
       print('Error fetching data: $error');
     }
   }
-
-  Future<void> getIdDetails() async {
-    SharedPreferences setpreference = await SharedPreferences.getInstance();
-    setState(() {
-      id = setpreference.getString('id') ?? '';
-    });
-    await fetchCardDetails();
-  }
-
   @override
   void initState() {
     super.initState();
-    getIdDetails();
+    _fetchCardDetails();
   }
 
   @override
@@ -141,7 +136,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
                   'assets/Icons/chip (2).png',
                   height: 35.0.h,
                   width: 50.0.h,
-                  color: Colors.black87,
+                  color: Colors.black,
                 ),
                 Padding(
                   padding:  EdgeInsets.only(right: 8.0.w),

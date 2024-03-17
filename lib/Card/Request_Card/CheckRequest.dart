@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:petrocardapppp/Card/Request/Request_Card_Screen.dart';
+import 'package:petrocardapppp/Card/Request_Card/pending..dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -72,29 +73,30 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: isLoading
-          ? LoadingAnimationWidget.halfTriangleDot(
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      child: Center(
+        child:
+      isLoading
+          ? Center(
+              child: LoadingAnimationWidget.halfTriangleDot(
               color: AppColors.darkPurple,
               size: 50,
-            ):
-          status == "pending"
-              ? Image.asset(
-                  'assets/Icons/expired.png',
-                  height: 50,
-                  width: 50,
-                ):
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => const Request_Screen(),
-                          ),
-                        );
-                      },
-                      child: Text('REQUEST FOR CARD'),
-                    ),
+            ))
+          : status == "pending"
+              ? pendingscreen()
+              : TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => const Request_Screen(),
+                      ),
+                    );
+                  },
+                  child: Text('REQUEST FOR CARD'),
+                ),
+      ),
     );
   }
 }

@@ -47,6 +47,7 @@ class _TransactionCardState extends State<TransactionCard> {
                 ],
               ),
               Text(
+                '-'+
                 widget.amount,
                 style: TextStyle(color: Colors.red, fontSize: 14.0),
               ),
