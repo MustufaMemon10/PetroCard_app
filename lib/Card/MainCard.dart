@@ -48,7 +48,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
           setpreference.setString('card_id', data[0]['card_id'].toString());
           setpreference.setString('card_num', data[0]['card_num'].toString());
           setpreference.setString('addedtime', data[0]['addedtime'].toString());
-          setpreference.setString('validate', data[0]['validate'].toString());
+          setpreference.setString('cardlimit', data[0]['cardlimit'].toString());
           setpreference.setString('balance', data[0]['balance'].toString());
           setpreference.setString('status', data[0]['status'].toString());
           setState(() {

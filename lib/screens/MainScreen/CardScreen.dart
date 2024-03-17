@@ -40,7 +40,7 @@ class _CardScreenState extends State<CardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+        padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
         child: Column(children: [
           SizedBox(
             height: 70.h,

@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RechargeCardScreen extends StatefulWidget {
   const RechargeCardScreen({super.key});
@@ -16,8 +20,49 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
   TextEditingController _cvvController = TextEditingController();
   TextEditingController _expiryController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-
+  bool isLoading = false;
+  Future<void> _rechargeCard() async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
+    final form = _formKey.currentState;
+    if (form!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      final login_url =
+      Uri.parse("https://petrocard.000webhostapp.com/API/rechargecard.php");
+      final response = await http.post(login_url, body: {
+        'id': setpreference.getString('id') ?? '',
+        'amount' : _amountController.text ?? '',
+      });
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        print(responseData);
+        setState(() {
+          isLoading = false;
+        });
+        if (responseData['error'] == false) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(responseData['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.green, // Customize background color
+            ),
+          );
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => BaseScreen()),
+                  (route) => false);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(responseData['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red, // Customize background color
+            ),
+          );
+        }
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,10 +107,7 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
             controller: _cardNumberController,
             textInputAction: TextInputAction.next,
             validator: (value) {
-              if (!RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]$').hasMatch(value!)) {
-                return 'Please enter a valid Card Number';
-              }
-              if (value.isEmpty) {
+              if (value!.isEmpty) {
                 return 'Card Number is required';
               }
               return null;
@@ -117,10 +159,7 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.next,
               validator: (value) {
-                if (!RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]$').hasMatch(value!)) {
-                  return 'Please enter a valid  Number';
-                }
-                if (value.isEmpty) {
+                if (value!.isEmpty) {
                   return 'CVV is required';
                 }
                 return null;
@@ -252,8 +291,8 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
           height: 40.h,
           child: ElevatedButton(
             onPressed: () {
-              // Implement payment logic here
-              _handlePayment(context);
+             _rechargeCard();
+             FocusScope.of(context).unfocus();
             },
             style: ElevatedButton.styleFrom(
               elevation: 0,
@@ -274,4 +313,3 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
   }
 }
 
-void _handlePayment(BuildContext context) {}

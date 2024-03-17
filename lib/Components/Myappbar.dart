@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/Card/Limit/CardLimitScreen.dart';
 import 'package:petrocardapppp/Card/Recharge/Recharge_Screen.dart';
 import 'package:petrocardapppp/Card/Request/Request_Card_Screen.dart';
 import 'package:petrocardapppp/Components/UserIcon.dart';
 import 'package:petrocardapppp/screens/MainScreen/User_screen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Myappbar extends StatefulWidget {
   final bool isDrawerOpen;
@@ -25,6 +27,14 @@ class Myappbar extends StatefulWidget {
 }
 
 class _MyappbarState extends State<Myappbar> {
+
+  void getuserName()async{
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
+  setState(() {
+    userName = setpreference.getString('name')!;
+  });
+  }
+
   String userName = '';
   String userId = '';
   bool _showPetroApp = false;
@@ -49,6 +59,7 @@ class _MyappbarState extends State<Myappbar> {
   void initState() {
     super.initState();
     _startAnimations();
+    getuserName();
   }
 
   @override
@@ -107,7 +118,7 @@ class _MyappbarState extends State<Myappbar> {
                                     context,
                                     CupertinoPageRoute(
                                       builder: (context) =>
-                                          const RechargeCardScreen(),
+                                          const CardLimitScreen(),
                                     ),
                                   );
                                 },
