@@ -104,7 +104,7 @@ class _MyNavBarState extends State<MyNavBar> {
                               style: const TextStyle(
                                 color: AppColors.darkPurple,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 15,
+                                fontSize: 14,
                               ),
                             ),
                           ),

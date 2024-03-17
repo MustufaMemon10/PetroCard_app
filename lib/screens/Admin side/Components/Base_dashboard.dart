@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Assign_Card/AssingCardScreen.dart';
+import 'package:petrocardapppp/screens/Admin%20side/Complain/ComplaintScreen.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Components/SideBar.dart';
 import 'package:petrocardapppp/screens/Admin%20side/DashBoard/MainDashboard.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Feedback/FeedbackScreen.dart';
@@ -59,7 +60,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               height: MediaQuery.of(context).size.height,
               child: SideBarMenu(
                 onTap: (index) async {
-                  if(index == 7){
+                  if(index == 6){
                     final pref = await SharedPreferences.getInstance();
                     await pref.clear();
                     await pref.setBool('seen',true);
@@ -101,7 +102,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
       case 4:
         return FeedbackScreen();
       case 5:
-        return ManageRequestsScreen();
+        return ComplaintScreen();
       default:
         return Container();
     }

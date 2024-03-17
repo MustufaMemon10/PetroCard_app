@@ -7,6 +7,8 @@ import 'package:petrocardapppp/DrawerComponents/side_menu_tile.dart';
 import 'package:petrocardapppp/DrawerComponents/userdetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../screens/Admin side/Complain/add_complaints_page.dart';
+
 class HomeDrawer extends StatefulWidget {
   final Function onTap;
   const HomeDrawer({
@@ -37,7 +39,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
               ),
               const User_details(),
               SlidermenuItem(title: 'Feedback', iconData: CupertinoIcons.star, onTap: () {widget.onTap();},),
-              SlidermenuItem(title: 'Complaint', iconData: CupertinoIcons.exclamationmark_bubble,  onTap:(){}),
+              SlidermenuItem(title: 'Complaint', iconData: CupertinoIcons.exclamationmark_bubble,  onTap:(){
+                Navigator.push(context, MaterialPageRoute(builder:(context)=> AddComplaintsPage()));
+              }),
               SlidermenuItem(title: 'About us', iconData: CupertinoIcons.personalhotspot,  onTap: ()async {}),
               SlidermenuItem(title: 'Log Out',
                   iconData: Icons.logout_rounded,

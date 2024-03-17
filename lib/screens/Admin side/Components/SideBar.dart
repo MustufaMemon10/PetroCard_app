@@ -64,13 +64,6 @@ class SideBarMenu extends StatelessWidget {
                     label: Text('Card Request')),
                 NavigationRailDestination(
                     icon: Image.asset(
-                      'assets/Icons/credit-card.png',
-                      height: 25.0,
-                      width: 25.0,
-                    ),
-                    label: Text('Assign Card')),
-                NavigationRailDestination(
-                    icon: Image.asset(
                       'assets/Icons/rate.png',
                       height: 32.0,
                       width: 32.0,

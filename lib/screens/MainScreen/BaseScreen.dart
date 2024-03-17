@@ -5,6 +5,7 @@ import 'package:petrocardapppp/Components/Drawer.dart';
 import 'package:petrocardapppp/Widgets/Home Widget.dart';
 
 import '../../DrawerComponents/Rating_popup.dart';
+import '../Admin side/Feedback/add_feedback_page.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({Key? key}) : super(key: key);
@@ -97,7 +98,9 @@ class _BaseScreenState extends State<BaseScreen>
             top: 0,
             bottom: 0,
             left: isDrawerOpen ? 0 : -450,
-            child: HomeDrawer(onTap: openRatingPopup),
+            child: HomeDrawer(onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder:(context)=> AddFeedbackPage()));
+            }),
           ),
         ],
       ),
