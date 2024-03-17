@@ -58,6 +58,7 @@
           if (!responseData['error']) {
             setState(() {
               transactions = responseData['transactions'];
+              print(transactions);
               isLoading = false;
             });
           }  else {
@@ -107,7 +108,7 @@
                   boxShadow: [
                     BoxShadow(
                       color: AppColors.primaryPurple.withOpacity(0.2),
-                      offset: Offset(10, 5), // Adjust elevation offset
+                      offset: Offset(-10, -20), // Adjust elevation offset
                       blurRadius: 5, // Adjust blur radius
                     ),
                   ],
@@ -119,14 +120,6 @@
               delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
                       final transaction = transactions[index];
-                      if(transactions.isEmpty)
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('No Transaction',style: TextStyle(color: Colors.black),),
-                        ],
-                      );
                  return  Padding(
                     padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 10.w),
                     child: Container(
