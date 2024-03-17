@@ -177,8 +177,11 @@ class _AddFeedbackPageState extends State<AddFeedbackPage> {
                   padding: EdgeInsets.only(left: 16,right: 16),
                   margin: EdgeInsets.all(10),
                   child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      backgroundColor: AppColors.darkPurple,
+                      side: BorderSide.none,
+                      shape: StadiumBorder(),
                       ),
                       child: const Text('Send Feedback',
                         style: TextStyle(color: Colors.white),),
