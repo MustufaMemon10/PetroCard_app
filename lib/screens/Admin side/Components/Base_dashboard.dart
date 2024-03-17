@@ -61,12 +61,35 @@ class _AdminDashboardState extends State<AdminDashboard> {
               child: SideBarMenu(
                 onTap: (index) async {
                   if(index == 6){
-                    final pref = await SharedPreferences.getInstance();
-                    await pref.clear();
-                    await pref.setBool('seen',true);
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                            (route) => false);}
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: Text("LogOut Confirmation"),
+                        content:
+                        Text("Are you sure you want to Logout?"),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(
+                                  false); // Return false when cancel is pressed
+                            },
+                            child: Text("Cancel",style: TextStyle(color: Colors.green),),
+                          ),
+                          TextButton(
+                            onPressed: () async{
+                              final pref = await SharedPreferences.getInstance();
+                              await pref.clear();
+                              await pref.setBool('seen',true);
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(builder: (context) => LoginPage()),
+                                      (route) => false);
+                            },
+                            child: Text("LogOut",style: TextStyle(color: Colors.red),),
+                          ),
+                        ],
+                      ),
+                    );
+                   }
                   setState(() {
                     _selectedIndex = index;
                     currentIndex = index;

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:card_loading/card_loading.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Assign_Card/AssingCardScreen.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Components/RequestUserIcon.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
@@ -788,7 +789,12 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                                 loadingBuilder:
                                                     (context, event) => Center(
                                                   child:
-                                                      CircularProgressIndicator(),
+                                                  LoadingAnimationWidget.halfTriangleDot(
+                                                    color: AppColors.darkPurple,
+                                                    // leftDotColor: AppColors.darkPurple,
+                                                    // rightDotColor: AppColors.white,
+                                                    size: 50,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -840,7 +846,7 @@ class _ViewImageState extends State<ViewImage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () => Navigator.pop(context),
           icon: Icon(Icons.arrow_back_ios_new_outlined),
           iconSize: 14.0,
           color: AppColors.black,
@@ -854,7 +860,10 @@ class _ViewImageState extends State<ViewImage> {
         child: PhotoView(
           imageProvider: NetworkImage(widget.imageUrl),
           loadingBuilder: (context, event) => Center(
-            child: CircularProgressIndicator(),
+            child:   LoadingAnimationWidget.halfTriangleDot(
+              color: AppColors.darkPurple,
+              size: 50,
+            ),
           ),
         ),
       ),

@@ -18,7 +18,6 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
   Future<void> deleteUser(String userId) async {
     final apiUrl =
         'https://petrocard.000webhostapp.com/API/Admin/deleteapi.php';
-
     try {
       final response = await http.post(
         Uri.parse(apiUrl),
