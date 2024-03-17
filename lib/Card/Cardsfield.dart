@@ -21,31 +21,15 @@ class Cardsfield extends StatefulWidget {
 
 class _CardsfieldState extends State<Cardsfield> {
   bool _showAddCardButton = true;
-  String userName = '';
-  String email = '';
-  String card_num = '';
-  String validate = '';
 
-  Future<void> getCardDetails() async {
-    SharedPreferences setpreference = await SharedPreferences.getInstance();
-    setState(() {
-      userName = setpreference.getString('name') ?? '';
-      email = setpreference.getString('email') ?? '';
-      card_num = setpreference.getString('card_num') ?? '';
-      validate = setpreference.getString('validate') ?? '';
-    });
-  }
-  @override
-  void initState() {
-    super.initState();
-    getCardDetails();
-  }
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(height: 0.12.sh),
-        PetroMainCard(userName: userName,card_num: card_num,validate: validate,),
+        PetroMainCard(),
         SizedBox(height: 20.0.h,),
         Appbtns(),
       ],

@@ -7,7 +7,6 @@ import 'package:petrocardapppp/Card/Request/Request_Card_Screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-import '../../screens/API/ApiHelper.dart';
 import '../../utilities/colors.dart';
 
 class RequestCardScreen extends StatefulWidget {
@@ -20,7 +19,7 @@ class RequestCardScreen extends StatefulWidget {
 }
 
 class _RequestCardScreenState extends State<RequestCardScreen> {
-  String status = '';
+  String? status;
   bool isLoading = false;
 
   @override
@@ -43,7 +42,6 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        print("responseData");
         print(responseData);
         setpreference.setString('reqStatus',
             responseData['status'].toString()); // Set the actual status
@@ -78,8 +76,6 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
       child: isLoading
           ? LoadingAnimationWidget.halfTriangleDot(
               color: AppColors.darkPurple,
-              // leftDotColor: AppColors.darkPurple,
-              // rightDotColor: AppColors.white,
               size: 50,
             ):
           status == "pending"
@@ -88,7 +84,6 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
                   height: 50,
                   width: 50,
                 ):
-              status.isEmpty ?
                   TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -99,9 +94,7 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
                         );
                       },
                       child: Text('REQUEST FOR CARD'),
-                    )
-                  : null,
-
+                    ),
     );
   }
 }

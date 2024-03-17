@@ -61,7 +61,7 @@ class _CardScreenState extends State<CardScreen> {
               ],
             ),
           ),
-          PetroMainCard(userName: userName,card_num: card_num,validate: validate,),
+          PetroMainCard(),
           SizedBox(height: 10.0,),
           Divider(),
           ProfileOptionwidget(iconColor: AppColors.darkPurple, icon: Icons.ac_unit_outlined, textfield: card_num, isDark: false),

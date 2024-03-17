@@ -8,13 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 
 class PetroMainCard extends StatefulWidget {
-  final String userName;
-  final String card_num;
-  final String validate;
+
   const PetroMainCard({
-    required this.validate,
-    required this.card_num,
-    required this.userName,
     Key? key,
   }) : super(key: key);
 
@@ -23,6 +18,9 @@ class PetroMainCard extends StatefulWidget {
 }
 
 class _PetroMainCardState extends State<PetroMainCard> {
+  String userName = '';
+  String email = '';
+  String card_num = '';
   bool isDark = false;
   bool isBalanceHidden = true;
   String id = '';
@@ -30,10 +28,11 @@ class _PetroMainCardState extends State<PetroMainCard> {
   var logindata;
   bool isLoading = false;
 
-  Future<void> fetchCardDetails() async {
+  Future<void> _fetchCardDetails() async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
     try {
       final loginUrl = Uri.parse(
-          "https://petrocard.000webhostapp.com/API/card_data_fetchapi.php?id=$id");
+          "https://petrocard.000webhostapp.com/API/card_data_fetchapi.php?id= 17");
       final response = await http.get(loginUrl);
 
       if (response.statusCode == 200) {
@@ -43,8 +42,6 @@ class _PetroMainCardState extends State<PetroMainCard> {
         logindata = jsonDecode(response.body);
         data = logindata['data'];
         if (!logindata['error']) {
-          SharedPreferences setpreference =
-          await SharedPreferences.getInstance();
           setpreference.setString('card_id', data[0]['card_id'].toString());
           setpreference.setString('card_num', data[0]['card_num'].toString());
           setpreference.setString('addedtime', data[0]['addedtime'].toString());
@@ -52,9 +49,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
           setpreference.setString('balance', data[0]['balance'].toString());
           setpreference.setString('status', data[0]['status'].toString());
         }
-        setState(() {
-          isLoading = false;
-        });
+        await getCardDetails();
       } else {
         print(
             'Failed to get response from server. Status code: ${response.statusCode}');
@@ -63,19 +58,23 @@ class _PetroMainCardState extends State<PetroMainCard> {
       print('Error fetching data: $error');
     }
   }
-
-  Future<void> getIdDetails() async {
+  Future<void> getCardDetails() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     setState(() {
-      id = setpreference.getString('id') ?? '';
+      userName = setpreference.getString('name') ?? '';
+      email = setpreference.getString('email') ?? '';
+      card_num = setpreference.getString('card_num') ?? '';
     });
-    await fetchCardDetails();
+    setState(() {
+      isLoading = false;
+    });
   }
+
 
   @override
   void initState() {
     super.initState();
-    getIdDetails();
+    _fetchCardDetails();
   }
 
   @override
@@ -164,7 +163,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.card_num,
+                  card_num,
                   style: TextStyle(
                     fontSize: 19.0.sp,
                     color: isDark
@@ -179,7 +178,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      widget.userName,
+                      userName,
                       style: TextStyle(
                         fontSize: 19.0.sp,
                         color: isDark

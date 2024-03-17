@@ -126,8 +126,8 @@ class _MyappbarState extends State<Myappbar> {
                                     ? AppColors.darkAppBarSplashColor
                                         .withOpacity(0.2)
                                     : AppColors.grey.withOpacity(0.2),
-                                child: widget.isDark ? Image.asset('assets/Icons/up-and-down.png',height: 28,width: 35,color: AppColors.black,)
-                              :Image.asset('assets/Icons/up-and-down (1).png',height: 28,width: 35,color: AppColors.translightPurple2,)
+                                child: widget.isDark ? Image.asset('assets/Icons/up-and-down-arrows.png',height: 28,width: 35,color: AppColors.white,)
+                              :Image.asset('assets/Icons/up-and-down-arrows.png',height: 28,width: 35,color: AppColors.translightPurple2,)
                               ),
                             SizedBox(
                               width: 10.0,
