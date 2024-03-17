@@ -77,27 +77,46 @@ class _CardLimitScreenState extends State<CardLimitScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Set Limit',style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20,color: AppColors.black),),
+        backgroundColor: AppColors.darkPurple,
+        title: Text('Set Limit',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 20,color: AppColors.white),),
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(
-            Icons.arrow_back_ios_new,
-            color: AppColors.black,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
           ),
-          iconSize: 18.0,
+        ),
+        leading: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              color: Colors.white.withAlpha(20),
+            ),
+            child: Icon(Icons.arrow_back_ios_new, color:Colors.white, size: 20),
+          ),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: Form(
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: InkWell(
-            onTap: (){},
+          child: GestureDetector(
+            onTap: (){
+              FocusScope.of(context).unfocus();
+            },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Previous:'+cardlimit,style: TextStyle(color: AppColors.secondaryText,fontSize: 18),),
+                Container(
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.only(bottom: 10.0),
+                    decoration: BoxDecoration(
+                      color: AppColors.darkPurple.withAlpha(20),
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child: Text('Current:'+cardlimit,style: TextStyle(color: AppColors.secondaryText,fontSize: 18),)),
                 TextFormField(
                   keyboardType: TextInputType.number,
                   controller: _limitController,

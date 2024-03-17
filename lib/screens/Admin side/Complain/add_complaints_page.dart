@@ -43,7 +43,7 @@ class _AddComplaintsPageState extends State<AddComplaintsPage> {
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),
+            bottom: Radius.circular(20),
           ),
         ),
         actions: <Widget>[

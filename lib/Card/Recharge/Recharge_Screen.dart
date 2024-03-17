@@ -77,12 +77,15 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
         ),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(
-            Icons.arrow_back_ios_new,
-            color: AppColors.black,
+          icon: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              color: Colors.white.withAlpha(20),
+            ),
+            child: Icon(Icons.arrow_back_ios_new, color:Colors.white, size: 20),
           ),
-          iconSize: 18.0,
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: Form(

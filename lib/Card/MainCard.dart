@@ -51,10 +51,10 @@ class _PetroMainCardState extends State<PetroMainCard> {
           setpreference.setString('cardlimit', data[0]['cardlimit'].toString());
           setpreference.setString('balance', data[0]['balance'].toString());
           setpreference.setString('status', data[0]['status'].toString());
-          setState(() {
-            isLoading = false;
-          });
         }
+        setState(() {
+          isLoading = false;
+        });
       } else {
         print(
             'Failed to get response from server. Status code: ${response.statusCode}');
