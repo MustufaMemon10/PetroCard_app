@@ -280,7 +280,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                                     TextButton(
                                       onPressed: () {
                                         Navigator.of(context).pop(
-                                            false); // Return false when cancel is pressed
+                                            false);
                                       },
                                       child: Text("Cancel",style: TextStyle(color: Colors.green)),
                                     ),
