@@ -282,13 +282,13 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                                         Navigator.of(context).pop(
                                             false); // Return false when cancel is pressed
                                       },
-                                      child: Text("Cancel"),
+                                      child: Text("Cancel",style: TextStyle(color: Colors.green)),
                                     ),
                                     TextButton(
                                       onPressed: () {
                                         deleteUser(user['id']);
                                       },
-                                      child: Text("Delete"),
+                                      child: Text("Delete",style: TextStyle(color: Colors.red)),
                                     ),
                                   ],
                                 ),
