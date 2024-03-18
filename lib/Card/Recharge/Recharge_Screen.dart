@@ -81,9 +81,9 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(20)),
-              color: Colors.white.withAlpha(20),
+              color: Colors.black.withAlpha(20),
             ),
-            child: Icon(Icons.arrow_back_ios_new, color:Colors.white, size: 20),
+            child: Icon(Icons.arrow_back_ios_new, color:Colors.black, size: 20),
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -102,9 +102,9 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
           SizedBox(height: 15),
               Text(
                 'Credit/Debit/ATM card',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,letterSpacing: 0.6),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600,letterSpacing: 0.6),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 15),
           TextFormField(
             keyboardType: TextInputType.number,
             controller: _cardNumberController,

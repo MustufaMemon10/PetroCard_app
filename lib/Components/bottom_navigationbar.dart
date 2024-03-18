@@ -28,7 +28,7 @@ class _MyNavBarState extends State<MyNavBar> {
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
         margin: const EdgeInsets.only(bottom: 5.0,right: 10.0,left: 10.0),
         height:.075.sh,
-        width: 0.6.sw,
+        width: 0.5.sw,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -67,7 +67,6 @@ class _MyNavBarState extends State<MyNavBar> {
                     duration: const Duration(seconds: 1),
                     curve: Curves.fastLinearToSlowEaseIn,
                     height: index == _currentindex ? width * .12 : 0,
-                    width: index == _currentindex ? width * .40 : 0,
                     decoration: BoxDecoration(
                       color: index == _currentindex
                           ? AppColors.lightPurple2.withOpacity(.2)
@@ -80,7 +79,7 @@ class _MyNavBarState extends State<MyNavBar> {
                   duration: const Duration(seconds: 1),
                   curve: Curves.fastLinearToSlowEaseIn,
                   width: index == _currentindex
-                      ? width * .31
+                      ? width * .30
                       : width * .20,
                   alignment: Alignment.center,
                   child: Stack(

@@ -7,7 +7,11 @@ import '../Card/Request/Request_Card_Screen.dart';
 import '../Widgets/custombtns_widget.dart';
 
 class Appbtns extends StatefulWidget {
-  const Appbtns({super.key});
+  final bool isLoading;
+  const Appbtns({
+    Key ? key,
+    required this.isLoading
+}): super(key: key);
 
   @override
   State<Appbtns> createState() => _AppbtnsState();

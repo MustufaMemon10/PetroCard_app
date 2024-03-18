@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'package:animate_do/animate_do.dart';
 import 'package:card_loading/card_loading.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Card/Cardsfield.dart';
@@ -45,15 +46,15 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     fetchTransactionDetails();
   }
-  void dispose(){
-    super.dispose();
-  }
 
   Future<void> fetchTransactionDetails() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     final apiUrl =
         'https://petrocard.000webhostapp.com/API/fetchalltranscations.php';
     try {
+      setState(() {
+        isLoading = true;
+      });
       final response = await http.post(
         Uri.parse(apiUrl),
         body: {'id': setpreference.getString('id')},
@@ -63,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
         if (!responseData['error']) {
           setState(() {
             transactions = responseData['transactions'];
-            print(transactions);
             isLoading = false;
           });
         } else {
@@ -79,6 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: isDark ? AppColors.darkBackground : AppColors.white,
       body: CustomScrollView(
@@ -90,74 +92,91 @@ class _HomeScreenState extends State<HomeScreen> {
             pinned: true,
             centerTitle: false,
             stretch: true,
-            expandedHeight: 0.500.sh,
+            expandedHeight: 440,
             flexibleSpace: FlexibleSpaceBar(
               background: Padding(
                 padding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0.w),
-                child: Cardsfield(),
+                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+                child: Cardsfield(isLoading: isLoading,),
               ),
             ),
           ),
           SliverAppBar(
             backgroundColor:
                 isDark ? AppColors.darkTransactionBackground : AppColors.white,
-            // Set app bar color based on isDark
             elevation: 5,
             floating: false,
             pinned: true,
             centerTitle: true,
             bottom: const PreferredSize(
               child: SizedBox(),
-              preferredSize: Size.fromHeight(-10.0),
+              preferredSize: Size.fromHeight(-20.0),
             ),
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                color: isDark
-                    ? AppColors.darkTransactionBackground
-                    : AppColors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20.0),
+            flexibleSpace: isLoading ? 
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: CardLoading(height: 100,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                )
+                :FadeInUp(
+              duration: Duration(milliseconds: 300),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? AppColors.darkTransactionBackground
+                      : AppColors.white,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(20.0),
+                  ),
                 ),
+                child: TransactionText(isDark: isDark),
               ),
-              child: TransactionText(isDark: isDark),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                final transaction = transactions[index];
-                final timeStamp = transaction['timestamp'];
-                return isLoading
-                    ? CardLoading(height: 10.0)
-                    : Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 3.h, horizontal: 10.w),
-                        child: Container(
+          SliverPadding(
+            padding: EdgeInsets.only(bottom: 0.22.sw),
+            sliver:SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  final transaction = transactions[index];
+                  final timeStampString = transaction['timestamp'];
+                  final timeStamp = DateTime.parse(timeStampString);
+                  final formattedTime =
+                      DateFormat('MMMM d, yyyy \'at\' hh:mm a')
+                          .format(timeStamp);
+                  return  Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: 20.h, horizontal: 20.w),
-                          decoration: BoxDecoration(
-                              color: isDark
-                                  ? AppColors.darkCardBackground
-                                  : AppColors.white,
-                              border: Border.all(
-                                  width: 0.5, color: AppColors.secondaryText),
-                              borderRadius: BorderRadius.circular(20.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.black.withOpacity(0.2),
-                                  offset: Offset(1, 2),
-                                )
-                              ]),
-                          child: TransactionCard(
-                            title: transaction['title'] ?? '',
-                            subTitle: timeStamp,
-                            amount: transaction['amount'] ?? '',
+                              vertical: 5.h, horizontal: 10.w),
+                          child: FadeInUp(
+                            duration: Duration(milliseconds: 400),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 14.0, horizontal: 30.0),
+                              decoration: BoxDecoration(
+                                  color: isDark
+                                      ? AppColors.darkCardBackground
+                                      : AppColors.white,
+                                  border: Border.all(
+                                      width: 0.5,
+                                      color: AppColors.secondaryText),
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.black.withOpacity(0.2),
+                                      offset: Offset(1, 2),
+                                    )
+                                  ]),
+                              child: TransactionCard(
+                                subTitle: formattedTime,
+                                amount: transaction['amount'] ?? '',
+                              ),
+                            ),
                           ),
-                        ),
-                      );
-                return null;
-              },
-              childCount: transactions.length,
+                        );
+                },
+                childCount: transactions.length,
+              ),
             ),
           ),
         ],

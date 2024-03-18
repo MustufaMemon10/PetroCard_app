@@ -6,23 +6,28 @@ import 'package:petrocardapppp/Widgets/CustomTextfieldWidget.dart';
 import 'package:petrocardapppp/screens/Forgot Passwordscreen//otpVerify.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 
-class CheckNumber extends StatefulWidget {
+class AddNumber extends StatefulWidget {
   final String? initialMobileNumber;
-  const CheckNumber({Key? key, required this.initialMobileNumber,}) : super(key: key);
+
+  const AddNumber({
+    Key? key,
+    required this.initialMobileNumber,
+  }) : super(key: key);
 
   @override
-  State<CheckNumber> createState() => _CheckNumberedState();
+  State<AddNumber> createState() => _AddNumberState();
 }
 
-class _CheckNumberedState extends State<CheckNumber> {
+class _AddNumberState extends State<AddNumber> {
   TextEditingController mobileNumberController = TextEditingController();
-  @override
-  void initState(){super.initState();
-  if(widget.initialMobileNumber !=null){
-    mobileNumberController.text = widget.initialMobileNumber!;
-  }
-  }
 
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialMobileNumber != null) {
+      mobileNumberController.text = widget.initialMobileNumber!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,16 +45,9 @@ class _CheckNumberedState extends State<CheckNumber> {
               child: Container(
                 height: .25.sh,
                 width: width,
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          AppColors.translightPurple2,
-                          AppColors.neutralBackground,
-                        ])),
+                decoration: const BoxDecoration(color: AppColors.white),
                 child: Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 40.w),
+                  padding: EdgeInsets.symmetric(horizontal: 40.w),
                   child: FadeInUp(
                     duration: const Duration(milliseconds: 1200),
                     child: Column(
@@ -59,7 +57,7 @@ class _CheckNumberedState extends State<CheckNumber> {
                         FadeInUp(
                           duration: const Duration(milliseconds: 1000),
                           child: Text(
-                            "Reset password",
+                            "Provide Phone Number",
                             style: TextStyle(
                               color: AppColors.darkPurple,
                               fontWeight: FontWeight.bold,
@@ -67,13 +65,13 @@ class _CheckNumberedState extends State<CheckNumber> {
                             ),
                           ),
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 5.h,
                         ),
                         FadeInUp(
                           duration: const Duration(milliseconds: 1300),
                           child: Text(
-                            "Forgot Password ?That's okay.",
+                            "Provide Your phone number to",
                             style: TextStyle(
                               color: AppColors.primaryText,
                               fontWeight: FontWeight.bold,
@@ -81,12 +79,12 @@ class _CheckNumberedState extends State<CheckNumber> {
                             ),
                           ),
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 5.h,
                         ),
                         FadeInUp(
                           duration: const Duration(milliseconds: 1400),
-                          child:  Text(
+                          child: Text(
                             "Please provide your Mobile number to reset your password ",
                             style: TextStyle(
                               color: AppColors.primaryText,
@@ -106,7 +104,7 @@ class _CheckNumberedState extends State<CheckNumber> {
               child: FadeInUp(
                 duration: const Duration(milliseconds: 1700),
                 child: Container(
-                  decoration:  BoxDecoration(
+                  decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(50.0.r),
                         topRight: Radius.circular(50.0.r),
@@ -120,13 +118,13 @@ class _CheckNumberedState extends State<CheckNumber> {
                         )
                       ]),
                   child: Padding(
-                    padding:  EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                         horizontal: 40.w, vertical: 10.0.h),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                           SizedBox(
+                          SizedBox(
                             height: 30.0.h,
                           ),
                           FadeInUp(
@@ -135,8 +133,8 @@ class _CheckNumberedState extends State<CheckNumber> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20.r),
                                   color: AppColors.white,
-                                  border: Border.all(
-                                      color: AppColors.lightPurple),
+                                  border:
+                                      Border.all(color: AppColors.lightPurple),
                                   boxShadow: const [
                                     BoxShadow(
                                       color: AppColors.lightPurple,
@@ -144,15 +142,22 @@ class _CheckNumberedState extends State<CheckNumber> {
                                       offset: Offset(0, 10),
                                     )
                                   ]),
-                              child: NumericTextField(hintText: 'Mobile number', controller: mobileNumberController,showBorder: false,),
+                              child: NumericTextField(
+                                hintText: 'Mobile number',
+                                controller: mobileNumberController,
+                                showBorder: false,
+                              ),
                             ),
                           ),
                           FadeInUp(
                             duration: const Duration(milliseconds: 2000),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 30.0),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 30.0),
                               child: GestureDetector(
-                                onTap: () {checkNumber();},
+                                onTap: () {
+                                  checkNumber();
+                                },
                                 child: Container(
                                   height: 40.h,
                                   width: .6.sw,
@@ -168,10 +173,9 @@ class _CheckNumberedState extends State<CheckNumber> {
                                       ),
                                     ]),
                                   ),
-                                  child:  Align(
+                                  child: Align(
                                     alignment: Alignment.center,
-                                    child:
-                                    Text(
+                                    child: Text(
                                       "Continue",
                                       style: TextStyle(
                                         color: AppColors.white,
@@ -195,7 +199,8 @@ class _CheckNumberedState extends State<CheckNumber> {
       ),
     );
   }
-  Future<void>  checkNumber() async {
+
+  Future<void> checkNumber() async {
     if (mobileNumberController.text.isNotEmpty) {
       String mobileNumber = mobileNumberController.text;
       if (mobileNumber.length == 10 && int.tryParse(mobileNumber) != null) {
@@ -209,11 +214,13 @@ class _CheckNumberedState extends State<CheckNumber> {
           ),
         );
       } else {
-        showSnackBar('Please provide a valid 10-digit mobile number.', isError: true);
+        showSnackBar('Please provide a valid 10-digit mobile number.',
+            isError: true);
       }
     } else {
       // Show an error message if the mobile number is empty
-      showSnackBar('Please provide a valid 10-digit mobile number.', isError: true);
+      showSnackBar('Please provide a valid 10-digit mobile number.',
+          isError: true);
     }
   }
 

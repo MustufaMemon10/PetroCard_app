@@ -115,7 +115,7 @@ class OtpPageState extends State<OtpPage> {
                                 Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                    builder: (context) => CheckNumber(initialMobileNumber: mobileNumber),
+                                    builder: (context) => CheckNumber(),
                                   ),
                                 );
                               },

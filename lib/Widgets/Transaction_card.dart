@@ -5,12 +5,10 @@ import 'package:petrocardapppp/utilities/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TransactionCard extends StatefulWidget {
-  final String title;
   final String subTitle;
   final String amount;
   TransactionCard({
   required this.subTitle,
-  required this.title,
   required this.amount,
   });
 
@@ -23,7 +21,7 @@ class _TransactionCardState extends State<TransactionCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0.h),
+          padding: EdgeInsets.symmetric(vertical: 4.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -33,21 +31,18 @@ class _TransactionCardState extends State<TransactionCard> {
                   SizedBox(width: 8.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        widget.title,
-                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
                         widget.subTitle,
-                        style: TextStyle(fontSize: 12.0,fontWeight: FontWeight.w400),
+                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),
                 ],
               ),
               Text(
-                '-'+
+                '- ₹'+
                 widget.amount,
                 style: TextStyle(color: Colors.red, fontSize: 14.0),
               ),

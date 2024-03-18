@@ -21,19 +21,22 @@ class _pendingscreenState extends State<pendingscreen> {
             color: AppColors.black,fontWeight: FontWeight.bold,
             letterSpacing: 0.7,fontSize: 24.0,
           ),),
+          Divider(height: 9.0,thickness: 2.0,color: AppColors.darkPurple,),
           SizedBox(height: 30,),
           Image.asset('assets/Icons/document.gif',height: 300,width: double.infinity,),
-          SizedBox(height: 80,),
+          SizedBox(height: 50,),
           Text("We're evaluating your request",style: TextStyle(
             color: AppColors.black,fontWeight: FontWeight.bold,
             letterSpacing: 0.7,fontSize: 20.0,
           ),),
           SizedBox(height: 20,),
-          Text("Thank you for your request, we're currently reviewing it to ensure everything is in order. Please stay tuned for updates on your request status.",style: TextStyle(
-            color: AppColors.black.withAlpha(70),fontWeight: FontWeight.bold,
-            letterSpacing: 0.7,fontSize: 16.0,
-          ),),
-
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0,top: 10.0),
+            child: Text("Thank you for your request, we're currently reviewing it to ensure everything is in order. Please stay tuned for updates on your request status.",style: TextStyle(
+              color: AppColors.black.withAlpha(70),fontWeight: FontWeight.bold,
+              letterSpacing: 0.4,fontSize: 16.0,
+            ),),
+          ),
         ],
       ),
     );

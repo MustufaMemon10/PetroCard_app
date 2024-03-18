@@ -26,7 +26,7 @@ class _UserIconState extends State<UserIcon> {
     fetchGender();
 
   }
-  String? Gender;
+  String Gender = '';
   @override
   Widget build(BuildContext context) {
     return Container(

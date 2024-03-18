@@ -221,24 +221,28 @@ class _UserScreenState extends State<UserScreen> {
                   ),
                   Divider(),
                   ProfileOptionwidget(
+                    textColor: textColor,
                     iconColor: iconColor,
                     isDark: isDark,
                     icon: FontAwesomeIcons.userCheck,
                     textfield: userName,
                   ),
                   ProfileOptionwidget(
+                    textColor: textColor,
                     iconColor: iconColor,
                     isDark: isDark,
                     icon: FontAwesomeIcons.envelope,
                     textfield: email,
                   ),
                   ProfileOptionwidget(
+                    textColor: textColor,
                     iconColor: iconColor,
                     isDark: isDark,
                     icon: FontAwesomeIcons.phone,
                     textfield: phone,
                   ),
                   ProfileOptionwidget(
+                    textColor: textColor,
                     iconColor: iconColor,
                     isDark: isDark,
                     icon: FontAwesomeIcons.fingerprint,
@@ -255,6 +259,7 @@ class _UserScreenState extends State<UserScreen> {
                   ),
                   if (DOB.isNotEmpty)
                     ProfileOptionwidget(
+                      textColor: textColor,
                       iconColor: iconColor,
                       isDark: isDark,
                       icon: FontAwesomeIcons.calendar,
@@ -262,6 +267,7 @@ class _UserScreenState extends State<UserScreen> {
                     ),
                   if (address.isNotEmpty)
                     ProfileOptionwidget(
+                      textColor: textColor,
                       iconColor: iconColor,
                       isDark: isDark,
                       icon: FontAwesomeIcons.addressBook,
@@ -269,6 +275,7 @@ class _UserScreenState extends State<UserScreen> {
                     ),
                   if (gender.isNotEmpty)
                     ProfileOptionwidget(
+                      textColor: textColor,
                       iconColor: iconColor,
                       isDark: isDark,
                       icon: FontAwesomeIcons.person,
@@ -324,6 +331,7 @@ class ProfileOptionwidget extends StatelessWidget {
     required this.iconColor,
     required this.icon,
     required this.textfield,
+    required this.textColor,
     this.trailing = false,
     this.onTap,
     required this.isDark,
@@ -331,6 +339,7 @@ class ProfileOptionwidget extends StatelessWidget {
   });
 
   final Color iconColor;
+  final Color textColor;
   final IconData icon;
   final String textfield;
   final Function()? onTap;
@@ -356,8 +365,8 @@ class ProfileOptionwidget extends StatelessWidget {
           textfield,
           style: TextStyle(
             fontSize: 16.0,
-            color: isDark ? AppColors.white : AppColors.black,
-            letterSpacing: 0.5,
+            color: textColor,
+            letterSpacing: 0.8,
           ),
         ),
         trailing: trailing
@@ -368,12 +377,12 @@ class ProfileOptionwidget extends StatelessWidget {
                   width: 70,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Colors.grey.withOpacity(0.2)),
+                      color: iconColor.withOpacity(0.2)),
                   child: Center(
                     child: Text(
                       'change',
                       style: TextStyle(
-                        color: AppColors.grey,
+                        color: textColor,
                         letterSpacing: 0.6,
                       ),
                     ),

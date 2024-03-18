@@ -1,3 +1,4 @@
+import 'package:card_loading/card_loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +14,10 @@ import '../utilities/colors.dart';
 import 'Request/Request_Card_Screen.dart';
 
 class Cardsfield extends StatefulWidget {
-  Cardsfield({Key? key}) : super(key: key);
+  final bool isLoading;
+    const Cardsfield({
+    required this.isLoading,
+    Key? key}) : super(key: key);
 
   @override
   State<Cardsfield> createState() => _CardsfieldState();
@@ -44,10 +48,17 @@ class _CardsfieldState extends State<Cardsfield> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 0.12.sh),
+        SizedBox(height: 105),
         PetroMainCard(userName: userName,card_num: card_num,),
-        SizedBox(height: 20.0.h,),
-        Appbtns(),
+        SizedBox(height: 30.0,),
+        widget.isLoading ?Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: [
+      CardLoading(height: 50,width: 50,borderRadius: BorderRadius.circular(16),),
+      CardLoading(height: 30,width: 50,borderRadius: BorderRadius.circular(16),),
+    ],
+    ):
+        Appbtns(isLoading: widget.isLoading,),
       ],
     );
   }

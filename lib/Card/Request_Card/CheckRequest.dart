@@ -45,7 +45,9 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
         final responseData = jsonDecode(response.body);
         print(responseData);
         setpreference.setString('reqStatus',
-            responseData['status'].toString()); // Set the actual status
+            responseData['status'].toString()); //
+        setpreference.setString('gender',
+            responseData['gender'].toString()); // Set the actual status
         setState(() {
           isLoading = false;
           status = setpreference.getString('reqStatus')!;
@@ -85,17 +87,19 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
             ))
           : status == "pending"
               ? pendingscreen()
-              : TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => const Request_Screen(),
-                      ),
-                    );
-                  },
-                  child: Text('REQUEST FOR CARD'),
-                ),
+              : status == "Rejected"?
+          Text('Request Rejected')
+          :TextButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => const Request_Screen(),
+            ),
+          );
+        },
+        child: Text('REQUEST FOR CARD'),
+      )
       ),
     );
   }

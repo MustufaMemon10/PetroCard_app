@@ -280,7 +280,6 @@ class _LoginPageState extends State<LoginPage> {
                                                 CupertinoPageRoute(
                                                   builder: (context) =>
                                                       const CheckNumber(
-                                                    initialMobileNumber: null,
                                                   ),
                                                 ),
                                               );
@@ -377,12 +376,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            LoadingAnimationWidget.halfTriangleDot(
-                              color: AppColors.darkPurple,
-                              // leftDotColor: AppColors.darkPurple,
-                              // rightDotColor: AppColors.white,
-                              size: 50,
-                            ),
+
                           ],
                         ),
                       )

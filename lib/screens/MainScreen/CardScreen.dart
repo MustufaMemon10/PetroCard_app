@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/screens/MainScreen/User_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Card/MainCard.dart';
@@ -14,10 +14,10 @@ class CardScreen extends StatefulWidget {
 }
 
 class _CardScreenState extends State<CardScreen> {
+  bool isDark = false;
   String userName = '';
   String email = '';
   String card_num = '';
-  String validate = '';
   String balance = '';
   String status = '';
   Future<void> getCardDetails() async {
@@ -26,7 +26,6 @@ class _CardScreenState extends State<CardScreen> {
       userName = setpreference.getString('name') ?? '';
       email = setpreference.getString('email') ?? '';
       card_num = setpreference.getString('card_num') ?? '';
-      validate = setpreference.getString('validate') ?? '';
       status = setpreference.getString('status') ?? '';
 
     });
@@ -64,10 +63,91 @@ class _CardScreenState extends State<CardScreen> {
           PetroMainCard(userName: userName,card_num: card_num,),
           SizedBox(height: 10.0,),
           Divider(),
-          ProfileOptionwidget(iconColor: AppColors.darkPurple, icon: Icons.ac_unit_outlined, textfield: card_num, isDark: false),
-          ProfileOptionwidget(iconColor: AppColors.darkPurple, icon: Icons.ac_unit_outlined, textfield: userName, isDark: false),
-          ProfileOptionwidget(iconColor: AppColors.darkPurple, icon: Icons.ac_unit_outlined, textfield: validate, isDark: false),
-          ProfileOptionwidget(iconColor: AppColors.darkPurple, icon: Icons.ac_unit_outlined, textfield: status, isDark: false),
+          ListTile(
+              leading: Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: AppColors.white.withAlpha(20)),
+                child: Icon(
+                  FontAwesomeIcons.creditCard,
+                  color: AppColors.darkPurple,
+                ),
+              ),
+              title: Text(
+                card_num,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: AppColors.black,
+                  letterSpacing: 0.8,
+                ),
+              ),
+          ),
+          ListTile(
+            leading: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: AppColors.white.withAlpha(20)),
+              child: Icon(
+                FontAwesomeIcons.userCheck,
+                color: AppColors.darkPurple,
+              ),
+            ),
+            title: Text(
+              userName,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: AppColors.black,
+                letterSpacing: 0.8,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: AppColors.white.withAlpha(20)),
+              child: Icon(
+                FontAwesomeIcons.envelope,
+                color: AppColors.darkPurple,
+              ),
+            ),
+            title: Text(
+              email,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: AppColors.black,
+                letterSpacing: 0.8,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: AppColors.white.withAlpha(20)),
+              child: Icon(
+                FontAwesomeIcons.creativeCommonsSampling,
+                color: AppColors.darkPurple,
+              ),
+            ),
+            title: Text(
+              status,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: AppColors.black,
+                letterSpacing: 0.8,
+              ),
+            ),
+            trailing: Icon(Icons.radio_button_off_outlined,color: Colors.green,),
+          ),
         ]),
       ),
     );
