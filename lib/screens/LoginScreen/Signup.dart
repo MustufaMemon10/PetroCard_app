@@ -6,11 +6,11 @@ import 'package:petrocardapppp/Widgets/CustomTextfieldWidget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/screens/Forgot%20Passwordscreen/Add%20Number.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Forgot Passwordscreen/Check Number.dart';
+import '../OTPverified/Check Number.dart';
 
 class SignUppage extends StatefulWidget {
   const SignUppage({super.key});
@@ -31,41 +31,47 @@ class _SignUppageState extends State<SignUppage> {
   bool showPasswordFields = false;
 
   Future<void> _handleSingUp() async {
-    final form = formKey.currentState;
-    if (form!.validate()) {
-      setState(() {
-        isLoading = true;
-      });
-      final login_url =
-          Uri.parse("https://petrocard.000webhostapp.com/API/signup.php");
-      final response = await http.post(login_url, body: {
-        "email": emailController.text,
-        "password": passwordController.text,
-        "name": fullNameController.text,
-        "role": "1",
-      });
-      if (response.statusCode == 200) {
-        logindata = jsonDecode(response.body);
-        data = jsonDecode(response.body)['user'];
-        print(logindata);
-        setState(() {
-          isLoading = false;
-        });
-        if (logindata['error'] == false) {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => CheckNumber()),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(logindata['message'].toString()),
-              duration: Duration(seconds: 2),
-              backgroundColor: Colors.red, // Customize background color
-            ),
-          );
-        }
-      }
-    }
+    Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => CheckNumber()),
+              );
+    // SharedPreferences setpreference = await SharedPreferences.getInstance();
+    //
+    // final form = formKey.currentState;
+    // if (form!.validate()) {
+    //   setState(() {
+    //     isLoading = true;
+    //   });
+    //   final login_url =
+    //       Uri.parse("https://petrocard.000webhostapp.com/API/signup.php");
+    //   final response = await http.post(login_url, body: {
+    //     "email": emailController.text,
+    //     "password": passwordController.text,
+    //     "name": fullNameController.text,
+    //     "role": "1",
+    //   });
+    //   if (response.statusCode == 200) {
+    //     logindata = jsonDecode(response.body);
+    //     data = jsonDecode(response.body)['data'];
+    //     setpreference.setString('email', logindata['email'].toString());
+    //     print(logindata);
+    //     setState(() {
+    //       isLoading = false;
+    //     });
+    //     if (logindata['error'] == false) {
+    //       Navigator.of(context).push(
+    //         MaterialPageRoute(builder: (context) => CheckNumber()),
+    //       );
+    //     } else {
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         SnackBar(
+    //           content: Text(logindata['message'].toString()),
+    //           duration: Duration(seconds: 2),
+    //           backgroundColor: Colors.red, // Customize background color
+    //         ),
+    //       );
+    //     }
+    //   }
+    // }
   }
 
   @override
@@ -312,17 +318,14 @@ class _SignUppageState extends State<SignUppage> {
           ),
         ),
         Positioned.fill(
-          child: Container(
-            color: isLoading ? AppColors.white.withOpacity(0.5) : null,
-            child: isLoading
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [],
-                    ),
-                  )
-                : null,
-          ),
+          child: isLoading
+              ? Container(
+              color: AppColors.white.withOpacity(0.5),
+              child: Center(
+                child: LoadingAnimationWidget.halfTriangleDot(
+                    color: AppColors.darkPurple, size: 50),
+              ))
+              : SizedBox(),
         ),
       ]),
     );

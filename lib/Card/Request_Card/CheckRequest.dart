@@ -67,7 +67,7 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
         SnackBar(
           content: Text('Error calling API'),
           duration: Duration(seconds: 2),
-          backgroundColor: Colors.red, // Customize background color
+          backgroundColor: Colors.red,
         ),
       );
     }

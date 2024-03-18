@@ -29,8 +29,7 @@ class _AssignCardScreenState extends State<AssignCardScreen> {
   Future<void> _assignCard() async {
     final form = _formKey.currentState;
     if (form!.validate()) {
-      print('userName: ${widget.userName}');
-      print('req_id: ${widget.req_id}');
+
       setState(() {
         isLoading = true;
       });

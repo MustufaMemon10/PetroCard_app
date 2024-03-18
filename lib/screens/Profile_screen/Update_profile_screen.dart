@@ -209,52 +209,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   hintText: 'Email',
                 ),
                 SizedBox(
-                  height: 10.0.h,
-                ),
-                ProfileTextfield(
-                  validatorValue: (val) {
-                    if (_phoneNumberController.text.length == 10 && int.tryParse(_phoneNumberController.text) != null){
-                      return 'Please Enter 10-digit mobile number.';
-                    }
-                    return null;
-                  },
-                  isDark: isDark,
-                  errorMsg: 'Please enter full name',
-                  Controller: _phoneNumberController,
-                  prefixicon: FontAwesomeIcons.mobileScreen,
-                  hintText: 'Phone',
-                ),
-                SizedBox(
-                  height: 10.0.h,
-                ),
-                if(address.isNotEmpty)
-                ProfileTextfield(
-                  validatorValue: (val) {
-                    return null;
-                  },
-                  isDark: isDark,
-                  errorMsg: 'Please enter Address',
-                  address: true,
-                  Controller: _addressController,
-                  prefixicon: FontAwesomeIcons.addressCard,
-                  hintText: 'Address',
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                if(DOB.isNotEmpty)
-                ProfileTextfield(
-                  validatorValue: (val) {
-                    return null;
-                  },
-                  isDark: isDark,
-                  errorMsg: 'Please enter Dob',
-                  Controller: _dobController,
-                  prefixicon: FontAwesomeIcons.calendar,
-                  hintText: 'Dob',
-                  issufix: true,
-                ),
-                SizedBox(
                   height: 40.0.h,
                 ),
                 SizedBox(

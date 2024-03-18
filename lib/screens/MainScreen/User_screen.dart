@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:petrocardapppp/Components/UserIcon.dart';
-import 'package:petrocardapppp/screens/Forgot%20Passwordscreen/ChangePasswordScreen.dart';
 import 'package:petrocardapppp/screens/Profile_screen/Update_profile_screen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../OTPverified/ChangePasswordScreen.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
