@@ -253,6 +253,7 @@ class _SignUppageState extends State<SignUppage> {
                                     child: MaterialButton(
                                       onPressed: () {
                                         _handleSingUp();
+                                        FocusScope.of(context).unfocus();
                                       },
                                       color:
                                           const Color.fromRGBO(49, 39, 79, 1),

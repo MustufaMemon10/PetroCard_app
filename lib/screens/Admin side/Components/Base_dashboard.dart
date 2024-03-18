@@ -8,6 +8,7 @@ import 'package:petrocardapppp/screens/Admin%20side/Feedback/FeedbackScreen.dart
 import 'package:petrocardapppp/screens/Admin%20side/Manage_Users/Manage_User.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Appbar/Admin_appbar.dart';
 import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
+import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Manage_Card_request/Manage_Request.dart';
@@ -64,7 +65,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        title: Text("LogOut Confirmation"),
+                        title: Text("Logout Confirmation"),
                         content:
                         Text("Are you sure you want to Logout?"),
                         actions: <Widget>[
@@ -73,7 +74,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                               Navigator.of(context).pop(
                                   false); // Return false when cancel is pressed
                             },
-                            child: Text("Cancel",style: TextStyle(color: Colors.green),),
+                            child: Text("Cancel",style: TextStyle(color: AppColors.accentColor),),
                           ),
                           TextButton(
                             onPressed: () async{
@@ -84,7 +85,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                   MaterialPageRoute(builder: (context) => LoginPage()),
                                       (route) => false);
                             },
-                            child: Text("LogOut",style: TextStyle(color: Colors.red),),
+                            child: Text("Logout",style: TextStyle(color: Colors.blue),),
                           ),
                         ],
                       ),

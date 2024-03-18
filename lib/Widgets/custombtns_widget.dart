@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 
 class Btn extends StatefulWidget {
-  final IconData icon;
+  final String imagePath;
   final String text;
   final Function() onTap;
 
   const Btn({
     Key? key,
-    required this.icon,
+    required this.imagePath,
     required this.text,
     required this.onTap,
   }) : super(key: key);
@@ -22,55 +22,27 @@ class Btn extends StatefulWidget {
 
 class _BtnState extends State<Btn> {
   bool isButtonPressed = false;
-  bool isLoading = false;
-
-  void _StartLoading() {
-    setState(() {
-      isLoading = !isLoading;
-    });
-    setState(() {
-      isLoading = !isLoading;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _StartLoading();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? CardLoading(
-            height: 30.h,
-            width: 30.w,
-            borderRadius: BorderRadius.circular(16.0),
-          )
-        : Column(
+    return Column(
             children: [
               SizedBox(
-                height: 50.h,
-                width: 60.w,
+                height: 50,
+                width: 60,
                 child: ElevatedButton(
                     onPressed: widget.onTap,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.white,
                       side: BorderSide(
-                        color: AppColors.lightPurple2,
+                        color: AppColors.grey.withOpacity(0.6),
                         width: 1.0,
                       ),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
                     ),
-                    child: Icon(
-                      widget.icon,
-                      size: 22.0,
-                      color: AppColors.black,
+                    child: Image.asset(
+                      widget.imagePath,
+                     height: 35,
+                      width: 40,
                     )),
               ),
               SizedBox(height: 10.0),

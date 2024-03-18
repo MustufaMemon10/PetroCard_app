@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
+import 'package:petrocardapppp/screens/MainScreens/BaseScreen.dart';
 
 
 class CardLimitScreen extends StatefulWidget {

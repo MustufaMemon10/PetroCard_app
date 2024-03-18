@@ -5,7 +5,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
-import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
+import 'package:petrocardapppp/screens/MainScreens/BaseScreen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -143,7 +143,7 @@ class OtpPageState extends State<OtpPage> {
                               FadeInDown(
                                 duration: const Duration(milliseconds: 470),
                                 child: Text(
-                                  "Verify your 6 -Digit OTP to verify",
+                                  "Enter your 6 -Digit OTP to verify",
                                   style: TextStyle(
                                     color: AppColors.black,
                                     fontWeight: FontWeight.w400,

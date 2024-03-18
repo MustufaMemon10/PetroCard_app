@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
+import 'package:petrocardapppp/screens/MainScreens/BaseScreen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 
 class ConfirmationAnimation extends StatefulWidget {

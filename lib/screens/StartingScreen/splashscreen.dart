@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Components/Base_dashboard.dart';
-import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
+import 'package:petrocardapppp/screens/MainScreens/BaseScreen.dart';
 import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

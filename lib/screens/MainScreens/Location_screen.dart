@@ -81,7 +81,7 @@
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20.0),
                               borderSide:
-                              BorderSide(color: AppColors.lightPurple, width: 0.5)),
+                              BorderSide(color: AppColors.lightPurple, width: 2)),
                           filled: true,
                           // Enable filled mode
                           fillColor: Colors.grey[200],
@@ -91,7 +91,6 @@
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: AppColors.darkPurple),
-                            // Customize focused border color
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           errorBorder: OutlineInputBorder(
@@ -153,32 +152,24 @@
                     SizedBox(
                       height: 30.0,
                     ),
-                    InkWell(
-                      onTap: (){
-                        FocusScope.of(context).unfocus();
-                        launchMap();
-                      },
-                      child: Center(
-                        child: Container(
-                          width: 0.6.sw,
-                          padding:const EdgeInsets.all(15.0),
-                          decoration: BoxDecoration(
-                            color: AppColors.darkPurple,
-                            borderRadius: BorderRadius.circular(30.0.r),
-                            border: Border.all(color: AppColors.white.withOpacity(0.5),width: 0.8)
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Search',
-                              style: TextStyle(
-                                color: AppColors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700
+                    Center(
+                      child:  Container(
+                          height: 55,
+                          width: double.infinity,
+                          padding: EdgeInsets.only(left: 16,right: 16),
+                          margin: EdgeInsets.all(10),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: AppColors.darkPurple,
+                                side: BorderSide.none,
+                                shape: StadiumBorder(),
                               ),
-                            ),
-                          ),
-                        ),
-                      ),
+                              child: const Text('Search',
+                                style: TextStyle(color: Colors.white),),
+                              onPressed:(){ FocusScope.of(context).unfocus();
+                              launchMap();}
+                          )),
                     )
                   ],
                 ),

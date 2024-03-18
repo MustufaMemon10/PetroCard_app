@@ -25,19 +25,18 @@ class _AddComplaintsPageState extends State<AddComplaintsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.darkPurple ,
-        title: Text('Add Complaints'),
-        titleTextStyle: TextStyle(color: Colors.white,fontSize: 20),
-        shadowColor: Colors.white,
-        elevation: 10,
+        backgroundColor: AppColors.white ,
+        title: Text('Add Complaints',style: TextStyle(color: AppColors.darkPurple,fontSize: 20,fontWeight: FontWeight.w600),),
+        titleTextStyle: TextStyle(color: Colors.black,fontSize: 20),
+        centerTitle: true,
         leading: IconButton(
           icon: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(20)),
-              color: Colors.white.withAlpha(20),
+              color: Colors.black.withAlpha(20),
             ),
-            child: Icon(Icons.arrow_back_ios_new, color:Colors.white, size: 20),
+            child: Icon(Icons.arrow_back_ios_new, color:Colors.black, size: 20),
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -97,15 +96,18 @@ class _AddComplaintsPageState extends State<AddComplaintsPage> {
                   ),
                 ),
               ),
-              SizedBox(height:30 ,),
+              SizedBox(height:20 ),
               Container(
                   height: 55,
                   width: double.infinity,
                   padding: EdgeInsets.only(left: 16,right: 16),
                   margin: EdgeInsets.all(10),
                   child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: AppColors.darkPurple,
+                        side: BorderSide.none,
+                        shape: StadiumBorder(),
                       ),
                       child: const Text('Send Complaint',
                         style: TextStyle(color: Colors.white),),

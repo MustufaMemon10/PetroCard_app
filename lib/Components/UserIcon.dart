@@ -19,12 +19,12 @@ class _UserIconState extends State<UserIcon> {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     setState(() {
       Gender = setpreference.getString('gender') ?? '';
+      print('$Gender');
     });
   }
   void initState() {
     super.initState();
     fetchGender();
-
   }
   String Gender = '';
   @override

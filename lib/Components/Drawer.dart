@@ -49,16 +49,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        title: Text("LogOut Confirmation"),
+                        title: Text("Logout Confirmation"),
                         content:
                         Text("Are you sure you want to Logout?"),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop(
-                                  false); // Return false when cancel is pressed
+                                  false);
                             },
-                            child: Text("Cancel",style: TextStyle(color: Colors.green),),
+                            child: Text("Cancel",style: TextStyle(color: AppColors.accentColor),),
                           ),
                           TextButton(
                             onPressed: () async{
@@ -69,7 +69,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                   MaterialPageRoute(builder: (context) => LoginPage()),
                                       (route) => false);
                             },
-                            child: Text("LogOut",style: TextStyle(color: Colors.red),),
+                            child: Text("Logout",style: TextStyle(color: AppColors.accentColor),),
                           ),
                         ],
                       ),

@@ -9,7 +9,7 @@ import 'package:petrocardapppp/Components/custombtns.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Widgets/custombtns_widget.dart';
-import '../screens/MainScreen/Card_balance screen/Balance_screen.dart';
+import '../screens/MainScreens/Card_balance screen/Balance_screen.dart';
 import '../utilities/colors.dart';
 import 'Request/Request_Card_Screen.dart';
 
@@ -55,7 +55,7 @@ class _CardsfieldState extends State<Cardsfield> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
       CardLoading(height: 50,width: 50,borderRadius: BorderRadius.circular(16),),
-      CardLoading(height: 30,width: 50,borderRadius: BorderRadius.circular(16),),
+      CardLoading(height: 50,width: 50,borderRadius: BorderRadius.circular(16),),
     ],
     ):
         Appbtns(isLoading: widget.isLoading,),

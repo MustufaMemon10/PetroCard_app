@@ -16,6 +16,7 @@ class AppColors {
   static const neutralBackground = Color(0xFFFFFFFF);//#FFFFFF
   static const white = Color(0xFFFFFFFF);//#FFFFFF
   static const red = Color(0xFFF44336);//#FFFFFF
+  static const green = Color.fromRGBO(76, 175, 80, 1);//
   static const black = Color(0xFF000000);
   static const neutralText = Color(0xFF333333);//#333333
   static const Color darkBackground = Color(0xFF1E1E1E);

@@ -43,6 +43,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
   }
 
   Future<void> fetchUserData() async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
     try {
       setState(() {
         isLoading = true;

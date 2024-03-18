@@ -30,25 +30,24 @@ class _AddFeedbackPageState extends State<AddFeedbackPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.darkPurple ,
+        backgroundColor: AppColors.white ,
         title: Text('Add Feedback'),
-        titleTextStyle: TextStyle(color: Colors.white,fontSize: 20),
-        shadowColor: Colors.white,
-        elevation: 10,
+        titleTextStyle: TextStyle(color: AppColors.darkPurple,fontSize: 20,fontWeight: FontWeight.w600),
+        centerTitle: true,
         leading: IconButton(
           icon: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(20)),
-              color: Colors.white.withAlpha(20),
+              color: Colors.black.withAlpha(20),
             ),
-            child: Icon(Icons.arrow_back_ios_new, color:Colors.white, size: 20),
+            child: Icon(Icons.arrow_back_ios_new, color:Colors.black, size: 20),
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),
+            bottom: Radius.circular(10),
           ),
         ),
         actions: <Widget>[
@@ -64,13 +63,7 @@ class _AddFeedbackPageState extends State<AddFeedbackPage> {
               Container(
                 width: double.infinity,
                 height: 0.05.sh,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(10.0),
-                    topLeft: Radius.circular(10.0),
-                  ),
-                ),
+                margin: EdgeInsets.only(top: 20.0),
                 child: Center(child: Text("Your opinion matters to us!",style: TextStyle(
                     fontSize: 22.0,fontWeight: FontWeight.w500,color: AppColors.black.withOpacity(0.8)
                 ),)),
@@ -158,7 +151,7 @@ class _AddFeedbackPageState extends State<AddFeedbackPage> {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.0),
                       borderSide: BorderSide(
-                        color: Color(0xFF08364B),
+                        color: AppColors.darkPurple,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
@@ -221,7 +214,7 @@ class _AddFeedbackPageState extends State<AddFeedbackPage> {
             SnackBar(
               content: Text(logindata['message'].toString()),
               duration: Duration(seconds: 2),
-              backgroundColor: Colors.red, // Customize background color
+              backgroundColor: Colors.green, // Customize background color
             ),
           );
           Navigator.of(context).pop();

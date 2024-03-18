@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/screens/MainScreen/BaseScreen.dart';
+import 'package:petrocardapppp/screens/FpassScreens/PhoneCheck.dart';
+import 'package:petrocardapppp/screens/MainScreens/BaseScreen.dart';
 import 'package:petrocardapppp/utilities/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -279,7 +280,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 context,
                                                 CupertinoPageRoute(
                                                   builder: (context) =>
-                                                      const CheckNumber(
+                                                      const NumberCheck(
                                                   ),
                                                 ),
                                               );

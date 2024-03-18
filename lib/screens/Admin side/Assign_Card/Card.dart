@@ -38,8 +38,9 @@ class _CardfieldState extends State<Cardfield> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors:  [
-            AppColors.darkPurple.withOpacity(1),
-            AppColors.darkPurple.withOpacity(0.3),
+            AppColors.translightPurple2.withOpacity(1), //
+            AppColors.red.withOpacity(0.8),
+            Color(0xFFFF00FF).withOpacity(0.7),
           ],
           stops: [0.0, 1.0],
         ),

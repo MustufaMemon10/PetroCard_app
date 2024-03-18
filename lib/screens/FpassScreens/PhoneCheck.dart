@@ -9,24 +9,26 @@ import 'package:petrocardapppp/Widgets/CustomTextfieldWidget.dart';
 import 'package:petrocardapppp/screens/OTPverified/otpVerify.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-class CheckNumber extends StatefulWidget {
-  const CheckNumber({
+
+class NumberCheck extends StatefulWidget {
+  const NumberCheck({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<CheckNumber> createState() => _CheckNumberedState();
+  State<NumberCheck> createState() => _NumberCheckState();
 }
 
-class _CheckNumberedState extends State<CheckNumber> {
+class _NumberCheckState extends State<NumberCheck> {
   TextEditingController mobileNumberController = TextEditingController();
   final _formKey = new GlobalKey<FormState>();
   bool isLoading = false;
 
   Future<void> _otpProvide() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
-    Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => OtpPage(initialMobileNumber: mobileNumberController.text)));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            OtpPage(initialMobileNumber: mobileNumberController.text)));
     // final form = _formKey.currentState;
     // if (form!.validate()) {
     //   setState(() {
@@ -124,34 +126,47 @@ class _CheckNumberedState extends State<CheckNumber> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  FadeInDown(
-                                    duration: const Duration(milliseconds: 460),
+                                  FadeInUp(
+                                    duration:
+                                        const Duration(milliseconds: 1000),
                                     child: Text(
-                                      "Phone Number",
+                                      "Reset password",
                                       style: TextStyle(
                                         color: AppColors.darkPurple,
                                         fontWeight: FontWeight.bold,
-                                        fontFamily: "RobotoMono",
-                                        fontSize: 24.sp,
+                                        fontSize: 25.sp,
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 8,
+                                  SizedBox(
+                                    height: 5.h,
                                   ),
-                                  FadeInDown(
-                                    duration: const Duration(milliseconds: 470),
+                                  FadeInUp(
+                                    duration:
+                                        const Duration(milliseconds: 1300),
                                     child: Text(
-                                      "Enter your phone number to verify",
+                                      "Forgot Password ?That's okay.",
                                       style: TextStyle(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.primaryText,
+                                        fontWeight: FontWeight.bold,
                                         fontSize: 20.sp,
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 8,
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  FadeInUp(
+                                    duration:
+                                        const Duration(milliseconds: 1400),
+                                    child: Text(
+                                      "Please provide your Mobile number to reset your password ",
+                                      style: TextStyle(
+                                        color: AppColors.primaryText,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 18,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -161,7 +176,7 @@ class _CheckNumberedState extends State<CheckNumber> {
                       ),
                     ),
                     AnimatedPositioned(
-                      top: 200,
+                      top: 220,
                       left: 0,
                       right: 0,
                       duration: Duration(milliseconds: 2000),
@@ -197,10 +212,16 @@ class _CheckNumberedState extends State<CheckNumber> {
                                   child: TextFormField(
                                     controller: mobileNumberController,
                                     keyboardType: TextInputType.number,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(10),
-                                      ],
+                                    validator: (value){
+                                      if (value!.isEmpty) {
+                                        return '   Please enter a phone number';
+                                      }
+                                      return null;
+                                    },
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(10),
+                                    ],
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                           borderRadius:
@@ -210,10 +231,11 @@ class _CheckNumberedState extends State<CheckNumber> {
                                       ),
                                       hintText: 'Phone Number',
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                        BorderSide(color: AppColors.darkPurple),
+                                        borderSide: BorderSide(
+                                            color: AppColors.darkPurple),
                                         // Customize focused border color
-                                        borderRadius: BorderRadius.circular(20.0),
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
                                       ),
                                       hintStyle: TextStyle(
                                           color: Colors.grey,
@@ -221,7 +243,7 @@ class _CheckNumberedState extends State<CheckNumber> {
                                           letterSpacing: 0.7),
                                       prefixIcon: Padding(
                                           padding: EdgeInsets.symmetric(
-                                              vertical: 15.0, horizontal: 15.0),
+                                              vertical: 13.6, horizontal: 15.0),
                                           child: Text(
                                             '+91',
                                             style: TextStyle(
@@ -240,29 +262,32 @@ class _CheckNumberedState extends State<CheckNumber> {
                                   child: InkWell(
                                     onTap: () {
                                       FocusScope.of(context).unfocus();
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) => AlertDialog(
-                                          title: Text("Is this the correct Number?",style: TextStyle(fontSize: 16.0),),
-                                          content:
-                                          Text('+91'+mobileNumberController.text),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop(
-                                                    false); // Return false when cancel is pressed
-                                              },
-                                              child: Text("Edit",style: TextStyle(color: AppColors.accentColor),),
-                                            ),
-                                            TextButton(
-                                              onPressed: () async{
-                                               _otpProvide();
-                                              },
-                                              child: Text("Yes",style: TextStyle(color: AppColors.accentColor),),
-                                            ),
-                                          ],
-                                        ),
-                                      );
+                                      final form = _formKey.currentState;
+                                      if (form!.validate()) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) => AlertDialog(
+                                            title: Text("Is this the correct Number?",style: TextStyle(fontSize: 16.0),),
+                                            content:
+                                            Text('+91'+mobileNumberController.text),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop(
+                                                      false); // Return false when cancel is pressed
+                                                },
+                                                child: Text("Edit",style: TextStyle(color: AppColors.accentColor),),
+                                              ),
+                                              TextButton(
+                                                onPressed: () async{
+                                                  _otpProvide();
+                                                },
+                                                child: Text("Yes",style: TextStyle(color: AppColors.accentColor),),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
                                     },
                                     child: Center(
                                       child: Container(

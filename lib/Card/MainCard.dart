@@ -75,7 +75,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
   Widget build(BuildContext context) {
     return isLoading
         ? CardLoading(
-            height: 190.h,
+            height: 0.250.sh,
             borderRadius: BorderRadius.circular(20.0),
             animationDuration: Duration(seconds: 2),
             animationDurationTwo: Duration(seconds: 2),
