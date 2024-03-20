@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
@@ -19,7 +18,6 @@ class AdminAppbar extends StatefulWidget {
 class _AdminAppbarState extends State<AdminAppbar> {
   String userName = '';
   bool _showWelcomeText = false;
-  bool _showPetroApp = false;
 
   getUserName() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
@@ -29,16 +27,7 @@ class _AdminAppbarState extends State<AdminAppbar> {
   }
 
   void _startAnimations() async {
-    await Future.delayed(const Duration(seconds: 500));
-    setState(() {
-      _showPetroApp = true;
-    });
-    await Future.delayed(
-        const Duration(seconds: 1500)); // Delay for petro card fade-out
-    setState(() {
-      _showPetroApp = false;
-    });
-    await Future.delayed(const Duration(seconds: 300));
+    await Future.delayed(const Duration(milliseconds: 800));
     setState(() {
       _showWelcomeText = true;
     });
