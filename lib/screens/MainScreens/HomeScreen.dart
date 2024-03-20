@@ -26,20 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
   String? userId;
   bool hasCard = false;
 
-  void _startAnimations() async {
-    await Future.delayed(const Duration(seconds: 1));
-    setState(() {
-      isLoading = true;
-    });
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      isLoading = false;
-    });
-    await Future.delayed(const Duration(seconds: 1));
-    setState(() {
-      isLoading = true;
-    });
-  }
 
   @override
   void initState() {
@@ -81,8 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: isDark ? AppColors.darkBackground : AppColors.white,
       body: CustomScrollView(

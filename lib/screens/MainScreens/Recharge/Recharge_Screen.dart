@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petrocardapppp/screens/MainScreens/BaseScreen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,7 +31,7 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
       Uri.parse("https://petrocard.000webhostapp.com/API/rechargecard.php");
       final response = await http.post(login_url, body: {
         'id': setpreference.getString('id') ?? '',
-        'amount' : _amountController.text ?? '',
+        'amount' : _amountController.text,
       });
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);

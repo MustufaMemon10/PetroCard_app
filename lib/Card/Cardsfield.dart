@@ -1,17 +1,10 @@
 import 'package:card_loading/card_loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petrocardapppp/Card/MainCard.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Components/custombtns.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Widgets/custombtns_widget.dart';
-import '../screens/MainScreens/Card_balance screen/Balance_screen.dart';
-import '../utilities/colors.dart';
-import 'Request/Request_Card_Screen.dart';
 
 class Cardsfield extends StatefulWidget {
     const Cardsfield({
@@ -22,7 +15,6 @@ class Cardsfield extends StatefulWidget {
 }
 
 class _CardsfieldState extends State<Cardsfield> {
-  bool _showAddCardButton = true;
   bool isLoading = false;
   String userName = '';
   String email = '';

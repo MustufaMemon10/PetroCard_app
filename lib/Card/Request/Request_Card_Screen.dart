@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mime/mime.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,7 +28,6 @@ class _Request_ScreenState extends State<Request_Screen> {
   TextEditingController _addressController = TextEditingController();
   TextEditingController _phoneNumberController = TextEditingController();
   TextEditingController upiIdController = TextEditingController();
-  File? _panPhotoPath;
   DateTime? _selectedDate;
   bool _isLoading = false;
   bool isLoading = false;
@@ -69,8 +67,9 @@ class _Request_ScreenState extends State<Request_Screen> {
     imageUploadRequest.fields['pan_number'] = panNumberController.text;
     imageUploadRequest.files.add(file);
     try {
-      _isLoading = true;
-
+      setState(() {
+        _isLoading = true;
+      });
       final streamedResponse = await imageUploadRequest.send();
 
       streamedResponse.stream.transform(utf8.decoder).listen((value) {

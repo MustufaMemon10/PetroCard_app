@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/Card/Request/Request_Card_Screen.dart';
 import 'package:petrocardapppp/screens/FpassScreens/PhoneCheck.dart';
 import 'package:petrocardapppp/screens/MainScreens/BaseScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petrocardapppp/screens/Admin%20side/Assign_Card/AssingCardScreen.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Complain/ComplaintScreen.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Components/Appbar/Admin_appbar.dart';
 import 'package:petrocardapppp/screens/Admin%20side/Components/SideBar.dart';

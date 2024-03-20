@@ -9,7 +9,6 @@ import 'package:petrocardapppp/screens/Admin%20side/Assign_Card/AssingCardScreen
 import 'package:petrocardapppp/screens/Admin%20side/Components/RequestUserIcon.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utilities/styles.dart';
 
@@ -34,7 +33,6 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
   }
 
   Future<void> fetchRequestData() async {
-    SharedPreferences setpreference = await SharedPreferences.getInstance();
     try {
       setState(() {
         isLoading = true;

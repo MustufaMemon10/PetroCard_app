@@ -31,7 +31,7 @@ class _CardLimitScreenState extends State<CardLimitScreen> {
       Uri.parse("https://petrocard.000webhostapp.com/API/setcardlimit.php");
       final response = await http.post(login_url, body: {
         'id': setpreference.getString('id') ?? '',
-        'limitamount' : _limitController.text ?? '',
+        'limitamount' : _limitController.text,
       });
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);

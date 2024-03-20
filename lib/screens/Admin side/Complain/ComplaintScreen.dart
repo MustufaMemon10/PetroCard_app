@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'dart:convert';
 import 'package:card_loading/card_loading.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ComplaintScreen extends StatefulWidget {
   const ComplaintScreen({super.key});
@@ -18,7 +17,6 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
   bool isLoading = false;
 
   Future<void> fetchComplaintData() async {
-    SharedPreferences setpreference = await SharedPreferences.getInstance();
     try {
       setState(() {
         isLoading = true;

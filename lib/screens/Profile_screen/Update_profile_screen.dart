@@ -20,9 +20,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
   TextEditingController _phoneNumberController = TextEditingController();
-  TextEditingController _dobController = TextEditingController();
   String id = '';
   String userName = '';
   String email = '';

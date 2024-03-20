@@ -1,6 +1,5 @@
   import 'package:flutter/material.dart';
   import 'package:url_launcher/url_launcher.dart';
-  import 'package:url_launcher/link.dart';
   import 'package:flutter_screenutil/flutter_screenutil.dart';
   import 'package:petrocardapppp/utilities/colors.dart';
   import 'package:petrocardapppp/utilities/styles.dart';
@@ -16,15 +15,6 @@
     TextEditingController areaController = TextEditingController();
     TextEditingController cityController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
-    // Future<void> redirectToGoogleMaps(String area, String city) async {
-    //   final url = 'https://www.google.com/maps/search/?api=1&query=$area+$city+petrol+stations';
-    //   if (await canLaunchUrl(url)) {
-    //     await launch(url);
-    //   } else {
-    //     throw 'Could not launch $url';
-    //   }
-    // }
-
     Future<void> _launchInBrowser(Uri url) async {
       if (!await launchUrl(
         url,
