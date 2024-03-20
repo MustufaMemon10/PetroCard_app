@@ -175,10 +175,6 @@ class _Request_ScreenState extends State<Request_Screen> {
       imageUploaded = true;
     });
   }
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
