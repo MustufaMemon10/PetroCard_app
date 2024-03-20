@@ -110,10 +110,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       address = setpreference.getString('address') ?? '';
       DOB = setpreference.getString('dob') ?? '';
       gender = setpreference.getString('gender') ?? '';
-      print('id: $id');
-      print('name: $userName');
-      print('phone : $phone');
-      print('email: $email');
     });
   }
 
@@ -206,6 +202,22 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   Controller: emailController,
                   prefixicon: FontAwesomeIcons.envelope,
                   hintText: 'Email',
+                ),
+                SizedBox(
+                  height: 10.0.h,
+                ),
+                ProfileTextfield(
+                  validatorValue: (val) {
+                    if(val.length<10 ){
+                      return 'Enter valid phone number';
+                    }
+                    return null;
+                  },
+                  isDark: isDark,
+                  errorMsg: 'Phone Number is Required',
+                  Controller: emailController,
+                  prefixicon: FontAwesomeIcons.envelope,
+                  hintText: 'Phone Number',
                 ),
                 SizedBox(
                   height: 40.0.h,

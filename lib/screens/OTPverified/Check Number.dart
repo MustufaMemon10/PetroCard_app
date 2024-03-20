@@ -25,62 +25,60 @@ class _CheckNumberedState extends State<CheckNumber> {
 
   Future<void> _otpProvide() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
-    Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => OtpPage(initialMobileNumber: mobileNumberController.text)));
-    // final form = _formKey.currentState;
-    // if (form!.validate()) {
-    //   setState(() {
-    //     isLoading = true;
-    //   });
-    //   final apiUrl = 'https://petrocard.000webhostapp.com/API/otpset.php';
-    //   try {
-    //     setState(() {
-    //       isLoading = true;
-    //     });
-    //     final response = await http.post(
-    //       Uri.parse(apiUrl),
-    //       body: {
-    //         "numbers": mobileNumberController.text,
-    //         "email": setpreference.getString('email'),
-    //       },
-    //     );
-    //     if (response.statusCode == 200) {
-    //       final responseData = jsonDecode(response.body);
-    //       setState(() {
-    //         isLoading = false;
-    //       });
-    //       Navigator.of(context).push(
-    //           MaterialPageRoute(builder: (context) => OtpPage(initialMobileNumber: mobileNumberController.text)));
-    //       if (responseData['success'] == true) {
-    //         ScaffoldMessenger.of(context).showSnackBar(
-    //             SnackBar(
-    //               content: Text(responseData['message'].toString()),
-    //               duration: Duration(seconds: 2),
-    //               backgroundColor: Colors.green,
-    //             ),
-    //         );
-    //       } else {
-    //         ScaffoldMessenger.of(context).showSnackBar(
-    //           SnackBar(
-    //             content: Text(responseData['message'].toString()),
-    //             duration: Duration(seconds: 2),
-    //             backgroundColor: Colors.red,
-    //           ),
-    //         );
-    //       }
-    //     }
-    //   }
-    //   catch (error) {
-    //     print('Error calling API: $error');
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(
-    //         content: Text('Error calling API'),
-    //         duration: Duration(seconds: 2),
-    //         backgroundColor: Colors.red, // Customize background color
-    //       ),
-    //     );
-    //   }
-    // }
+    final form = _formKey.currentState;
+    if (form!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      final apiUrl = 'https://petrocard.000webhostapp.com/API/otpset.php';
+      try {
+        setState(() {
+          isLoading = true;
+        });
+        final response = await http.post(
+          Uri.parse(apiUrl),
+          body: {
+            "numbers": mobileNumberController.text,
+            "email": setpreference.getString('email'),
+          },
+        );
+        if (response.statusCode == 200) {
+          final responseData = jsonDecode(response.body);
+          setState(() {
+            isLoading = false;
+          });
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => OtpPage(initialMobileNumber: mobileNumberController.text)));
+          if (responseData['success'] == true) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(responseData['message'].toString()),
+                  duration: Duration(seconds: 2),
+                  backgroundColor: Colors.green,
+                ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(responseData['message'].toString()),
+                duration: Duration(seconds: 2),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        }
+      }
+      catch (error) {
+        print('Error calling API: $error');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error calling API'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.red, // Customize background color
+          ),
+        );
+      }
+    }
   }
 
   @override

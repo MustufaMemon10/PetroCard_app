@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/Card/Request/Request_Card_Screen.dart';
 import 'package:petrocardapppp/screens/FpassScreens/PhoneCheck.dart';
 import 'package:petrocardapppp/screens/MainScreens/BaseScreen.dart';
-import 'package:petrocardapppp/utilities/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +14,6 @@ import 'package:petrocardapppp/screens/LoginScreen/Signup.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 
 import '../Admin side/Components/Base_dashboard.dart';
-import '../OTPverified/Check Number.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -370,19 +369,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Positioned.fill(
-              child: Container(
-                color: isLoading ? AppColors.white.withOpacity(0.5) : null,
-                child: isLoading
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-
-                          ],
-                        ),
-                      )
-                    : null,
-              ),
+              child: isLoading
+                  ? Container(
+                  color: AppColors.white.withOpacity(0.5),
+                  child: Center(
+                    child: LoadingAnimationWidget.halfTriangleDot(
+                        color: AppColors.darkPurple, size: 50),
+                  ))
+                  : SizedBox(),
             ),
           ],
         ),

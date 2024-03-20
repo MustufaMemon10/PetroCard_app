@@ -39,6 +39,7 @@ class _Request_ScreenState extends State<Request_Screen> {
   String email = '';
   String name = '';
   String phone = '';
+  bool imageUploaded = false;
 
   getUserName() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -146,10 +147,18 @@ class _Request_ScreenState extends State<Request_Screen> {
       setState(() {
         _selectedDate = picked;
         _dobController.text = "${picked.year}/${picked.month}/${picked.day}";
+        if (!_isAgeValid(picked)) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('You must be at least 18 years old.'),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
       });
     }
   }
-
   bool _isAgeValid(DateTime dob) {
     DateTime now = DateTime.now();
     int age = now.year - dob.year;
@@ -167,25 +176,39 @@ class _Request_ScreenState extends State<Request_Screen> {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
       _image = File(pickedFile!.path);
+      imageUploaded = true;
     });
   }
 
 
-  // bool _validateForm() {
-  //   if (_selectedGender.isEmpty || _panPhotoPath == null ||
-  //       _panPhotoPath!.isEmpty ) {
-  //     return false;
-  //   }
-  //   if (_formKey.currentState!.validate()) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  bool _validateForm() {
+    if (_selectedGender.isEmpty || _image == null ||
+        _image!.path.isEmpty ) {
+      return false;
+    }
+    if (_formKey.currentState!.validate()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              color: Colors.black.withAlpha(20),
+            ),
+            child: Icon(Icons.arrow_back_ios_new, color:Colors.black, size: 20),
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: isLoading
           ? Center(
               child: LoadingAnimationWidget.flickr(
@@ -196,29 +219,7 @@ class _Request_ScreenState extends State<Request_Screen> {
             )
           : SingleChildScrollView(
               child: Column(children: [
-                SizedBox(
-                  height: 0.10.sh,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: AppColors.transparent,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                  width: 1.0, color: AppColors.darkPurple)),
-                          child: Icon(Icons.arrow_back,
-                              color: AppColors.darkPurple),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+
                 InkWell(
                   onTap: () {
                     FocusScope.of(context).unfocus();
@@ -369,10 +370,6 @@ class _Request_ScreenState extends State<Request_Screen> {
                                 textInputAction: TextInputAction.next,
                                 readOnly: true,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Phone Number is required';
-                                  }
-
                                   return null;
                                 },
                                 decoration: InputDecoration(
@@ -412,6 +409,15 @@ class _Request_ScreenState extends State<Request_Screen> {
                                     size: 18.0,
                                   ),
                                 )),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text('Cannot edit. You are required to use your PetroApp registered number only',style: TextStyle(
+                                fontSize: 10.0,fontWeight: FontWeight.w500,color: AppColors.secondaryText
+                              ),maxLines: 1,),
+                            ),
                             SizedBox(
                               height: 10.0,
                             ),
@@ -568,7 +574,10 @@ class _Request_ScreenState extends State<Request_Screen> {
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
+                              children:
+                              imageUploaded ?[Text('Uploaded Successfully'),
+                              Icon(Icons.check_circle_outline_sharp,color: AppColors.green,)]:
+                              [
                                 Text('Add your PAN',
                                     style: TextStyle(
                                         color: AppColors.black,

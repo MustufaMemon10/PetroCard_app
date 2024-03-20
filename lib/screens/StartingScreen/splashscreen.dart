@@ -45,7 +45,6 @@ class _SplashScreenState extends State<SplashScreen>
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? id = prefs.getString('id');
     String? role = prefs.getString('role');
-
     if (id != null) {
       if (role == '0') {
         Navigator.of(context).pushReplacement(

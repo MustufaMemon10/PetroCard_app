@@ -75,8 +75,10 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (error) {
       print('Error fetching user data: $error');
     }
+    setState(() {
+      isLoading = false;
+    });
   }
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -97,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
               background: Padding(
                 padding:
                     EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-                child: Cardsfield(isLoading: isLoading,),
+                child: Cardsfield(),
               ),
             ),
           ),
@@ -145,35 +147,41 @@ class _HomeScreenState extends State<HomeScreen> {
                   final formattedTime =
                       DateFormat('MMMM d, yyyy \'at\' hh:mm a')
                           .format(timeStamp);
-                  return  Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5.h, horizontal: 10.w),
-                          child: FadeInUp(
-                            duration: Duration(milliseconds: 400),
-                            child: Container(
+                  return Stack(
+                    children: [
+                      Padding(
                               padding: EdgeInsets.symmetric(
-                                  vertical: 14.0, horizontal: 30.0),
-                              decoration: BoxDecoration(
-                                  color: isDark
-                                      ? AppColors.darkCardBackground
-                                      : AppColors.white,
-                                  border: Border.all(
-                                      width: 0.5,
-                                      color: AppColors.secondaryText),
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AppColors.black.withOpacity(0.2),
-                                      offset: Offset(1, 2),
-                                    )
-                                  ]),
-                              child: TransactionCard(
-                                subTitle: formattedTime,
-                                amount: transaction['amount'] ?? '',
+                                  vertical: 5.h, horizontal: 10.w),
+                              child: FadeInUp(
+                                duration: Duration(milliseconds: 400),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 14.0, horizontal: 30.0),
+                                  decoration: BoxDecoration(
+                                      color: isDark
+                                          ? AppColors.darkCardBackground
+                                          : AppColors.white,
+                                      border: Border.all(
+                                          width: 0.5,
+                                          color: AppColors.secondaryText),
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: AppColors.black.withOpacity(0.2),
+                                          offset: Offset(1, 2),
+                                        )
+                                      ]),
+                                  child: TransactionCard(
+                                    subTitle: formattedTime,
+                                    amount: transaction['amount'] ?? '',
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        );
+                      if(transactions.length<= 0)
+                        Positioned(left:10,child: Center(child: Text('No Transaction'),))
+                    ],
+                  );
                 },
                 childCount: transactions.length,
               ),

@@ -36,60 +36,57 @@ class OtpPageState extends State<OtpPage> {
   final FocusNode focusNode6 = FocusNode();
 
   Future<void> _checkOtp() async {
-    Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                    (Route<dynamic> route) => false);
-  //   SharedPreferences setpreference = await SharedPreferences.getInstance();
-  //   final String apiUrl =
-  //       'https://petrocard.000webhostapp.com/API/checkotp.php'; // Replace with your API URL
-  //   String OTP =
-  //       '${otpController1.text}${otpController2.text}${otpController3.text}${otpController4.text}${otpController5.text}${otpController6.text}';
-  //   try {
-  //     setState(() {
-  //       isLoading = true;
-  //     });
-  //     final response = await http.post(
-  //       Uri.parse(apiUrl),
-  //       body: {'email': setpreference.getString('email'),
-  //         'otp': OTP},
-  //     );
-  //
-  //     if (response.statusCode == 200) {
-  //       final responseData = json.decode(response.body);
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //       if (responseData['success'] == true) {
-  //         print('$responseData');
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(
-  //             content: Text(responseData['message'].toString()),
-  //             duration: Duration(seconds: 2),
-  //             backgroundColor: Colors.green,
-  //           ),
-  //         );
-  //         Navigator.of(context).pushAndRemoveUntil(
-  //             MaterialPageRoute(builder: (context) => LoginPage()),
-  //             (Route<dynamic> route) => false);
-  //         print(responseData['message']);
-  //       } else {
-  //         print(responseData['message']);
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(
-  //             content: Text(responseData['message'].toString()),
-  //             duration: Duration(seconds: 2),
-  //             backgroundColor: Colors.red, // Customize background color
-  //           ),
-  //         );
-  //       }
-  //     } else {
-  //       // Handle API error
-  //       print('Error: ${response.reasonPhrase}');
-  //     }
-  //   } catch (e) {
-  //     // Handle network or other errors
-  //     print('Error: $e');
-  //   }
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
+    final String apiUrl =
+        'https://petrocard.000webhostapp.com/API/checkotp.php'; // Replace with your API URL
+    String OTP =
+        '${otpController1.text}${otpController2.text}${otpController3.text}${otpController4.text}${otpController5.text}${otpController6.text}';
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        body: {'email': setpreference.getString('email'),
+          'otp': OTP},
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        setState(() {
+          isLoading = false;
+        });
+        if (responseData['success'] == true) {
+          print('$responseData');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(responseData['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => LoginPage()),
+              (Route<dynamic> route) => false);
+          print(responseData['message']);
+        } else {
+          print(responseData['message']);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(responseData['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red, // Customize background color
+            ),
+          );
+        }
+      } else {
+        // Handle API error
+        print('Error: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      // Handle network or other errors
+      print('Error: $e');
+    }
   }
 
 

@@ -10,7 +10,7 @@ import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../OTPverified/ChangePasswordScreen.dart';
+import '../FpassScreens/ChangePasswordScreen.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});

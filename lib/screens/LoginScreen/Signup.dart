@@ -31,47 +31,44 @@ class _SignUppageState extends State<SignUppage> {
   bool showPasswordFields = false;
 
   Future<void> _handleSingUp() async {
-    Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => CheckNumber()),
-              );
-    // SharedPreferences setpreference = await SharedPreferences.getInstance();
-    //
-    // final form = formKey.currentState;
-    // if (form!.validate()) {
-    //   setState(() {
-    //     isLoading = true;
-    //   });
-    //   final login_url =
-    //       Uri.parse("https://petrocard.000webhostapp.com/API/signup.php");
-    //   final response = await http.post(login_url, body: {
-    //     "email": emailController.text,
-    //     "password": passwordController.text,
-    //     "name": fullNameController.text,
-    //     "role": "1",
-    //   });
-    //   if (response.statusCode == 200) {
-    //     logindata = jsonDecode(response.body);
-    //     data = jsonDecode(response.body)['data'];
-    //     setpreference.setString('email', logindata['email'].toString());
-    //     print(logindata);
-    //     setState(() {
-    //       isLoading = false;
-    //     });
-    //     if (logindata['error'] == false) {
-    //       Navigator.of(context).push(
-    //         MaterialPageRoute(builder: (context) => CheckNumber()),
-    //       );
-    //     } else {
-    //       ScaffoldMessenger.of(context).showSnackBar(
-    //         SnackBar(
-    //           content: Text(logindata['message'].toString()),
-    //           duration: Duration(seconds: 2),
-    //           backgroundColor: Colors.red, // Customize background color
-    //         ),
-    //       );
-    //     }
-    //   }
-    // }
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
+
+    final form = formKey.currentState;
+    if (form!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      final login_url =
+          Uri.parse("https://petrocard.000webhostapp.com/API/signup.php");
+      final response = await http.post(login_url, body: {
+        "email": emailController.text,
+        "password": passwordController.text,
+        "name": fullNameController.text,
+        "role": "1",
+      });
+      if (response.statusCode == 200) {
+        logindata = jsonDecode(response.body);
+        data = jsonDecode(response.body)['data'];
+        setpreference.setString('email', logindata['email'].toString());
+        print(logindata);
+        setState(() {
+          isLoading = false;
+        });
+        if (logindata['error'] == false) {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => CheckNumber()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(logindata['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red, // Customize background color
+            ),
+          );
+        }
+      }
+    }
   }
 
   @override

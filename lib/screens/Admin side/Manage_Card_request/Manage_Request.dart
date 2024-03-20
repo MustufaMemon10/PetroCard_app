@@ -34,6 +34,7 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
   }
 
   Future<void> fetchRequestData() async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
     try {
       setState(() {
         isLoading = true;

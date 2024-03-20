@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'dart:convert';
 import 'package:card_loading/card_loading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ComplaintScreen extends StatefulWidget {
   const ComplaintScreen({super.key});
@@ -16,7 +17,8 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
   List<Map<String, dynamic>> userData = [];
   bool isLoading = false;
 
-  Future<void> fetchUserData() async {
+  Future<void> fetchComplaintData() async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
     try {
       setState(() {
         isLoading = true;
@@ -26,9 +28,9 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         if (responseData['error'] == false) {
-          final List<dynamic> usersData = responseData['complaints'];
+          final List<dynamic> complaindata = responseData['complaints'];
           setState(() {
-            userData = usersData.cast<Map<String, dynamic>>();
+            userData = complaindata.cast<Map<String, dynamic>>();
           });
           setState(() {
             isLoading = false;
@@ -47,11 +49,11 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
   @override
   void initState() {
     super.initState();
-    fetchUserData();
+    fetchComplaintData();
   }
 
   Future<void> _refreshData() async {
-    await fetchUserData();
+    await fetchComplaintData();
   }
 
   @override

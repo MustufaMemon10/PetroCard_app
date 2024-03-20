@@ -22,7 +22,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   bool showOldPassword = false;
   bool showNewPassword = false;
   bool showConfirmPassword = false;
-
   bool showPasswordFields = false;
 
   @override

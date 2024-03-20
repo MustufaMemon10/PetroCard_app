@@ -14,9 +14,7 @@ import '../utilities/colors.dart';
 import 'Request/Request_Card_Screen.dart';
 
 class Cardsfield extends StatefulWidget {
-  final bool isLoading;
     const Cardsfield({
-    required this.isLoading,
     Key? key}) : super(key: key);
 
   @override
@@ -25,6 +23,7 @@ class Cardsfield extends StatefulWidget {
 
 class _CardsfieldState extends State<Cardsfield> {
   bool _showAddCardButton = true;
+  bool isLoading = false;
   String userName = '';
   String email = '';
   String card_num = '';
@@ -51,14 +50,14 @@ class _CardsfieldState extends State<Cardsfield> {
         SizedBox(height: 105),
         PetroMainCard(userName: userName,card_num: card_num,),
         SizedBox(height: 30.0,),
-        widget.isLoading ?Row(
+        isLoading ?Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
       CardLoading(height: 50,width: 50,borderRadius: BorderRadius.circular(16),),
       CardLoading(height: 50,width: 50,borderRadius: BorderRadius.circular(16),),
     ],
     ):
-        Appbtns(isLoading: widget.isLoading,),
+        Appbtns(isLoading: isLoading,),
       ],
     );
   }

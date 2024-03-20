@@ -26,7 +26,7 @@ class _ConfirmationAnimationState extends State<ConfirmationAnimation> {
             Center(
               child: Lottie.asset(
                 'assets/Animations/applied successfully animation.json',
-                repeat: false,reverse: true,
+                repeat: true,reverse: true,
               ),
             ),
             SizedBox(
@@ -72,15 +72,14 @@ class _ConfirmationAnimationState extends State<ConfirmationAnimation> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              AppColors.lightPurple2.withOpacity(0.7),
-                          elevation: 0,
-                          side: BorderSide(width: 1, color: AppColors.black),
+                              AppColors.black,
+                          elevation: 5,
                           shape: CircleBorder(),
                         ),
                         child: Icon(
                           Icons.arrow_forward_ios_sharp,
                           size: 16.0,
-                          color: AppColors.black,
+                          color: AppColors.white,
                         ),
                       )),
                   SizedBox(
@@ -91,7 +90,7 @@ class _ConfirmationAnimationState extends State<ConfirmationAnimation> {
                     style: TextStyle(
                         fontSize: 18.0,
                         color: AppColors.black,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w700,
                         decoration: TextDecoration.none),
                   )
                 ],
