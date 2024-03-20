@@ -177,17 +177,7 @@ class _Request_ScreenState extends State<Request_Screen> {
   }
 
 
-  bool _validateForm() {
-    if (_selectedGender.isEmpty || _image == null ||
-        _image!.path.isEmpty ) {
-      return false;
-    }
-    if (_formKey.currentState!.validate()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
