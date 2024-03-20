@@ -29,7 +29,6 @@ class _Request_ScreenState extends State<Request_Screen> {
   TextEditingController _phoneNumberController = TextEditingController();
   TextEditingController upiIdController = TextEditingController();
   DateTime? _selectedDate;
-  bool _isLoading = false;
   bool isLoading = false;
   var logindata;
   var data;
@@ -67,9 +66,7 @@ class _Request_ScreenState extends State<Request_Screen> {
     imageUploadRequest.fields['pan_number'] = panNumberController.text;
     imageUploadRequest.files.add(file);
     try {
-      setState(() {
-        _isLoading = true;
-      });
+
       final streamedResponse = await imageUploadRequest.send();
 
       streamedResponse.stream.transform(utf8.decoder).listen((value) {
@@ -78,7 +75,7 @@ class _Request_ScreenState extends State<Request_Screen> {
           data = jsonDecode(value)['user'];
           print(logindata);
           setState(() {
-            isLoading = false;
+            isLoading = true;
           });
           if (logindata['error'] == false) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -105,7 +102,7 @@ class _Request_ScreenState extends State<Request_Screen> {
           print(value);
         } else {
           setState(() {
-            _isLoading = false;
+            isLoading = false;
           });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -280,7 +277,6 @@ class _Request_ScreenState extends State<Request_Screen> {
                                           color: AppColors.lightPurple,
                                           width: 0.5)),
                                   filled: true,
-                                  // Enable filled mode
                                   fillColor: Colors.grey[200],
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
