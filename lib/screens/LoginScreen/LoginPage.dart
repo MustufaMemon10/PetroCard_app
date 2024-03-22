@@ -51,7 +51,6 @@ class _LoginPageState extends State<LoginPage> {
         if (response.statusCode == 200) {
           final responseData = jsonDecode(response.body);
           final  data = jsonDecode(response.body)['user'];
-
           print('$responseData');
           setpreference.setString('id', data['id'].toString());
           setpreference.setString('name', data['name'].toString());

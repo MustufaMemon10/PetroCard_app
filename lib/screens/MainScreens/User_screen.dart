@@ -47,7 +47,6 @@ class _UserScreenState extends State<UserScreen> {
         logindata = jsonDecode(response.body);
         data = logindata['data'];
         print(logindata);
-
         if (!logindata['error']) {
           print('$id');
           SharedPreferences setpreference =
@@ -84,20 +83,19 @@ class _UserScreenState extends State<UserScreen> {
     }
   }
 
-  Future<void> getUserDetails() async {
-    SharedPreferences setpreference = await SharedPreferences.getInstance();
-    setState(() {
-      id = setpreference.getString('id') ?? '';
-      userName = setpreference.getString('name') ?? '';
-      email = setpreference.getString('email') ?? '';
-      phone = setpreference.getString('phone') ?? '';
-      address = setpreference.getString('address') ?? '';
-      DOB = setpreference.getString('dob') ?? '';
-      gender = setpreference.getString('gender') ?? '';
-      print('$id');
-    });
-    await fetchOtherDetails();
-  }
+    Future<void> getUserDetails() async {
+      SharedPreferences setpreference = await SharedPreferences.getInstance();
+      setState(() {
+        id = setpreference.getString('id') ?? '';
+        userName = setpreference.getString('name') ?? '';
+        email = setpreference.getString('email') ?? '';
+        phone = setpreference.getString('phone') ?? '';
+        gender = setpreference.getString('gender') ?? '';
+        print('$id');
+        print('$phone');
+      });
+      await fetchOtherDetails();
+    }
 
   @override
   void initState() {

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petrocardapppp/Widgets/CustomTextfieldWidget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +11,7 @@ import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../utilities/styles.dart';
 import '../OTPverified/Check Number.dart';
 
 class SignUppage extends StatefulWidget {
@@ -221,27 +223,83 @@ class _SignUppageState extends State<SignUppage> {
                                             hintText: 'Email',
                                             icon: Icons.mail_outline,
                                           ),
-                                          CustomPassfields(
-                                            icon: Icons.lock_outline_rounded,
-                                            icon2: Icons.lock_person_outlined,
-                                            controller: passwordController,
-                                            controller2:
-                                                confirmPasswordController,
-                                            validator: (val) {
-                                              if (RegExp(r"\s").hasMatch(val) ||
-                                                  RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)')
-                                                      .hasMatch(val)) {
-                                                return "Use Proper Password ";
-                                              }
-                                            },
-                                            errorMsg: "Please Enter Password",
-                                            hintText: 'Password',
-                                            hintText2: 'Confirm Password',
-                                            obscureText: !showPasswordFields,
+                                      Container(
+                                        padding: EdgeInsets.all(10.0),
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            bottom: BorderSide(color: AppColors.lightPurple),
                                           ),
-                                        ],
+                                        ),
+                                        child: TextFormField(
+                                            controller: passwordController,
+                                            obscureText: !showPasswordFields,
+                                            textInputAction: TextInputAction.next,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'New password is required';
+                                              }
+                                              if (passwordController.text.length < 8) {
+                                                return 'Enter 8 Character Password';
+                                              }
+                                              return null;
+                                            },
+                                            decoration: InputDecoration(
+                                              prefixIcon: Icon(
+                                                Icons.lock_outline_rounded,
+                                                color: AppColors.darkPurple,
+                                              ),
+                                              contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                                              border: InputBorder.none,
+                                              hintText: 'New password',
+                                              hintStyle: AppStyles.Textfield_hintstyle,
+                                            ),
+                                          ),
                                       ),
-                                    )),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: TextFormField(
+                                              controller: confirmPasswordController,
+                                              obscureText: !showPasswordFields,
+                                              textInputAction: TextInputAction.go,
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'Confirm password is required';
+                                                }
+                                                if (confirmPasswordController.text != passwordController.text) {
+                                                  return "Password doesn't match";
+                                                }
+                                                return null;
+                                              },
+                                              decoration: InputDecoration(
+                                                prefixIcon: Icon(
+                                                  Icons.lock_person_outlined,
+                                                  color: AppColors.darkPurple,
+                                                ),
+                                                contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                                                border: InputBorder.none,
+                                                hintText: 'Confirm password',
+                                                hintStyle: const TextStyle(
+                                                  color: AppColors.secondaryText,
+                                                  letterSpacing: 0.7,
+                                                ),
+                                                suffixIcon: IconButton(
+                                                  icon: Icon(
+                                                    !showPasswordFields ? Icons.visibility : Icons.visibility_off,
+                                                    color: AppColors.darkPurple,
+                                                  ),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      showPasswordFields = !showPasswordFields;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                    ]
+                                      ),
+                                    ),
+                                ),
                                 const SizedBox(
                                   height: 20,
                                 ),

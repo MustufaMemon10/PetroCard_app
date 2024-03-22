@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:animate_do/animate_do.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -152,96 +153,99 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           FocusScope.of(context).unfocus();
         },
         child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-            child: Form(
-              key: _formKey,
-              child: Column(children: [
-                SizedBox(
-                  width: 110,
-                  height: 110,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      shape: BoxShape.circle
+          child: FadeInUp(
+            duration: Duration(milliseconds: 570),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+              child: Form(
+                key: _formKey,
+                child: Column(children: [
+                  SizedBox(
+                    width: 110,
+                    height: 110,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        shape: BoxShape.circle
+                      ),
+                      child: UserIcon(isDark: isDark,),
                     ),
-                    child: UserIcon(isDark: isDark,),
                   ),
-                ),
-                SizedBox(
-                  height: 30.0.h,
-                ),
-                ProfileTextfield(
-                  validatorValue: (val) {
-                    return null;
-                  },
-                  isDark: isDark,
-                  errorMsg: 'Please enter full name',
-                  Controller: fullNameController,
-                  prefixicon: FontAwesomeIcons.user,
-                  hintText: 'Full Name',
-                ),
-                SizedBox(
-                  height: 10.0.h,
-                ),
-                ProfileTextfield(
-                  validatorValue: (val) {
-                    if (RegExp(r"\s").hasMatch(val)) {
-                      return "Email must not be empty";
-                    } else {
-                      if (RegExp(r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
-                          .hasMatch(val)) {
-                      }
-                    }
-                    return null;
-                  },
-                  isDark: isDark,
-                  errorMsg: 'Enter a valid Email',
-                  Controller: emailController,
-                  prefixicon: FontAwesomeIcons.envelope,
-                  hintText: 'Email',
-                ),
-                SizedBox(
-                  height: 10.0.h,
-                ),
-                ProfileTextfield(
-                  validatorValue: (val) {
-                    if(val.length<10 ){
-                      return 'Enter valid phone number';
-                    }
-                    return null;
-                  },
-                  isDark: isDark,
-                  errorMsg: 'Phone Number is Required',
-                  Controller: emailController,
-                  prefixicon: FontAwesomeIcons.phone,
-                  hintText: 'Phone Number',
-                ),
-                SizedBox(
-                  height: 40.0.h,
-                ),
-                SizedBox(
-                  width: 200,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _updateProfile();
-                      FocusScope.of(context).unfocus();
+                  SizedBox(
+                    height: 30.0.h,
+                  ),
+                  ProfileTextfield(
+                    validatorValue: (val) {
+                      return null;
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:isDark ?AppColors.primaryPurple.withOpacity(0.8) : AppColors.darkPurple,
-                      side: BorderSide.none,
-                      shape: StadiumBorder(),
-                    ),
-                    child: Text(
-                      'Edit Profile',
-                      style: TextStyle(
-                        color: isDark ?Colors.white38: AppColors.white,
+                    isDark: isDark,
+                    errorMsg: 'Please enter full name',
+                    Controller: fullNameController,
+                    prefixicon: FontAwesomeIcons.user,
+                    hintText: 'Full Name',
+                  ),
+                  SizedBox(
+                    height: 10.0.h,
+                  ),
+                  ProfileTextfield(
+                    validatorValue: (val) {
+                      if (RegExp(r"\s").hasMatch(val)) {
+                        return "Email must not be empty";
+                      } else {
+                        if (RegExp(r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
+                            .hasMatch(val)) {
+                        }
+                      }
+                      return null;
+                    },
+                    isDark: isDark,
+                    errorMsg: 'Enter a valid Email',
+                    Controller: emailController,
+                    prefixicon: FontAwesomeIcons.envelope,
+                    hintText: 'Email',
+                  ),
+                  SizedBox(
+                    height: 10.0.h,
+                  ),
+                  ProfileTextfield(
+                    validatorValue: (val) {
+                      if(val.length<10 ){
+                        return 'Enter valid phone number';
+                      }
+                      return null;
+                    },
+                    isDark: isDark,
+                    errorMsg: 'Phone Number is Required',
+                    Controller: _phoneNumberController,
+                    prefixicon: FontAwesomeIcons.phone,
+                    hintText: 'Phone Number',
+                  ),
+                  SizedBox(
+                    height: 40.0.h,
+                  ),
+                  SizedBox(
+                    width: 200,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _updateProfile();
+                        FocusScope.of(context).unfocus();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:isDark ?AppColors.primaryPurple.withOpacity(0.8) : AppColors.darkPurple,
+                        side: BorderSide.none,
+                        shape: StadiumBorder(),
+                      ),
+                      child: Text(
+                        'Edit Profile',
+                        style: TextStyle(
+                          color: isDark ?Colors.white38: AppColors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ]),
+                ]),
+              ),
             ),
           ),
         ),

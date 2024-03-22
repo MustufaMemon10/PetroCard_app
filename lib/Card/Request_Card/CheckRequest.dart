@@ -11,9 +11,8 @@ import '../../utilities/colors.dart';
 
 class RequestCardScreen extends StatefulWidget {
   final String userId;
-  final bool isLoading;
 
-  const RequestCardScreen({Key? key, required this.userId,required this.isLoading}) : super(key: key);
+  const RequestCardScreen({Key? key, required this.userId,}) : super(key: key);
 
   @override
   State<RequestCardScreen> createState() => _RequestCardScreenState();
@@ -43,7 +42,6 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        print(responseData);
         setpreference.setString('reqStatus',
             responseData['status'].toString());
         setpreference.setString('gender',

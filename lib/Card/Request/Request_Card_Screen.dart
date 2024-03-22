@@ -30,7 +30,7 @@ class _Request_ScreenState extends State<Request_Screen> {
   TextEditingController _phoneNumberController = TextEditingController();
   TextEditingController upiIdController = TextEditingController();
   DateTime? _selectedDate;
-  bool isLoading = true;
+  bool isLoading = false;
   var logindata;
   var data;
   String id = '';
@@ -46,6 +46,7 @@ class _Request_ScreenState extends State<Request_Screen> {
       email = sharedPreferences.getString('email') ?? '';
       name = sharedPreferences.getString('name') ?? '';
       phone = sharedPreferences.getString('phone') ?? '';
+      print('$phone');
       _emailController.text = email;
       _phoneNumberController.text = phone;
     });
@@ -109,7 +110,7 @@ class _Request_ScreenState extends State<Request_Screen> {
             SnackBar(
               content: Text('Something went wrong'),
               duration: Duration(seconds: 2),
-              backgroundColor: Colors.green, // Customize background color
+              backgroundColor: Colors.green,
             ),
           );
           print(value);
@@ -301,7 +302,6 @@ class _Request_ScreenState extends State<Request_Screen> {
                                 SizedBox(
                                   height: 10.0,
                                 ),
-
                                 FadeInUp(
                                   duration: Duration(milliseconds: 250),
                                   child: TextFormField(
@@ -359,6 +359,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                                   duration: Duration(milliseconds: 270),
                                   child: TextFormField(
                                       controller: _phoneNumberController,
+                                      readOnly: true,
                                       textCapitalization:
                                           TextCapitalization.characters,
                                       textInputAction: TextInputAction.next,

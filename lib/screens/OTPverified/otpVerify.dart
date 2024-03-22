@@ -9,10 +9,10 @@ import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OtpPage extends StatefulWidget {
-  final String initialMobileNumber;
 
-  const OtpPage({Key? key, required this.initialMobileNumber})
-      : super(key: key);
+  const OtpPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<OtpPage> createState() => OtpPageState();

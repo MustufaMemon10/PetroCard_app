@@ -28,7 +28,7 @@ class _NumberCheckState extends State<NumberCheck> {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) =>
-            OtpPage(initialMobileNumber: mobileNumberController.text)));
+            OtpPage()));
     // final form = _formKey.currentState;
     // if (form!.validate()) {
     //   setState(() {

@@ -43,12 +43,11 @@ class _CheckNumberedState extends State<CheckNumber> {
         );
         if (response.statusCode == 200) {
           final responseData = jsonDecode(response.body);
-          setpreference.setString('numbers', responseData['numbers'].toString());
           setState(() {
             isLoading = false;
           });
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => OtpPage(initialMobileNumber: mobileNumberController.text)));
+              MaterialPageRoute(builder: (context) => OtpPage()));
           if (responseData['success'] == true) {
             ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -297,6 +296,16 @@ class _CheckNumberedState extends State<CheckNumber> {
                   ],
                 ),
               ),
+            ),
+            Positioned.fill(
+              child: isLoading
+                  ? Container(
+                  color: AppColors.white.withOpacity(0.5),
+                  child: Center(
+                    child: LoadingAnimationWidget.halfTriangleDot(
+                        color: AppColors.darkPurple, size: 50),
+                  ))
+                  : SizedBox(),
             ),
           ],
         ),
