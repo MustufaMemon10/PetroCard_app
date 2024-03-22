@@ -214,7 +214,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   isDark: isDark,
                   errorMsg: 'Phone Number is Required',
                   Controller: emailController,
-                  prefixicon: FontAwesomeIcons.envelope,
+                  prefixicon: FontAwesomeIcons.phone,
                   hintText: 'Phone Number',
                 ),
                 SizedBox(

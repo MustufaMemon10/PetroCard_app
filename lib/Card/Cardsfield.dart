@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:card_loading/card_loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Cardsfield extends StatefulWidget {
-    const Cardsfield({
-    Key? key}) : super(key: key);
+ const Cardsfield({
+   Key? key}) : super(key: key);
 
   @override
   State<Cardsfield> createState() => _CardsfieldState();
@@ -24,10 +25,10 @@ class _CardsfieldState extends State<Cardsfield> {
   Future<void> getCardDetails() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     setState(() {
-      userName = setpreference.getString('name') ?? '';
-      email = setpreference.getString('email') ?? '';
-      card_num = setpreference.getString('card_num') ?? '';
-      validate = setpreference.getString('validate') ?? '';
+      userName = setpreference.getString('name')?? '';
+      email = setpreference.getString('email')?? '';
+      card_num = setpreference.getString('card_num')?? '';
+      validate = setpreference.getString('validate')?? '';
     });
   }
   @override
@@ -40,16 +41,11 @@ class _CardsfieldState extends State<Cardsfield> {
     return Column(
       children: [
         SizedBox(height: 105),
-        PetroMainCard(userName: userName,card_num: card_num,),
+        FadeInDown(
+            duration: Duration(milliseconds: 400),
+            child: PetroMainCard(userName: userName,card_num: card_num,)),
         SizedBox(height: 30.0,),
-        isLoading ?Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: [
-      CardLoading(height: 50,width: 50,borderRadius: BorderRadius.circular(16),),
-      CardLoading(height: 50,width: 50,borderRadius: BorderRadius.circular(16),),
-    ],
-    ):
-        Appbtns(isLoading: isLoading,),
+        FadeIn(child: Appbtns()),
       ],
     );
   }

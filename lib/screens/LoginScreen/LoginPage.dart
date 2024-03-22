@@ -22,36 +22,37 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final formKey = new GlobalKey<FormState>();
-  var logindata;
-  var data;
   bool showPassword = true;
   bool isLoading = false;
   String? role;
 
   Future<void> handleLogin() async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
     final form = formKey.currentState;
     if (form!.validate()) {
       setState(() {
         isLoading = true;
       });
-      final login_url =
-          Uri.parse("https://petrocard.000webhostapp.com/API/login.php");
-      final response = await http.post(login_url, body: {
-        "email": usernameController.text,
-        "password": passwordController.text,
-      });
-      if (response.statusCode == 200) {
-        logindata = jsonDecode(response.body);
-        data = jsonDecode(response.body)['user'];
+      final apiUrl = 'https://petrocard.000webhostapp.com/API/login.php';
+      try {
         setState(() {
-          isLoading = false;
+          isLoading = true;
         });
-        if (logindata['error'] == false) {
-          SharedPreferences setpreference =
-              await SharedPreferences.getInstance();
+        final response = await http.post(
+          Uri.parse(apiUrl),
+          body: {
+            "email": emailController.text,
+            "password": passwordController.text,
+          },
+        );
+        if (response.statusCode == 200) {
+          final responseData = jsonDecode(response.body);
+          final  data = jsonDecode(response.body)['user'];
+
+          print('$responseData');
           setpreference.setString('id', data['id'].toString());
           setpreference.setString('name', data['name'].toString());
           setpreference.setString('phone', data['phone'].toString());
@@ -59,35 +60,42 @@ class _LoginPageState extends State<LoginPage> {
           setpreference.setString('timestamp', data['timestamp'].toString());
           setpreference.setString('role', data['role'].toString());
           role = data['role'].toString();
-          if (role == '1') {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (BuildContext context) => BaseScreen()),
-                (Route<dynamic> route) => false);
-          } else if (role == '0') {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (BuildContext context) => AdminDashboard()),
-                (Route<dynamic> route) => false);
+          setState(() {
+            isLoading = false;
+          });
+          if (!responseData['error']) {
+            if (role == '1') {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => BaseScreen()),
+                      (Route<dynamic> route) => false);
+            } else if (role == '0') {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => AdminDashboard()),
+                      (Route<dynamic> route) => false);
+            }
           }
-        }else if(response.statusCode == 205){
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('BSDK NET on kar'),
-              duration: Duration(seconds: 2),
-              backgroundColor: Colors.red, // Customize background color
-            ),
-          );
-        }
         else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(logindata['message'].toString()),
-              duration: Duration(seconds: 2),
-              backgroundColor: Colors.red, // Customize background color
-            ),
-          );
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(responseData['message'].toString()),
+                duration: Duration(seconds: 2),
+                backgroundColor: Colors.red, // Customize background color
+              ),
+            );
+          }
         }
+      }
+      catch (error) {
+        print('Error calling API: $error');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('No connection'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.red, // Customize background color
+          ),
+        );
       }
     }
   }
@@ -245,7 +253,7 @@ class _LoginPageState extends State<LoginPage> {
                                           },
                                           errorMsg: 'Enter Valid Email',
                                           hintText: 'Email',
-                                          controller: usernameController,
+                                          controller: emailController,
                                         ),
                                         CustomPassfields(
                                           icon: Icons.lock_outline,

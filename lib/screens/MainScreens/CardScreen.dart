@@ -27,7 +27,6 @@ class _CardScreenState extends State<CardScreen> {
       email = setpreference.getString('email') ?? '';
       card_num = setpreference.getString('card_num') ?? '';
       status = setpreference.getString('status') ?? '';
-
     });
   }
   @override
@@ -42,7 +41,7 @@ class _CardScreenState extends State<CardScreen> {
         padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
         child: Column(children: [
           SizedBox(
-            height: 70.h,
+            height: 80,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15.0),

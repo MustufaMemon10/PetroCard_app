@@ -298,18 +298,14 @@ class _UserScreenState extends State<UserScreen> {
           ),
         ),
         Positioned.fill(
-          child: Container(
-            color: isLoading ? AppColors.black.withOpacity(0.4) : null,
-            child: isLoading
-                ? Center(
-                    child: LoadingAnimationWidget.flickr(
-                      leftDotColor: AppColors.darkPurple,
-                      rightDotColor: AppColors.white,
-                      size: 50,
-                    ),
-                  )
-                : null,
-          ),
+          child: isLoading
+              ? Container(
+              color: AppColors.white.withOpacity(0.5),
+              child: Center(
+                child: LoadingAnimationWidget.halfTriangleDot(
+                    color: AppColors.darkPurple, size: 50),
+              ))
+              : SizedBox(),
         ),
       ],
     );

@@ -302,7 +302,10 @@ class _SignUppageState extends State<SignUppage> {
                                                       fontSize: 15.0),
                                                 ),
                                               ],
-                                            )))),
+                                            ),
+                                        ),
+                                    ),
+                                ),
                               ],
                             ),
                           ),
@@ -318,11 +321,11 @@ class _SignUppageState extends State<SignUppage> {
         Positioned.fill(
           child: isLoading
               ? Container(
-              color: AppColors.white.withOpacity(0.5),
-              child: Center(
-                child: LoadingAnimationWidget.halfTriangleDot(
-                    color: AppColors.darkPurple, size: 50),
-              ))
+                  color: AppColors.white.withOpacity(0.5),
+                  child: Center(
+                    child: LoadingAnimationWidget.halfTriangleDot(
+                        color: AppColors.darkPurple, size: 50),
+                  ))
               : SizedBox(),
         ),
       ]),

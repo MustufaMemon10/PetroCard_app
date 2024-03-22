@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petrocardapppp/DrawerComponents/AboutUspage.dart';
 import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:petrocardapppp/DrawerComponents/side_menu_tile.dart';
@@ -8,11 +9,10 @@ import 'package:petrocardapppp/DrawerComponents/userdetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/Admin side/Complain/add_complaints_page.dart';
+import '../screens/Admin side/Feedback/add_feedback_page.dart';
 
 class HomeDrawer extends StatefulWidget {
-  final Function onTap;
   const HomeDrawer({
-    required this.onTap,
     super.key});
   @override
   State<HomeDrawer> createState() => _HomeDrawerState();
@@ -38,11 +38,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 height: 20,
               ),
               const User_details(),
-              SlidermenuItem(title: 'Feedback', iconData: CupertinoIcons.star, onTap: () {widget.onTap();},),
+              SlidermenuItem(title: 'Feedback', iconData: CupertinoIcons.star, onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder:(context)=> AddFeedbackPage()));
+              },),
               SlidermenuItem(title: 'Complaint', iconData: CupertinoIcons.exclamationmark_bubble,  onTap:(){
                 Navigator.push(context, MaterialPageRoute(builder:(context)=> AddComplaintsPage()));
               }),
-              SlidermenuItem(title: 'About us', iconData: CupertinoIcons.personalhotspot,  onTap: ()async {}),
+              SlidermenuItem(title: 'About us', iconData: CupertinoIcons.personalhotspot,  onTap: () {   Navigator.push(context, MaterialPageRoute(builder:(context)=> AboutUsPage()));}),
               SlidermenuItem(title: 'Log Out',
                   iconData: Icons.logout,
                   onTap: () async{

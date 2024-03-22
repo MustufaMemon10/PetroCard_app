@@ -11,8 +11,9 @@ import '../../utilities/colors.dart';
 
 class RequestCardScreen extends StatefulWidget {
   final String userId;
+  final bool isLoading;
 
-  const RequestCardScreen({Key? key, required this.userId}) : super(key: key);
+  const RequestCardScreen({Key? key, required this.userId,required this.isLoading}) : super(key: key);
 
   @override
   State<RequestCardScreen> createState() => _RequestCardScreenState();
@@ -20,7 +21,7 @@ class RequestCardScreen extends StatefulWidget {
 
 class _RequestCardScreenState extends State<RequestCardScreen> {
   String? status;
-  bool isLoading = false;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -44,9 +45,9 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
         final responseData = jsonDecode(response.body);
         print(responseData);
         setpreference.setString('reqStatus',
-            responseData['status'].toString()); //
+            responseData['status'].toString());
         setpreference.setString('gender',
-            responseData['gender'].toString()); // Set the actual status
+            responseData['gender'].toString());
         setState(() {
           isLoading = false;
           status = setpreference.getString('reqStatus')!;
@@ -64,30 +65,29 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
       print('Error calling API: $error');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error calling API'),
-          duration: Duration(seconds: 2),
-          backgroundColor: Colors.red,
+          content: Text('No connection'),
+          duration: Duration(seconds: 5),
+          backgroundColor: Colors.black,
         ),
       );
     }
   }
-
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return isLoading
+        ? Center(
+        child: LoadingAnimationWidget.halfTriangleDot(
+          color: AppColors.darkPurple,
+          size: 50,
+        ))
+        : Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Center(
         child:
-      isLoading
-          ? Center(
-              child: LoadingAnimationWidget.halfTriangleDot(
-              color: AppColors.darkPurple,
-              size: 50,
-            ))
-          : status == "pending"
+     status == "pending"
               ? pendingscreen()
               : status == "Rejected"?
-          Text('Request Rejected')
+          Center(child: Text('Request Rejected'))
           :TextButton(
         onPressed: () {
           Navigator.push(

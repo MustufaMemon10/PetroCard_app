@@ -72,8 +72,7 @@ class _ConfirmationAnimationState extends State<ConfirmationAnimation> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              AppColors.black,
-                          elevation: 5,
+                              AppColors.translightPurple2,
                           shape: CircleBorder(),
                         ),
                         child: Icon(

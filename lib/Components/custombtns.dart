@@ -7,10 +7,8 @@ import '../screens/MainScreens/Card_balance screen/Balance_screen.dart';
 import '../screens/MainScreens/Recharge/Recharge_Screen.dart';
 
 class Appbtns extends StatefulWidget {
-  final bool isLoading;
   const Appbtns({
     Key ? key,
-    required this.isLoading
 }): super(key: key);
 
   @override

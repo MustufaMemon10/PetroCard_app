@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,23 +19,29 @@ class TransactionText extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            'Recent Transaction',
-            style: TextStyle(
-              fontSize: 24.0.sp,
-              fontWeight: FontWeight.w500,
-              color: isDark ? AppColors.white : AppColors.black, // Use isDark to determine the text color
+          FadeInLeft(
+            duration: Duration(milliseconds: 200),
+            child: Text(
+              'Recent Transaction',
+              style: TextStyle(
+                fontSize: 24.0.sp,
+                fontWeight: FontWeight.w500,
+                color: isDark ? AppColors.white : AppColors.black,
+              ),
             ),
           ),
-          IconButton(
-            icon: SvgPicture.asset(
-              'assets/Icons/mac-action.svg',
-              height: 5.0,
-              width: 5.0,
-              color: isDark ? AppColors.white : AppColors.black, // Use isDark to determine the icon color
+          FadeInRight(
+            duration: Duration(milliseconds: 200),
+            child: IconButton(
+              icon: SvgPicture.asset(
+                'assets/Icons/mac-action.svg',
+                height: 5.0,
+                width: 5.0,
+                color: isDark ? AppColors.white : AppColors.black, // Use isDark to determine the icon color
+              ),
+              onPressed: () {
+              },
             ),
-            onPressed: () {
-            },
           )
         ],
       ),
@@ -44,7 +51,7 @@ class TransactionText extends StatelessWidget {
 
 void _showPopupMenu(BuildContext context) {
   final RenderBox overlay =
-  Overlay.of(context)!.context.findRenderObject() as RenderBox;
+  Overlay.of(context).context.findRenderObject() as RenderBox;
   showMenu(
     context: context,
     position: RelativeRect.fromRect(

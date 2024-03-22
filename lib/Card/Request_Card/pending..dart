@@ -31,10 +31,10 @@ class _pendingscreenState extends State<pendingscreen> {
           ),),
           SizedBox(height: 20,),
           Padding(
-            padding: const EdgeInsets.only(left: 10.0,top: 10.0),
-            child: Text("Thank you for your request, we're currently reviewing it to ensure everything is in order. Please stay tuned for updates on your request status.",style: TextStyle(
+            padding:  EdgeInsets.symmetric(horizontal: 30.0),
+            child: Text("Thank you for your request,Please stay tuned for updates on your request status.",style: TextStyle(
               color: AppColors.black.withAlpha(70),fontWeight: FontWeight.bold,
-              letterSpacing: 0.4,fontSize: 16.0,
+              letterSpacing: 0.8,fontSize: 18.0,
             ),),
           ),
         ],

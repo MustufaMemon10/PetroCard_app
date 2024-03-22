@@ -10,7 +10,7 @@ class PetroMainCard extends StatefulWidget {
   final String userName;
   final String card_num;
 
-  const PetroMainCard({
+   const PetroMainCard({
     required this.card_num,
     required this.userName,
     Key? key,
@@ -25,8 +25,8 @@ class _PetroMainCardState extends State<PetroMainCard> {
   bool isBalanceHidden = true;
   String userId = '';
   var data;
-  var logindata;
   bool isLoading = false;
+  var logindata;
 
   Future<void> _fetchCardDetails() async {
     try {
@@ -44,6 +44,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
         logindata = jsonDecode(response.body);
         data = logindata['data'];
         if (!logindata['error']) {
+          print(data);
           SharedPreferences setpreference =
               await SharedPreferences.getInstance();
           setpreference.setString('card_id', data[0]['card_id'].toString());
@@ -73,17 +74,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? CardLoading(
-            height: 0.250.sh,
-            borderRadius: BorderRadius.circular(20.0),
-            animationDuration: Duration(seconds: 2),
-            animationDurationTwo: Duration(seconds: 2),
-            cardLoadingTheme: CardLoadingTheme.defaultTheme,
-            curve: Curves.bounceOut,
-            width: 380.w,
-          )
-        : Container(
+    return Container(
             height: 0.250.sh,
             width: 380.w,
             decoration: BoxDecoration(

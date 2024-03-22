@@ -62,7 +62,7 @@ class HomeWidgetState extends State<HomeWidget> {
       } else {
       }
     } catch (error) {
-      print('Error calling API: $error');
+      print('No connection');
     }
   }
 
@@ -75,8 +75,6 @@ class HomeWidgetState extends State<HomeWidget> {
         children: [
           LoadingAnimationWidget.halfTriangleDot(
             color: AppColors.darkPurple,
-            // leftDotColor: AppColors.darkPurple,
-            // rightDotColor: AppColors.white,
             size: 50,
           ),
         ],
@@ -124,9 +122,9 @@ class HomeWidgetState extends State<HomeWidget> {
       case 0:
         return const LocationScreen();
       case 1:
-        return hasCard ? const HomeScreen() :  RequestCardScreen(userId: userId,);
+        return hasCard ? const HomeScreen() :  RequestCardScreen(isLoading:isLoading,userId: userId,);
       case 2:
-        return hasCard ? const CardScreen() :  RequestCardScreen(userId: userId,);
+        return hasCard ? const CardScreen() :  RequestCardScreen(isLoading:isLoading,userId: userId,);
       default:
         return Container();
     }

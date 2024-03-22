@@ -43,6 +43,7 @@ class _CheckNumberedState extends State<CheckNumber> {
         );
         if (response.statusCode == 200) {
           final responseData = jsonDecode(response.body);
+          setpreference.setString('numbers', responseData['numbers'].toString());
           setState(() {
             isLoading = false;
           });
@@ -71,7 +72,8 @@ class _CheckNumberedState extends State<CheckNumber> {
         print('Error calling API: $error');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error calling API'),
+            content: Text('No connection'),
+            shape: OutlineInputBorder(),
             duration: Duration(seconds: 2),
             backgroundColor: Colors.red, // Customize background color
           ),
@@ -295,16 +297,6 @@ class _CheckNumberedState extends State<CheckNumber> {
                   ],
                 ),
               ),
-            ),
-            Positioned.fill(
-              child: isLoading
-                  ? Container(
-                      color: AppColors.white.withOpacity(0.5),
-                      child: Center(
-                        child: LoadingAnimationWidget.halfTriangleDot(
-                            color: AppColors.darkPurple, size: 50),
-                      ))
-                  : SizedBox(),
             ),
           ],
         ),

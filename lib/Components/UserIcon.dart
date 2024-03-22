@@ -4,12 +4,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utilities/colors.dart';
 
 class UserIcon extends StatefulWidget {
-   bool isDark= false;
+   final bool isDark;
    UserIcon({
     Key ? key,
     required this.isDark,
     }): super(key: key);
-
   @override
   State<UserIcon> createState() => _UserIconState();
 }
@@ -19,7 +18,6 @@ class _UserIconState extends State<UserIcon> {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     setState(() {
       Gender = setpreference.getString('gender') ?? '';
-      print('$Gender');
     });
   }
   void initState() {

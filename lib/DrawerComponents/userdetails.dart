@@ -65,7 +65,7 @@ class _User_detailsState extends State<User_details> {
           email,
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: AppColors.secondaryText,
+            color: AppColors.black.withOpacity(0.5),
             fontWeight: FontWeight.w400,
             fontSize: 13.sp,
           ),

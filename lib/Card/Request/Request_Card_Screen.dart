@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:animate_do/animate_do.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -20,16 +21,16 @@ class Request_Screen extends StatefulWidget {
 }
 
 class _Request_ScreenState extends State<Request_Screen> {
-    final _formKey = GlobalKey<FormState>();
-    TextEditingController panNumberController = TextEditingController();
-    TextEditingController _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController panNumberController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
   String _selectedGender = '';
   TextEditingController _dobController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   TextEditingController _phoneNumberController = TextEditingController();
   TextEditingController upiIdController = TextEditingController();
   DateTime? _selectedDate;
-  bool isLoading = false;
+  bool isLoading = true;
   var logindata;
   var data;
   String id = '';
@@ -52,6 +53,9 @@ class _Request_ScreenState extends State<Request_Screen> {
 
   uploadImageMedia(File fileImage) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isLoading = true;
+    });
     final mimeTypeData =
         lookupMimeType(fileImage.path, headerBytes: [0xFF, 0xD8])?.split('/');
     final imageUploadRequest = http.MultipartRequest('POST',
@@ -66,7 +70,6 @@ class _Request_ScreenState extends State<Request_Screen> {
     imageUploadRequest.fields['pan_number'] = panNumberController.text;
     imageUploadRequest.files.add(file);
     try {
-
       final streamedResponse = await imageUploadRequest.send();
 
       streamedResponse.stream.transform(utf8.decoder).listen((value) {
@@ -74,9 +77,7 @@ class _Request_ScreenState extends State<Request_Screen> {
           logindata = jsonDecode(value);
           data = jsonDecode(value)['user'];
           print(logindata);
-          setState(() {
-            isLoading = true;
-          });
+
           if (logindata['error'] == false) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -85,6 +86,9 @@ class _Request_ScreenState extends State<Request_Screen> {
                 backgroundColor: Colors.green,
               ),
             );
+            setState(() {
+              isLoading = false;
+            });
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                     builder: (context) => ConfirmationAnimation()),
@@ -101,9 +105,6 @@ class _Request_ScreenState extends State<Request_Screen> {
           print(streamedResponse.stream);
           print(value);
         } else {
-          setState(() {
-            isLoading = false;
-          });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Something went wrong'),
@@ -120,7 +121,7 @@ class _Request_ScreenState extends State<Request_Screen> {
   }
 
   //
-@override
+  @override
   void initState() {
     getUserName();
     super.initState();
@@ -155,6 +156,7 @@ class _Request_ScreenState extends State<Request_Screen> {
       });
     }
   }
+
   bool _isAgeValid(DateTime dob) {
     DateTime now = DateTime.now();
     int age = now.year - dob.year;
@@ -175,459 +177,539 @@ class _Request_ScreenState extends State<Request_Screen> {
       imageUploaded = true;
     });
   }
+
+  bool _validateForm() {
+    if (panNumberController.text.isEmpty || _addressController.text.isEmpty || _dobController.text.isEmpty ||_selectedGender.isEmpty || _image == null || _image!.path.isEmpty) {
+      return false;
+    }
+    if (_formKey.currentState!.validate()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
-              color: Colors.black.withAlpha(20),
-            ),
-            child: Icon(Icons.arrow_back_ios_new, color:Colors.black, size: 20),
-          ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
-      body: isLoading
-          ? Center(
-              child: LoadingAnimationWidget.flickr(
-                leftDotColor: AppColors.darkPurple,
-                rightDotColor: AppColors.secondaryText,
-                size: 50,
-              ),
-            )
-          : SingleChildScrollView(
-              child: Column(children: [
+    return  Scaffold(
+      body: SingleChildScrollView(
+              child: Stack(
+                children: [
+                  Column(children: [
+                    SizedBox(height: 50.0,),
+                    ListTile(
+                      leading: IconButton(
+                        icon: Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+                        color: Colors.white,
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FadeInUp(
+                                  duration: Duration(milliseconds: 190),
+                                  child: Text(
+                                    "Elevate your Payment experience",
+                                    style: TextStyle(
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.primaryText,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5.0,
+                                ),
+                                FadeInUp(
+                                  duration: Duration(milliseconds: 210),
+                                  child: Text(
+                                    "with our feature-rich Petro Card.",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 22.0,
+                                      color: AppColors.darkPurple,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 30.0,
+                                ),
+                                FadeInUp(
+                                  duration: Duration(milliseconds: 230),
+                                  child: TextFormField(
+                                      controller: panNumberController,
+                                      textCapitalization:
+                                          TextCapitalization.characters,
+                                      textInputAction: TextInputAction.next,
+                                      validator: (value) {
+                                        if (!RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]$')
+                                            .hasMatch(value!)) {
+                                          return 'Please enter a valid PAN Number';
+                                        }
+                                        if (value.isEmpty) {
+                                          return 'PAN Number is required';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: 'PAN Number',
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(20.0),
+                                            borderSide: BorderSide(
+                                                color: AppColors.lightPurple,
+                                                width: 0.5)),
+                                        filled: true,
+                                        fillColor: Colors.grey[200],
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          borderRadius: BorderRadius.circular(20.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: AppColors.darkPurple),
+                                          // Customize focused border color
+                                          borderRadius: BorderRadius.circular(20.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: AppColors.red),
+                                          // Customize error border color
+                                          borderRadius: BorderRadius.circular(20.0),
+                                        ),
+                                        hintStyle: const TextStyle(
+                                            color: AppColors.secondaryText,
+                                            letterSpacing: 0.7),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 15.0, horizontal: 20.0),
+                                        prefixIcon: Icon(
+                                          FontAwesomeIcons.creditCard,
+                                          color: AppColors.darkPurple,
+                                          size: 18.0,
+                                        ),
+                                      )),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
 
-                InkWell(
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                  },
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                    color: Colors.white,
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Elevate your Payment experience",
-                              style: TextStyle(
-                                fontSize: 25.0,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.primaryText,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-                            Text(
-                              "with our feature-rich Petro Card.",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 22.0,
-                                color: AppColors.darkPurple,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20.0,
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            TextFormField(
-                                controller: panNumberController,
-                                textCapitalization:
-                                    TextCapitalization.characters,
-                                textInputAction: TextInputAction.next,
-                                validator: (value) {
-                                  if (!RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]$')
-                                      .hasMatch(value!)) {
-                                    return 'Please enter a valid PAN Number';
-                                  }
-                                  if (value.isEmpty) {
-                                    return 'PAN Number is required';
-                                  }
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                  hintText: 'PAN Number',
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      borderSide: BorderSide(
-                                          color: AppColors.lightPurple,
-                                          width: 0.5)),
-                                  filled: true,
-                                  fillColor: Colors.grey[200],
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.darkPurple),
-                                    // Customize focused border color
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.red),
-                                    // Customize error border color
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  hintStyle: const TextStyle(
-                                      color: AppColors.secondaryText,
-                                      letterSpacing: 0.7),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 15.0, horizontal: 20.0),
-                                  prefixIcon: Icon(
-                                    FontAwesomeIcons.creditCard,
-                                    color: AppColors.darkPurple,
-                                    size: 18.0,
-                                  ),
-                                )),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            TextFormField(
-                                controller: _emailController,
-                                readOnly: true,
-                                textInputAction: TextInputAction.next,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Email is required';
-                                  }
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                  hintText: _emailController.text,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      borderSide: BorderSide(
-                                          color: AppColors.lightPurple,
-                                          width: 0.5)),
-                                  filled: true,
-                                  // Enable filled mode
-                                  fillColor: Colors.grey[200],
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.darkPurple),
-                                    // Customize focused border color
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.red),
-                                    // Customize error border color
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  hintStyle: const TextStyle(
-                                      color: AppColors.secondaryText,
-                                      letterSpacing: 0.7),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 15.0, horizontal: 20.0),
-                                  prefixIcon: Icon(
-                                    FontAwesomeIcons.envelope,
-                                    color: AppColors.darkPurple,
-                                    size: 18.0,
-                                  ),
-                                )),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            TextFormField(
-                                controller: _phoneNumberController,
-                                textCapitalization:
-                                    TextCapitalization.characters,
-                                textInputAction: TextInputAction.next,
-                                readOnly: true,
-                                validator: (value) {
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                  hintText: _phoneNumberController.text,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      borderSide: BorderSide(
-                                          color: AppColors.lightPurple,
-                                          width: 0.5)),
-                                  filled: true,
-                                  // Enable filled mode
-                                  fillColor: Colors.grey[200],
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.darkPurple),
-                                    // Customize focused border color
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.red),
-                                    // Customize error border color
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  hintStyle: const TextStyle(
-                                      color: AppColors.secondaryText,
-                                      letterSpacing: 0.7),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 15.0, horizontal: 20.0),
-                                  prefixIcon: Icon(
-                                    FontAwesomeIcons.mobileScreen,
-                                    color: AppColors.darkPurple,
-                                    size: 18.0,
-                                  ),
-                                )),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text('Cannot edit. You are required to use your PetroApp registered number only',style: TextStyle(
-                                fontSize: 10.0,fontWeight: FontWeight.w500,color: AppColors.secondaryText
-                              ),maxLines: 1,),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            TextFormField(
-                                controller: _addressController,
-                                maxLines: 3,
-                                textInputAction: TextInputAction.next,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Address is required';
-                                  }
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                    hintText: 'Address',
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                        borderSide: BorderSide(
-                                            color: AppColors.lightPurple,
-                                            width: 0.5)),
-                                    filled: true,
-                                    // Enable filled mode
-                                    fillColor: Colors.grey[200],
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(20.0),
+                                FadeInUp(
+                                  duration: Duration(milliseconds: 250),
+                                  child: TextFormField(
+                                      controller: _emailController,
+                                      readOnly: true,
+                                      textInputAction: TextInputAction.next,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Email is required';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: _emailController.text,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(20.0),
+                                            borderSide: BorderSide(
+                                                color: AppColors.lightPurple,
+                                                width: 0.5)),
+                                        filled: true,
+                                        // Enable filled mode
+                                        fillColor: Colors.grey[200],
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          borderRadius: BorderRadius.circular(20.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: AppColors.darkPurple),
+                                          // Customize focused border color
+                                          borderRadius: BorderRadius.circular(20.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: AppColors.red),
+                                          // Customize error border color
+                                          borderRadius: BorderRadius.circular(20.0),
+                                        ),
+                                        hintStyle: const TextStyle(
+                                            color: AppColors.secondaryText,
+                                            letterSpacing: 0.7),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 15.0, horizontal: 20.0),
+                                        prefixIcon: Icon(
+                                          FontAwesomeIcons.envelope,
+                                          color: AppColors.darkPurple,
+                                          size: 18.0,
+                                        ),
+                                      )),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                FadeInUp(
+                                  duration: Duration(milliseconds: 270),
+                                  child: TextFormField(
+                                      controller: _phoneNumberController,
+                                      textCapitalization:
+                                          TextCapitalization.characters,
+                                      textInputAction: TextInputAction.next,
+                                      validator: (value) {
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: _phoneNumberController.text,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(20.0),
+                                            borderSide: BorderSide(
+                                                color: AppColors.lightPurple,
+                                                width: 0.5)),
+                                        filled: true,
+                                        // Enable filled mode
+                                        fillColor: Colors.grey[200],
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          borderRadius: BorderRadius.circular(20.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: AppColors.darkPurple),
+                                          // Customize focused border color
+                                          borderRadius: BorderRadius.circular(20.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: AppColors.red),
+                                          // Customize error border color
+                                          borderRadius: BorderRadius.circular(20.0),
+                                        ),
+                                        hintStyle: const TextStyle(
+                                            color: AppColors.secondaryText,
+                                            letterSpacing: 0.7),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 15.0, horizontal: 20.0),
+                                        prefixIcon: Icon(
+                                          FontAwesomeIcons.mobileScreen,
+                                          color: AppColors.darkPurple,
+                                          size: 18.0,
+                                        ),
+                                      )),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child:
+                                  FadeInUp(
+                                    duration: Duration(milliseconds: 280),
+                                    child: Text(
+                                      'Cannot edit. You are required to use your PetroApp registered number only',
+                                      style: TextStyle(
+                                          fontSize: 10.0,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.secondaryText),
+                                      maxLines: 1,
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: AppColors.darkPurple),
-                                      // Customize focused border color
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: AppColors.red),
-                                      // Customize error border color
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    hintStyle: const TextStyle(
-                                        color: AppColors.secondaryText,
-                                        letterSpacing: 0.7),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 15.0, horizontal: 20.0),
-                                    prefixIcon: Padding(
-                                      padding: EdgeInsets.only(bottom: 35.0),
-                                      child: Icon(
-                                        FontAwesomeIcons.house,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                FadeInUp(
+                                      duration: Duration(milliseconds: 300),
+                                  child: TextFormField(
+                                      controller: _addressController,
+                                      textCapitalization:
+                                      TextCapitalization.characters,
+                                      maxLines: 3,
+                                      textInputAction: TextInputAction.next,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Address is required';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                          hintText: 'Address',
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              borderSide: BorderSide(
+                                                  color: AppColors.lightPurple,
+                                                  width: 0.5)),
+                                          filled: true,
+                                          // Enable filled mode
+                                          fillColor: Colors.grey[200],
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                            borderRadius: BorderRadius.circular(20.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: AppColors.darkPurple),
+                                            // Customize focused border color
+                                            borderRadius: BorderRadius.circular(20.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: AppColors.red),
+                                            // Customize error border color
+                                            borderRadius: BorderRadius.circular(20.0),
+                                          ),
+                                          hintStyle: const TextStyle(
+                                              color: AppColors.secondaryText,
+                                              letterSpacing: 0.7),
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 15.0, horizontal: 20.0),
+                                          prefixIcon: Padding(
+                                            padding: EdgeInsets.only(bottom: 35.0),
+                                            child: Icon(
+                                              FontAwesomeIcons.house,
+                                              color: AppColors.darkPurple,
+                                              size: 18.0,
+                                            ),
+                                          ))),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                FadeInUp(
+                                  duration: Duration(milliseconds: 320),
+                                  child: TextFormField(
+                                    controller: _dobController,
+                                    onTap: () {
+                                      _selectDate(context);
+                                    },
+                                    readOnly: true,
+                                    textInputAction: TextInputAction.next,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Dob required';
+                                      }
+                                      return null;
+                                    },
+                                    decoration: InputDecoration(
+                                      hintText: 'DOB',
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(20.0),
+                                          borderSide: BorderSide(
+                                              color: AppColors.lightPurple,
+                                              width: 0.5)),
+                                      filled: true,
+                                      // Enable filled mode
+                                      fillColor: Colors.grey[200],
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(20.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: AppColors.darkPurple),
+                                        // Customize focused border color
+                                        borderRadius: BorderRadius.circular(20.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: AppColors.red),
+                                        // Customize error border color
+                                        borderRadius: BorderRadius.circular(20.0),
+                                      ),
+                                      hintStyle: const TextStyle(
+                                          color: AppColors.secondaryText,
+                                          letterSpacing: 0.7),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 15.0, horizontal: 20.0),
+                                      prefixIcon: Icon(
+                                        FontAwesomeIcons.calendar,
                                         color: AppColors.darkPurple,
                                         size: 18.0,
                                       ),
-                                    ))),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            TextFormField(
-                              controller: _dobController,
-                              onTap: () {
-                                _selectDate(context);
-                              },
-                              readOnly: true,
-                              textInputAction: TextInputAction.next,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Dob required';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'DOB',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: BorderSide(
-                                        color: AppColors.lightPurple,
-                                        width: 0.5)),
-                                filled: true,
-                                // Enable filled mode
-                                fillColor: Colors.grey[200],
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: AppColors.darkPurple),
-                                  // Customize focused border color
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: AppColors.red),
-                                  // Customize error border color
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                hintStyle: const TextStyle(
-                                    color: AppColors.secondaryText,
-                                    letterSpacing: 0.7),
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 15.0, horizontal: 20.0),
-                                prefixIcon: Icon(
-                                  FontAwesomeIcons.calendar,
-                                  color: AppColors.darkPurple,
-                                  size: 18.0,
-                                ),
-                                suffixIcon: Icon(
-                                  FontAwesomeIcons.calendarCheck,
-                                  color: AppColors.secondaryText,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Text("Gender"),
-                            Row(
-                              children: [
-                                Radio(
-                                  value: 'Male',
-                                  activeColor: AppColors.darkPurple,
-                                  groupValue: _selectedGender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value!;
-                                    });
-                                  },
-                                ),
-                                Text('Male'),
-                                Radio(
-                                  value: 'Female',
-                                  groupValue: _selectedGender,
-                                  activeColor: AppColors.darkPurple,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value!;
-                                    });
-                                  },
-                                ),
-                                Text('Female'),
-                                Radio(
-                                  value: 'Helicopter',
-                                  activeColor: AppColors.darkPurple,
-                                  groupValue: _selectedGender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value!;
-                                    });
-                                  },
-                                ),
-                                Text('Helicopter'),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20.0,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children:
-                              imageUploaded ?[Text('Uploaded Successfully'),
-                              Icon(Icons.check_circle_outline_sharp,color: AppColors.green,)]:
-                              [
-                                Text('Add your PAN',
-                                    style: TextStyle(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16.0)),
-                                SizedBox(
-                                  width: 15.0,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    FocusScope.of(context).unfocus();
-                                    _getImage();
-                                  },
-                                  child: Container(
-                                    height: 35,
-                                    width: 70,
-                                    padding: EdgeInsets.all(10.0),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.darkPurple,
-                                      borderRadius: BorderRadius.circular(28.0),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'Upload',
-                                        style: TextStyle(
-                                            color: AppColors.white,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14.0),
+                                      suffixIcon: Icon(
+                                        FontAwesomeIcons.calendarCheck,
+                                        color: AppColors.secondaryText,
                                       ),
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                uploadImageMedia(_image!);
-                                FocusScope.of(context).unfocus();
-                              },
-                              splashColor:
-                                  AppColors.accentColor.withOpacity(0.2),
-                              child: Center(
-                                child: Container(
-                                  height: 35.h,
-                                  width: 200.w,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.darkPurple,
-                                    borderRadius: BorderRadius.circular(50.r),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                    FadeInUp(
+                                        duration: Duration(milliseconds: 325),child: Text("Gender")),
+                                Row(
+                                  children: [
+
+                                    FadeInUp(
+                                      duration: Duration(milliseconds: 330),
+                                      child: Radio(
+                                        value: 'Male',
+                                        activeColor: AppColors.darkPurple,
+                                        groupValue: _selectedGender,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _selectedGender = value!;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    FadeInUp(
+                                      duration: Duration(milliseconds: 335),
+                                        child: Text('Male')),
+                                    FadeInUp(
+                                      duration: Duration(milliseconds: 340),child:Radio(
+                                      value: 'Female',
+                                      groupValue: _selectedGender,
+                                      activeColor: AppColors.darkPurple,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedGender = value!;
+                                        });
+                                      },
+                                    ),
+                    ),
+                                    FadeInUp(
+                                        duration: Duration(milliseconds: 345),
+                                        child: Text('Female')),
+
+                                    FadeInUp(
+                                      duration: Duration(milliseconds: 350),
+                                      child: Radio(
+                                        value: 'Helicopter',
+                                        activeColor: AppColors.darkPurple,
+                                        groupValue: _selectedGender,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _selectedGender = value!;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    FadeInUp(
+                                        duration: Duration(milliseconds: 355),
+                                        child: Text('Others')),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                FadeInUp(
+                                  duration: Duration(milliseconds: 375),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: imageUploaded
+                                        ? [
+                                            Text('Uploaded Successfully'),
+                                            Icon(
+                                              Icons.check_circle_outline_sharp,
+                                              color: AppColors.green,
+                                            )
+                                          ]
+                                        : [
+                                            Text('Add your PAN',
+                                                style: TextStyle(
+                                                    color: AppColors.black,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 16.0)),
+                                            SizedBox(
+                                              width: 15.0,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                FocusScope.of(context).unfocus();
+                                                _getImage();
+                                              },
+                                              child: Container(
+                                                height: 35,
+                                                width: 70,
+                                                padding: EdgeInsets.all(10.0),
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.darkPurple,
+                                                  borderRadius:
+                                                      BorderRadius.circular(28.0),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    'Upload',
+                                                    style: TextStyle(
+                                                        color: AppColors.white,
+                                                        fontWeight: FontWeight.w600,
+                                                        fontSize: 14.0),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                   ),
-                                  child: Center(
-                                    child: Text(
-                                      "Submit",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          letterSpacing: 0.5,
-                                          fontSize: 14.sp),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                FadeInUp(
+                                  duration: Duration(milliseconds: 395),
+                                  child: InkWell(
+                                    onTap: () {
+                                      if (_image != null&&_validateForm()) {
+                                        uploadImageMedia(_image!);
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                'Please fill in all required fields.'),
+                                            duration: Duration(seconds: 2),
+                                            backgroundColor: Colors.red,
+                                          ),
+                                        );
+                                      }
+                                      FocusScope.of(context).unfocus();
+                                    },
+                                    splashColor:
+                                        AppColors.accentColor.withOpacity(0.2),
+                                    child: Center(
+                                      child: Container(
+                                        height: 35.h,
+                                        width: 200.w,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.darkPurple,
+                                          borderRadius: BorderRadius.circular(50.r),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "Submit",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                letterSpacing: 0.5,
+                                                fontSize: 14.sp),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ]),
+                              ]),
+                        ),
+                      ),
                     ),
+                  ]),
+                  Positioned.fill(
+                    child: isLoading
+                        ? Container(
+                        color: AppColors.white.withOpacity(0.5),
+                        child: Center(
+                          child: LoadingAnimationWidget.halfTriangleDot(
+                              color: AppColors.darkPurple, size: 50),
+                        ))
+                        : SizedBox(),
                   ),
-                ),
-              ]),
+                ],
+              ),
             ),
     );
   }
