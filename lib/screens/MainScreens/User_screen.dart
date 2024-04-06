@@ -157,7 +157,7 @@ class _UserScreenState extends State<UserScreen> {
                       color: cColor,
                       shape: BoxShape.circle
                     ),
-                    child: UserIcon(isDark: isDark),
+                    child:  UserIcon(isDark: isDark,)
                   ),
                   SizedBox(
                     height: 10.0.h,
@@ -272,7 +272,8 @@ class _UserScreenState extends State<UserScreen> {
                       icon: FontAwesomeIcons.addressBook,
                       textfield: address,
                     ),
-                  if (gender.isNotEmpty)
+                  gender.isEmpty?
+                      SizedBox():
                     ProfileOptionwidget(
                       textColor: textColor,
                       iconColor: iconColor,
@@ -298,10 +299,10 @@ class _UserScreenState extends State<UserScreen> {
         Positioned.fill(
           child: isLoading
               ? Container(
-              color: AppColors.white.withOpacity(0.5),
+              color: isDark ?AppColors.black.withOpacity(0.5):AppColors.white.withOpacity(0.5),
               child: Center(
                 child: LoadingAnimationWidget.halfTriangleDot(
-                    color: AppColors.darkPurple, size: 50),
+                    color: isDark?AppColors.lightPurple:AppColors.darkPurple, size: 50),
               ))
               : SizedBox(),
         ),

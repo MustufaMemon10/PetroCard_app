@@ -38,7 +38,7 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
       });
       final response = await http.post(
         Uri.parse(apiUrl),
-        body: {'id': setpreference.getString('id') ?? ''}, // Use userId here
+        body: {'id': setpreference.getString('id') ?? ''},
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
@@ -55,7 +55,7 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
           SnackBar(
             content: Text('Failed to fetch data'),
             duration: Duration(seconds: 2),
-            backgroundColor: Colors.red, // Customize background color
+            backgroundColor: Colors.red,
           ),
         );
       }

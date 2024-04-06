@@ -36,8 +36,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       setState(() {
         isLoading = true;
       });
-      final changePasswordUrl =
-      Uri.parse("https://petrocard.000webhostapp.com/API/changepassword.php");
+      final changePasswordUrl = Uri.parse(
+          "https://petrocard.000webhostapp.com/API/changepassword.php");
       final response = await http.post(changePasswordUrl, body: {
         "id": setpreference.getString('id'),
         "password": oldPasswordController.text,
@@ -57,9 +57,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             ),
           );
           Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                  builder: (context) => BaseScreen()),
-                  (route) => false);
+              MaterialPageRoute(builder: (context) => BaseScreen()),
+              (route) => false);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -122,7 +121,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                            padding:
+                                const EdgeInsets.only(left: 8.0, right: 8.0),
                             child: Text(
                               'Keep your Account safe with a new password.',
                               style: TextStyle(
@@ -142,10 +142,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                   textInputAction: TextInputAction.next,
                                   validator: (value) {
                                     if (oldPasswordController.text.length < 8) {
+                                      if (value!.isEmpty) {
+                                        return 'old password is required';
+                                      }
                                       return 'Enter 8 Character Password';
-                                    }
-                                    if(value!.isEmpty){
-                                      return 'Old password is required';
                                     }
                                     return null;
                                   },
@@ -153,23 +153,24 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                     hintText: 'old password',
                                     border: OutlineInputBorder(
                                         borderRadius:
-                                        BorderRadius.circular(100.0),
+                                            BorderRadius.circular(100.0),
                                         borderSide: BorderSide.none),
                                     filled: true,
                                     fillColor: Colors.grey[200],
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: AppColors.lightPurple),
+                                      borderSide: BorderSide(
+                                          color: AppColors.lightPurple),
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: AppColors.darkPurple),
+                                      borderSide: BorderSide(
+                                          color: AppColors.darkPurple),
                                       // Customize focused border color
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide:
-                                      BorderSide(color: AppColors.red),
+                                          BorderSide(color: AppColors.red),
                                       // Customize error border color
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
@@ -193,10 +194,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                   textInputAction: TextInputAction.next,
                                   obscureText: !showPasswordFields,
                                   validator: (value) {
-                                    if(value!.isEmpty){
-                                      return 'New password is required';
-                                    }
                                     if (passwordController.text.length < 8) {
+                                      if (value!.isEmpty) {
+                                        return 'New password is required';
+                                      }
                                       return 'Enter 8 Character Password';
                                     }
                                     return null;
@@ -210,12 +211,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                     filled: true,
                                     fillColor: Colors.grey[200],
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: AppColors.lightPurple),
+                                      borderSide: BorderSide(
+                                          color: AppColors.lightPurple),
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: AppColors.darkPurple),
+                                      borderSide: BorderSide(
+                                          color: AppColors.darkPurple),
                                       // Customize focused border color
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
@@ -245,63 +247,66 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                   textInputAction: TextInputAction.next,
                                   obscureText: !showPasswordFields,
                                   validator: (value) {
-                                    if(value!.isEmpty){
-                                      return 'Confirm password is required';
-                                    }
-                                    if (confirmPasswordController.text.length < 8) {
-                                      return 'Enter 8 Character Password';
-                                    }
                                     if (confirmPasswordController.text !=
-                                        passwordController.text)
-                                      return "Password doesn't match";
-                                    return null;
+                                        passwordController.text) {
+                                      if (value!.isEmpty) {
+                                        return 'Confirm password is required';
+                                      }
+                                    }
+                                    return "Password doesn't match";
                                   },
                                   decoration: InputDecoration(
-                                    hintText: 'Confirm password',
-                                    border: OutlineInputBorder(
+                                      hintText: 'Confirm password',
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(100.0),
+                                          borderSide: BorderSide.none),
+                                      filled: true,
+                                      fillColor: Colors.grey[200],
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.lightPurple),
                                         borderRadius:
-                                        BorderRadius.circular(100.0),
-                                        borderSide: BorderSide.none),
-                                    filled: true,
-                                    fillColor: Colors.grey[200],
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: AppColors.lightPurple),
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: AppColors.darkPurple),
-                                      // Customize focused border color
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: AppColors.red),
-                                      // Customize error border color
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    hintStyle: const TextStyle(
-                                        color: AppColors.secondaryText,
-                                        letterSpacing: 0.7),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 15.0, horizontal: 20.0),
-                                    prefixIcon: Icon(
-                                      FontAwesomeIcons.userLock,
-                                      color: AppColors.darkPurple,
-                                      size: 18.0,
-                                    ),
-                                      suffixIcon:IconButton(
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.darkPurple),
+                                        // Customize focused border color
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: AppColors.red),
+                                        // Customize error border color
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      hintStyle: const TextStyle(
+                                          color: AppColors.secondaryText,
+                                          letterSpacing: 0.7),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 15.0, horizontal: 20.0),
+                                      prefixIcon: Icon(
+                                        FontAwesomeIcons.userLock,
+                                        color: AppColors.darkPurple,
+                                        size: 18.0,
+                                      ),
+                                      suffixIcon: IconButton(
                                         icon: Icon(
-                                          !showPasswordFields ? Icons.visibility : Icons.visibility_off,
+                                          !showPasswordFields
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
                                           color: AppColors.darkPurple,
                                         ),
                                         onPressed: () {
                                           setState(() {
-                                            showPasswordFields = !showPasswordFields;
+                                            showPasswordFields =
+                                                !showPasswordFields;
                                           });
                                         },
-                                      )
-                                  ),
+                                      )),
                                 ),
                               ],
                             ),
@@ -318,7 +323,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 onPressed: () {
                                   FocusScope.of(context).unfocus();
                                   changePassword();
-
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.darkPurple,
@@ -354,15 +358,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       Positioned.fill(
         child: isLoading
             ? Container(
-            color: AppColors.white.withOpacity(0.5),
-            child: Center(
-              child: LoadingAnimationWidget.halfTriangleDot(
-                  color: AppColors.darkPurple, size: 50),
-            ))
+                color: AppColors.white.withOpacity(0.5),
+                child: Center(
+                  child: LoadingAnimationWidget.halfTriangleDot(
+                      color: AppColors.darkPurple, size: 50),
+                ))
             : SizedBox(),
       ),
     ]);
   }
+
   void showSnackBar(String message, {required bool isError}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

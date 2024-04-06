@@ -44,11 +44,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         String fullName = fullNameController.text;
         String email = emailController.text;
         String phoneNumber = _phoneNumberController.text;
-  
+
         print('Full Name: $fullName');
         print('Email: $email');
         print('Phone: $phoneNumber');
-  
+
         final login_url = Uri.parse(
             "https://petrocard.000webhostapp.com/API/updateprofile2.php");
         try {
@@ -58,7 +58,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             "email": email,
             "phone": phoneNumber,
           });
-  
+
           if (response.statusCode == 200) {
             logindata = jsonDecode(response.body);
             data = jsonDecode(response.body)['user'];
@@ -66,7 +66,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             setState(() {
               isLoading = false;
             });
-  
+
             if (logindata['error'] == false) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -209,7 +209,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   ),
                   ProfileTextfield(
                     validatorValue: (val) {
-                      if(val.length<10 ){
+                      if(val.length<10){
                         return 'Enter valid phone number';
                       }
                       return null;

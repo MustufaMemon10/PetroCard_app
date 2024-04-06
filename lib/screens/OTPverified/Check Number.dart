@@ -8,6 +8,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:petrocardapppp/screens/OTPverified/otpVerify.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class CheckNumber extends StatefulWidget {
   const CheckNumber({
     Key? key,
@@ -31,9 +32,6 @@ class _CheckNumberedState extends State<CheckNumber> {
       });
       final apiUrl = 'https://petrocard.000webhostapp.com/API/otpset.php';
       try {
-        setState(() {
-          isLoading = true;
-        });
         final response = await http.post(
           Uri.parse(apiUrl),
           body: {
@@ -46,15 +44,15 @@ class _CheckNumberedState extends State<CheckNumber> {
           setState(() {
             isLoading = false;
           });
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => OtpPage()));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => OtpPage()));
           if (responseData['success'] == true) {
             ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(responseData['message'].toString()),
-                  duration: Duration(seconds: 2),
-                  backgroundColor: Colors.green,
-                ),
+              SnackBar(
+                content: Text(responseData['message'].toString()),
+                duration: Duration(seconds: 2),
+                backgroundColor: Colors.green,
+              ),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -66,8 +64,7 @@ class _CheckNumberedState extends State<CheckNumber> {
             );
           }
         }
-      }
-      catch (error) {
+      } catch (error) {
         print('Error calling API: $error');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -78,6 +75,9 @@ class _CheckNumberedState extends State<CheckNumber> {
           ),
         );
       }
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -195,10 +195,10 @@ class _CheckNumberedState extends State<CheckNumber> {
                                   child: TextFormField(
                                     controller: mobileNumberController,
                                     keyboardType: TextInputType.number,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(10),
-                                      ],
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(10),
+                                    ],
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                           borderRadius:
@@ -208,10 +208,11 @@ class _CheckNumberedState extends State<CheckNumber> {
                                       ),
                                       hintText: 'Phone Number',
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                        BorderSide(color: AppColors.darkPurple),
+                                        borderSide: BorderSide(
+                                            color: AppColors.darkPurple),
                                         // Customize focused border color
-                                        borderRadius: BorderRadius.circular(20.0),
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
                                       ),
                                       hintStyle: TextStyle(
                                           color: Colors.grey,
@@ -238,29 +239,77 @@ class _CheckNumberedState extends State<CheckNumber> {
                                   child: InkWell(
                                     onTap: () {
                                       FocusScope.of(context).unfocus();
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) => AlertDialog(
-                                          title: Text("Is this the correct Number?",style: TextStyle(fontSize: 16.0),),
-                                          content:
-                                          Text('+91'+mobileNumberController.text),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop(
-                                                    false); // Return false when cancel is pressed
-                                              },
-                                              child: Text("Edit",style: TextStyle(color: AppColors.accentColor),),
-                                            ),
-                                            TextButton(
-                                              onPressed: () async{
-                                               _otpProvide();
-                                              },
-                                              child: Text("Yes",style: TextStyle(color: AppColors.accentColor),),
-                                            ),
-                                          ],
-                                        ),
-                                      );
+                                      if (mobileNumberController
+                                              .text.isNotEmpty &&
+                                          mobileNumberController.text.length ==
+                                              10) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                            title: Text(
+                                                "Is this the correct Number?",
+                                                style:
+                                                    TextStyle(fontSize: 16.0)),
+                                            content: Text('+91' +
+                                                mobileNumberController.text),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop(
+                                                      false); // Return false when cancel is pressed
+                                                },
+                                                child: Text("Edit",
+                                                    style: TextStyle(
+                                                        color: AppColors
+                                                            .accentColor)),
+                                              ),
+                                              TextButton(
+                                                onPressed: () async {
+                                                  // Call _otpProvide method only if mobileNumberController is not empty and is valid
+                                                  if (mobileNumberController
+                                                          .text.isNotEmpty &&
+                                                      mobileNumberController
+                                                              .text.length ==
+                                                          10) {
+                                                    Navigator.of(context)
+                                                        .pop(); // Close the dialog
+                                                    _otpProvide();
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                            "Invalid mobile number"),
+                                                        duration: Duration(
+                                                            seconds: 2),
+                                                        backgroundColor:
+                                                            Colors.red,
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                                child: Text("Yes",
+                                                    style: TextStyle(
+                                                        color: AppColors
+                                                            .accentColor)),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      } else {
+                                        // Show a toast or snackbar indicating the mobile number is empty or invalid
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                "Enter a valid mobile number"),
+                                            duration: Duration(seconds: 2),
+                                            backgroundColor: Colors.red,
+                                          ),
+                                        );
+                                      }
                                     },
                                     child: Center(
                                       child: Container(
@@ -300,11 +349,11 @@ class _CheckNumberedState extends State<CheckNumber> {
             Positioned.fill(
               child: isLoading
                   ? Container(
-                  color: AppColors.white.withOpacity(0.5),
-                  child: Center(
-                    child: LoadingAnimationWidget.halfTriangleDot(
-                        color: AppColors.darkPurple, size: 50),
-                  ))
+                      color: AppColors.white.withOpacity(0.5),
+                      child: Center(
+                        child: LoadingAnimationWidget.halfTriangleDot(
+                            color: AppColors.darkPurple, size: 50),
+                      ))
                   : SizedBox(),
             ),
           ],

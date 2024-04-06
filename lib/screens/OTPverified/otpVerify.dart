@@ -40,6 +40,16 @@ class OtpPageState extends State<OtpPage> {
         'https://petrocard.000webhostapp.com/API/checkotp.php'; // Replace with your API URL
     String OTP =
         '${otpController1.text}${otpController2.text}${otpController3.text}${otpController4.text}${otpController5.text}${otpController6.text}';
+    if (OTP.length != 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Enter a valid OTP"),
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
     try {
       setState(() {
         isLoading = true;
