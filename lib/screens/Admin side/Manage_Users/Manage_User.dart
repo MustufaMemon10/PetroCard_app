@@ -62,12 +62,21 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
           });
         } else {
           print('Error fetching user data: ${responseData['message']}');
+          setState(() {
+            isLoading = true;
+          });
         }
       } else {
         print('Failed to fetch user data: ${response.statusCode}');
+        setState(() {
+          isLoading = true;
+        });
       }
     } catch (error) {
       print('Error fetching user data: $error');
+      setState(() {
+        isLoading = true;
+      });
     }
   }
 

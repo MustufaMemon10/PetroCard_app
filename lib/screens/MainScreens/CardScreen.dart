@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../Card/MainCard.dart';
@@ -19,11 +20,13 @@ class _CardScreenState extends State<CardScreen> {
   String userName = '';
   String email = '';
   String card_num = '';
+  String card_id = '';
   String balance = '';
   String status = '';
   String userId = '';
-  String _selectedReason = '';
   bool switchValue = true;
+  bool isLoading = false;
+
 
   void handleSwitchChanged(bool value) async {
     setState(() {
@@ -62,6 +65,7 @@ class _CardScreenState extends State<CardScreen> {
       userName = setpreference.getString('name') ?? '';
       email = setpreference.getString('email') ?? '';
       card_num = setpreference.getString('card_num') ?? '';
+      card_id = setpreference.getString('card_id') ?? '';
       status = setpreference.getString('status') ?? '';
       switchValue = status == 'Active' ? true : false;
     });
@@ -80,161 +84,174 @@ class _CardScreenState extends State<CardScreen> {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: _refreshData,
-        displacement: kToolbarHeight + 60.0,
-        color: AppColors.white,
-        backgroundColor: AppColors.darkPurple,
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-          child: Column(children: [
-            SizedBox(
-              height: 80,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'My Card',
-                    style: TextStyle(
-                      fontSize: 20.0.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primaryText,
+        displacement: kToolbarHeight + 20.0,
+        color: AppColors.black,
+        backgroundColor: AppColors.white,
+        child: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+              child: Column(children: [
+                SizedBox(
+                  height: 80,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'My Card',
+                        style: TextStyle(
+                          fontSize: 20.0.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.primaryText,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                PetroMainCard(userName: userName,card_num: card_num,),
+                SizedBox(height: 10.0,),
+                Divider(),
+                ListTile(
+                    leading: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: AppColors.white.withAlpha(20)),
+                      child: Icon(
+                        FontAwesomeIcons.creditCard,
+                        color: AppColors.darkPurple,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            PetroMainCard(userName: userName,card_num: card_num,),
-            SizedBox(height: 10.0,),
-            Divider(),
-            ListTile(
-                leading: Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: AppColors.white.withAlpha(20)),
-                  child: Icon(
-                    FontAwesomeIcons.creditCard,
-                    color: AppColors.darkPurple,
-                  ),
+                    title: Text(
+                      card_num,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: AppColors.black,
+                        letterSpacing: 0.8,
+                      ),
+                    ),
                 ),
-                title: Text(
-                  card_num,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: AppColors.black,
-                    letterSpacing: 0.8,
-                  ),
-                ),
-            ),
-            ListTile(
-              leading: Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: AppColors.white.withAlpha(20)),
-                child: Icon(
-                  FontAwesomeIcons.userCheck,
-                  color: AppColors.darkPurple,
-                ),
-              ),
-              title: Text(
-                userName,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: AppColors.black,
-                  letterSpacing: 0.8,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: AppColors.white.withAlpha(20)),
-                child: Icon(
-                  FontAwesomeIcons.envelope,
-                  color: AppColors.darkPurple,
-                ),
-              ),
-              title: Text(
-                email,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: AppColors.black,
-                  letterSpacing: 0.8,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: AppColors.white.withAlpha(20)),
-                child: Icon(
-                  FontAwesomeIcons.creativeCommonsSampling,
-                  color: AppColors.darkPurple,
-                ),
-              ),
-              title: Text(
-                status,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: AppColors.black,
-                  letterSpacing: 0.8,
-                ),
-              ),
-                trailing: Switch(
-                  value: switchValue,
-                  onChanged: handleSwitchChanged,
-                  activeColor: AppColors.green,
-                  inactiveThumbColor: AppColors.red,
-                  inactiveTrackColor: AppColors.red.withOpacity(0.3),
-                  activeTrackColor: AppColors.green.withOpacity(0.3),
-                ),
-            ),
-            ListTile(
-              leading: Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: AppColors.white.withAlpha(20)),
-                child: Icon(
-                  Icons.block,
-                  color: AppColors.darkPurple,
-                ),
-              ),
-              title: Text(
-                'Block card',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: AppColors.black,
-                  letterSpacing: 0.8,
-                ),
-              ),
-
-              trailing: GestureDetector(
-    onTap: () {
-      showBlockingReasonDialog(context);
-    },
-                child: Container(
-                  padding: EdgeInsets.all(10),
+                ListTile(
+                  leading: Container(
+                    height: 40,
+                    width: 40,
                     decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.translightPurple2.withOpacity(0.1)
+                        borderRadius: BorderRadius.circular(100),
+                        color: AppColors.white.withAlpha(20)),
+                    child: Icon(
+                      FontAwesomeIcons.userCheck,
+                      color: AppColors.darkPurple,
                     ),
-                    child: Icon(Icons.arrow_forward_ios,size: 18,color: AppColors.translightPurple2,)),
-              ),
+                  ),
+                  title: Text(
+                    userName,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: AppColors.black,
+                      letterSpacing: 0.8,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: AppColors.white.withAlpha(20)),
+                    child: Icon(
+                      FontAwesomeIcons.envelope,
+                      color: AppColors.darkPurple,
+                    ),
+                  ),
+                  title: Text(
+                    email,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: AppColors.black,
+                      letterSpacing: 0.8,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: AppColors.white.withAlpha(20)),
+                    child: Icon(
+                      FontAwesomeIcons.creativeCommonsSampling,
+                      color: AppColors.darkPurple,
+                    ),
+                  ),
+                  title: Text(
+                    status,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: AppColors.black,
+                      letterSpacing: 0.8,
+                    ),
+                  ),
+                    trailing: Switch(
+                      value: switchValue,
+                      onChanged: handleSwitchChanged,
+                      activeColor: AppColors.green,
+                      inactiveThumbColor: AppColors.red,
+                      inactiveTrackColor: AppColors.red.withOpacity(0.3),
+                      activeTrackColor: AppColors.green.withOpacity(0.3),
+                    ),
+                ),
+                ListTile(
+                  leading: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: AppColors.white.withAlpha(20)),
+                    child: Icon(
+                      Icons.block,
+                      color: AppColors.darkPurple,
+                    ),
+                  ),
+                  title: Text(
+                    'Block card',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: AppColors.black,
+                      letterSpacing: 0.8,
+                    ),
+                  ),
+                  trailing: GestureDetector(
+                  onTap: () {
+                    showBlockingReasonDialog(context,card_id);
+                  },
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.translightPurple2.withOpacity(0.1)
+                        ),
+                        child: Icon(Icons.arrow_forward_ios,size: 18,color: AppColors.translightPurple2,)),
+                  ),
+                ),
+              ]),
             ),
-          ]),
+            Positioned.fill(
+              child: isLoading
+                  ? Container(
+                  color: AppColors.white.withOpacity(0.5),
+                  child: Center(
+                    child: LoadingAnimationWidget.halfTriangleDot(
+                        color: AppColors.darkPurple, size: 50),
+                  ))
+                  : SizedBox(),
+            ),
+          ],
         ),
       ),
     );
@@ -246,9 +263,8 @@ class _CardScreenState extends State<CardScreen> {
     'Card not working',
     'Other',
   ];
-  void showBlockingReasonDialog(BuildContext context) {
+  void showBlockingReasonDialog(BuildContext context,String card_id) {
     String selectedReason = blockingReasons[0]; // Default to the first reason
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -293,7 +309,7 @@ class _CardScreenState extends State<CardScreen> {
             TextButton(
               onPressed: () {
                 print('Selected Blocking Reason: $selectedReason');
-                Navigator.pop(context);
+                _blockreason(card_id, selectedReason);
               },
               child: Text('Block',style: TextStyle(color: AppColors.black),),
             ),
@@ -301,6 +317,51 @@ class _CardScreenState extends State<CardScreen> {
         );
       },
     );
+  }
+  Future<void> _blockreason(String card_id,String selectedReason) async {
+    final apiUrl =
+        'https://petrocard.000webhostapp.com/API/blockcard.php';
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        body: {
+          "card_id":  card_id,
+          "b_reason": selectedReason,
+        },
+      );
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        setState(() {
+          isLoading = false;
+        });
+        if (!responseData['error']) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(responseData['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.green, // Customize background color
+            ),
+          );
+          Navigator.of(context).pop();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(responseData['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red, // Customize background color
+            ),
+          );
+        }
+      } else {
+        print('Failed to fetch user data: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching user data: $error');
+    }
+
   }
 
 }

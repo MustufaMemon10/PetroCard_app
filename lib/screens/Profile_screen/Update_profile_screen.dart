@@ -168,7 +168,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         color: Colors.transparent,
                         shape: BoxShape.circle
                       ),
-                      child: UserIcon(isDark: isDark,),
+                      child: UserIcon(),
                     ),
                   ),
                   SizedBox(

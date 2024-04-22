@@ -119,6 +119,8 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
               )
             : RefreshIndicator(
                 onRefresh: _refreshData,
+          color: AppColors.black,
+          backgroundColor: AppColors.white,
                 child: Stack(
                   children: [
                     ListView.builder(
@@ -231,14 +233,23 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                             vertical: 5.0, horizontal: 5.0),
                                         decoration: BoxDecoration(
                                           color:
-                                              AppColors.white.withOpacity(0.8),
+                                              AppColors.white.withOpacity(0.9),
                                           border: Border.all(
                                             color: AppColors.white
                                                 .withOpacity(0.7),
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15.0),
-                                        ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: ('${request['status']}') ==
+                                              'pending'
+                                              ? Colors.orange
+                                                  : '${request['status']}'=='rejected'?
+                                              Colors.red:
+                                              Colors.green,)
+                                    ]
+                          ),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -465,7 +476,9 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                                           ('${request['status']}') ==
                                                                   'pending'
                                                               ? Colors.orange
-                                                              : Colors.green,
+                                                              : '${request['status']}'=='rejected'?
+                                                              Colors.red:
+                                                              Colors.green,
                                                       fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -475,6 +488,7 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                                             if ('${request['status']}' ==
                                                 'pending')
                                               ElevatedButton(
+                                                onLongPress: (){showRejectingreasons(context,'${request['req_id']}');},
                                                   onPressed: () {
                                                     Navigator.push(
                                                       context,
@@ -826,6 +840,115 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                 ),
               ));
   }
+
+  List<String> blockingReasons = [
+    'Document Verification Issue',
+    'Invalid Pan Number',
+    'Fraud Suspected',
+    'Incomplete Information',
+    'Other',
+  ];
+  void showRejectingreasons(BuildContext context,String req_id) {
+    String selectedReason = blockingReasons[0]; // Default to the first reason
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Blocking Reason'),
+          content: DropdownButtonFormField(
+              value: selectedReason,
+              items: blockingReasons.map((reason) {
+                return DropdownMenuItem(
+                  value: reason,
+                  child: Text(reason,style: TextStyle(color: AppColors.black),),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  selectedReason = newValue.toString();
+                });
+              },
+              decoration: InputDecoration(
+                fillColor: Colors.white70,
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide(
+                    color: AppColors.grey,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.darkPurple, // Customize focused border color
+                  ),
+                ),
+              )
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel',style: TextStyle(color: AppColors.black.withOpacity(0.6)),),
+            ),
+            TextButton(
+              onPressed: () {
+                print('Selected Rejecting Reason: $selectedReason');
+                _rejectReason(req_id, selectedReason);
+              },
+              child: Text('Reject',style: TextStyle(color: AppColors.red),),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  Future<void> _rejectReason(String req_id,String selectedReason) async {
+    final apiUrl =
+        'https://petrocard.000webhostapp.com/API/rejectingreasonAPI.php';
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        body: {
+          "req_id":  req_id,
+          "r_reason": selectedReason,
+        },
+      );
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        setState(() {
+          isLoading = false;
+        });
+        if (!responseData['error']) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(responseData['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.green, // Customize background color
+            ),
+          );
+          Navigator.of(context).pop();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(responseData['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red, // Customize background color
+            ),
+          );
+        }
+      } else {
+        print('Failed to fetch user data: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching user data: $error');
+    }
+
+  }
+
 }
 
 class ViewImage extends StatefulWidget {

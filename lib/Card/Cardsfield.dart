@@ -44,7 +44,7 @@ class _CardsfieldState extends State<Cardsfield> {
         FadeInDown(
             duration: Duration(milliseconds: 400),
             child: PetroMainCard(userName: userName,card_num: card_num,)),
-        SizedBox(height: 30.0,),
+        SizedBox(height: 20.0,),
         FadeIn(child: Appbtns()),
       ],
     );

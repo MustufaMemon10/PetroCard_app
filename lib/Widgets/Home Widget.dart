@@ -122,7 +122,7 @@ class HomeWidgetState extends State<HomeWidget> {
       case 0:
         return const LocationScreen();
       case 1:
-        return hasCard ? const HomeScreen() :  RequestCardScreen(userId: userId,);
+        return  RequestCardScreen(userId: userId,);
       case 2:
         return hasCard ? const CardScreen() :  RequestCardScreen(userId: userId,);
       default:

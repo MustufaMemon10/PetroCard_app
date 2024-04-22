@@ -145,7 +145,7 @@ class _MyappbarState extends State<Myappbar> {
                                   ? AppColors.black
                                       .withOpacity(0.2)
                                   : AppColors.white,
-                              child: UserIcon(isDark: widget.isDark,),
+                              child: UserIcon(),
                             ),
                           ],
                         ),
@@ -192,7 +192,7 @@ class _MyappbarState extends State<Myappbar> {
                                   userName.split(' ')[0].substring(1),
                               // Start from index 1 to get the rest of the string
                               style: TextStyle(
-                                fontSize: 20.0,
+                                fontSize: 18.0.sp,
                                 fontWeight: FontWeight.w600,
                                 color: widget.isDark
                                     ? AppColors.darkPrimaryTitle

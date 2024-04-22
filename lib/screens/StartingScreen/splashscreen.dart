@@ -6,9 +6,9 @@ import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
-    ));
+  debugShowCheckedModeBanner: false,
+  home: SplashScreen(),
+));
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -110,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen>
                 'Petro Card',
                 style: TextStyle(
                   color: Color(0xFF032737),
-                  fontSize: 19,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),

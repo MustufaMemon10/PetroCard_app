@@ -149,7 +149,7 @@ class _CustomPassfieldsState extends State<CustomPassfields> {
                 icon: Icon(
                   _isObscured
                       ? Icons.visibility
-                      : Icons.visibility_off,
+                      : Icons.visibility_off,color: AppColors.darkPurple,
                 ),
                 onPressed: () {
                   setState(() {

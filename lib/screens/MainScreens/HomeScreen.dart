@@ -76,60 +76,62 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: isDark ? AppColors.darkBackground : AppColors.white,
       body: RefreshIndicator(
         onRefresh: _refreshData,
         displacement: kToolbarHeight + 60.0,
-        color: AppColors.white,
-        backgroundColor: AppColors.darkPurple,
+        color: AppColors.black,
+        backgroundColor: AppColors.white,
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
               backgroundColor:
-                  isDark ? AppColors.darkBackground : AppColors.white,
+              isDark ? AppColors.darkBackground : AppColors.white,
               elevation: 0,
               pinned: true,
               centerTitle: false,
               stretch: true,
-              expandedHeight: 440,
+              expandedHeight: screenHeight * 0.490, // Adjusted for responsiveness
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+                  padding: EdgeInsets.only(top: screenHeight * 0.04,left: screenWidth * 0.05,right: screenWidth * 0.05,bottom: 0),
                   child: isLoading
                       ? Column(
-                          children: [
-                            SizedBox(height: 105),
-                            CardLoading(
-                              height: 0.250.sh,
-                              borderRadius: BorderRadius.circular(20.0),
-                              animationDuration: Duration(seconds: 2),
-                              animationDurationTwo: Duration(seconds: 2),
-                              cardLoadingTheme: CardLoadingTheme.defaultTheme,
-                              curve: Curves.bounceOut,
-                              width: 380.w,
-                            ),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                CardLoading(
-                                  height: 50,
-                                  width: 50,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                CardLoading(
-                                  height: 50,
-                                  width: 50,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                              ],
-                            )
-                          ],
-                        )
+                    children: [
+                      SizedBox(height: screenHeight * 0.13), // Adjusted for responsiveness
+                      CardLoading(
+                        height: screenHeight * 0.25, // Adjusted for responsiveness
+                        borderRadius: BorderRadius.circular(20.0),
+                        animationDuration: Duration(seconds: 2),
+                        animationDurationTwo: Duration(seconds: 2),
+                        cardLoadingTheme: CardLoadingTheme.defaultTheme,
+                        curve: Curves.bounceOut,
+                        width: screenWidth * 0.9, // Adjusted for responsiveness
+                      ),
+                      SizedBox(
+                        height: screenHeight * 0.035, // Adjusted for responsiveness
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CardLoading(
+                            height: screenHeight * 0.065, // Adjusted for responsiveness
+                            width: screenWidth * 0.15, // Adjusted for responsiveness
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          CardLoading(
+                            height: screenHeight * 0.065, // Adjusted for responsiveness
+                            width: screenWidth * 0.15, // Adjusted for responsiveness
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
                       : Cardsfield(),
                 ),
               ),
@@ -144,44 +146,45 @@ class _HomeScreenState extends State<HomeScreen> {
               centerTitle: true,
               bottom: const PreferredSize(
                 child: SizedBox(),
-                preferredSize: Size.fromHeight(-20.0),
+                preferredSize: Size.fromHeight( -0.20),
               ),
               flexibleSpace: isLoading
                   ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: CardLoading(
-                        height: 50,
-                        borderRadius: BorderRadius.circular(40.0),
-                      ),
-                    )
+                padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.02), // Adjusted for responsiveness
+                child: CardLoading(
+                  height: screenHeight * 0.06, // Adjusted for responsiveness
+                  borderRadius: BorderRadius.circular(40.0),
+                ),
+              )
                   : Container(
-                      decoration: BoxDecoration(
-                        color: isDark
-                            ? AppColors.darkTransactionBackground
-                            : AppColors.white,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20.0),
-                        ),
-                      ),
-                      child: TransactionText(isDark: isDark),
-                    ),
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? AppColors.darkTransactionBackground
+                      : AppColors.white,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(screenWidth * 0.045), // Adjusted for responsiveness
+                  ),
+                ),
+                child: TransactionText(isDark: isDark),
+              ),
             ),
             SliverPadding(
               padding: EdgeInsets.only(
-                  bottom: 0.22.sw,
+                  bottom: screenHeight * 0.17, // Adjusted for responsiveness
                   top: isLoading
                       ? 0
                       : transactions.isEmpty
-                          ? 50
-                          : 0),
+                      ? screenHeight * 0.09 // Adjusted for responsiveness
+                      : 0),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
+                      (BuildContext context, int index) {
                     if (isLoading) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CardLoading(
-                          height: 50,
+                          height: screenHeight * 0.065, // Adjusted for responsiveness
                           borderRadius: BorderRadius.circular(40.0),
                         ),
                       );
@@ -192,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(
                             'No Transaction',
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: screenWidth * 0.045, // Adjusted for responsiveness
                               fontWeight: FontWeight.w700,
                               color: AppColors.red.withRed(170),
                             ),
@@ -204,23 +207,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     final timeStampString = transaction['timestamp'];
                     final timeStamp = DateTime.parse(timeStampString);
                     final formattedTime =
-                        DateFormat('MMMM d, yyyy \'at\' hh:mm a')
-                            .format(timeStamp);
+                    DateFormat('MMMM d, yyyy \'at\' hh:mm a')
+                        .format(timeStamp);
                     return Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+                      padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.005,
+                          horizontal: screenWidth * 0.02),
                       child: FadeInUp(
                         duration: Duration(milliseconds: 400),
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                              vertical: 14.0, horizontal: 30.0),
+                              vertical: screenHeight * 0.018, // Adjusted for responsiveness
+                              horizontal: screenWidth * 0.08), // Adjusted for responsiveness
                           decoration: BoxDecoration(
                               color: isDark
                                   ? AppColors.darkCardBackground
                                   : AppColors.white,
                               border: Border.all(
-                                  width: 0.5, color: AppColors.secondaryText),
-                              borderRadius: BorderRadius.circular(20.0),
+                                  width: screenWidth * 0.002,
+                                  color: AppColors.secondaryText),
+                              borderRadius: BorderRadius.circular(20), // Adjusted for responsiveness
                               boxShadow: [
                                 BoxShadow(
                                   color: AppColors.black.withOpacity(0.2),
@@ -238,8 +244,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   childCount: isLoading
                       ? 5
                       : transactions.isEmpty
-                          ? 1
-                          : transactions.length,
+                      ? 1
+                      : transactions.length,
                 ),
               ),
             ),

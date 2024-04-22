@@ -201,7 +201,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                   left: 10.0,
                                 ),
                                 child: Text(
-                                  '${user['phone']}',
+                                  '${user['email']}',
                                   style: TextStyle(
                                       color: AppColors.secondaryText,
                                       fontSize: 16.0,

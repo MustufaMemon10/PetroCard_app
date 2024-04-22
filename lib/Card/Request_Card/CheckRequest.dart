@@ -7,6 +7,7 @@ import 'package:petrocardapppp/Card/Request_Card/pending..dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../../screens/MainScreens/HomeScreen.dart';
 import '../../utilities/colors.dart';
 
 class RequestCardScreen extends StatefulWidget {
@@ -20,6 +21,7 @@ class RequestCardScreen extends StatefulWidget {
 
 class _RequestCardScreenState extends State<RequestCardScreen> {
   String? status;
+  String? reason;
   bool isLoading = true;
 
   @override
@@ -27,7 +29,6 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
     super.initState();
     _checkHasRequested();
   }
-
   Future<void> _checkHasRequested() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     final apiUrl =
@@ -42,13 +43,17 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
+        print('reason:$reason');
         setpreference.setString('reqStatus',
             responseData['status'].toString());
+        setpreference.setString('r_reason',
+            responseData['reason'].toString());
         setpreference.setString('gender',
             responseData['gender'].toString());
         setState(() {
           isLoading = false;
           status = setpreference.getString('reqStatus')!;
+          reason = setpreference.getString('r_reason')!;
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -84,8 +89,19 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
         child:
      status == "pending"
               ? pendingscreen()
-              : status == "Rejected"?
-          Center(child: Text('Request Rejected'))
+     : status == "Accepted"
+         ? HomeScreen()
+              : status == "rejected"?
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Request Rejected,'),
+                reason != null ?Text(reason!, style: TextStyle(color: AppColors.red)) : Text('Reason not provided'),
+                TextButton(onPressed: (){const Request_Screen();}, child: Text('Request Again?'))
+              ],
+            ),
+          )
           :TextButton(
         onPressed: () {
           Navigator.push(

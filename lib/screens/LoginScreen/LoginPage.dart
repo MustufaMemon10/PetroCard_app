@@ -83,6 +83,9 @@ class _LoginPageState extends State<LoginPage> {
                 backgroundColor: Colors.red, // Customize background color
               ),
             );
+            setState(() {
+              isLoading = false;
+            });
           }
         }
       }
@@ -90,11 +93,14 @@ class _LoginPageState extends State<LoginPage> {
         print('Error calling API: $error');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('No connection'),
+            content: Text('No Internet connection'),
             duration: Duration(seconds: 2),
             backgroundColor: Colors.red, // Customize background color
           ),
         );
+        setState(() {
+          isLoading = false;
+        });
       }
     }
   }
