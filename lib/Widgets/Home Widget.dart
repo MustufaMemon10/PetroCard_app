@@ -33,7 +33,7 @@ class HomeWidgetState extends State<HomeWidget> {
   int _currentIndex = 1;
   bool hasCard = false;
   String userId = '';
-  bool isLoading = false;
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -52,14 +52,22 @@ class HomeWidgetState extends State<HomeWidget> {
         if (responseData['error']== true) {
           setState(() {
             hasCard = false;
+            isLoading = false;
           });
         }
         else{
+          setpreference.setString('dob', responseData['data']['dob'].toString());
+          setpreference.setString('gender', responseData['data']['gender'].toString());
+          print(setpreference.getString('gender'));
           setState(() {
             hasCard = true;
+            isLoading = false;
           });
         }
       } else {
+        setState(() {
+          isLoading = false;
+        });
       }
     } catch (error) {
       print('No connection');
@@ -76,6 +84,8 @@ class HomeWidgetState extends State<HomeWidget> {
             color: AppColors.darkPurple,
             size: 50,
           ),
+          SizedBox(height: 10,),
+          Text('Please Wait ...',style: TextStyle(color: AppColors.darkPurple,fontSize: 20,fontWeight: FontWeight.w500),)
         ],
       ),
     )

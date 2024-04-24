@@ -93,14 +93,15 @@ class _Request_ScreenState extends State<Request_Screen> {
               ),
             );
             setState(() {
-              req_id = prefs.getString('req_id');
+              req_id = setpreference.getString('req_id');
               isLoading = false;
             });
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                     builder: (context) => ConfirmationAnimation()),
                 (route) => false);
-          } else {
+          } else if(logindata['error'] == true) {
+            setpreference.setString('req_id', logindata['req_id']);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(logindata['message'].toString()),
@@ -127,6 +128,7 @@ class _Request_ScreenState extends State<Request_Screen> {
       });
     } catch (e) {
       print(e);
+      setpreference.setString('req_id', logindata['req_id']);
       setState(() {
         isLoading = false;
       });

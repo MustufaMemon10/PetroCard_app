@@ -75,7 +75,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
   Widget build(BuildContext context) {
     return Container(
             height: 0.250.sh,
-            width: 380.w,
+            width: 410.w,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0.r),
               border: Border.all(

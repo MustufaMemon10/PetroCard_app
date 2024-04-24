@@ -27,8 +27,8 @@ class _MyNavBarState extends State<MyNavBar> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
         margin: const EdgeInsets.only(bottom: 5.0,right: 10.0,left: 10.0),
-        height:.075.sh,
-        width: 0.5.sw,
+        height:.073.sh,
+        width: 0.49.sw,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -60,8 +60,8 @@ class _MyNavBarState extends State<MyNavBar> {
                   duration: const Duration(seconds: 1),
                   curve: Curves.fastLinearToSlowEaseIn,
                   width: index == _currentindex
-                      ? width * .36
-                      : width * .18,
+                      ? width * .32
+                      : width * .15,
                   alignment: Alignment.center,
                   child: AnimatedContainer(
                     duration: const Duration(seconds: 1),
