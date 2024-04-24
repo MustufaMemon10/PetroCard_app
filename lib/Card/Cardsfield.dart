@@ -20,15 +20,12 @@ class _CardsfieldState extends State<Cardsfield> {
   String userName = '';
   String email = '';
   String card_num = '';
-  String validate = '';
 
   Future<void> getCardDetails() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     setState(() {
-      userName = setpreference.getString('name')?? '';
-      email = setpreference.getString('email')?? '';
-      card_num = setpreference.getString('card_num')?? '';
-      validate = setpreference.getString('validate')?? '';
+      userName = setpreference.getString('name') ?? '';
+      card_num = setpreference.getString('card_num') ?? '';
     });
   }
   @override
@@ -43,8 +40,8 @@ class _CardsfieldState extends State<Cardsfield> {
         SizedBox(height: 105),
         FadeInDown(
             duration: Duration(milliseconds: 400),
-            child: PetroMainCard(userName: userName,card_num: card_num,)),
-        SizedBox(height: 20.0,),
+            child: PetroMainCard(card_num: card_num,userName: userName,)),
+        SizedBox(height: 30.0,),
         FadeIn(child: Appbtns()),
       ],
     );

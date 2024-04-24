@@ -42,7 +42,6 @@ class _UserScreenState extends State<UserScreen> {
       final loginUrl = Uri.parse(
           "https://petrocard.000webhostapp.com/API/fetch_cardrequestapi.php?id=$id");
       final response = await http.get(loginUrl);
-
       if (response.statusCode == 200) {
         logindata = jsonDecode(response.body);
         data = logindata['data'];
@@ -91,10 +90,12 @@ class _UserScreenState extends State<UserScreen> {
         email = setpreference.getString('email') ?? '';
         phone = setpreference.getString('phone') ?? '';
         gender = setpreference.getString('gender') ?? '';
+        DOB = setpreference.getString('dob') ?? '';
+        timestamp = setpreference.getString('timestamp') ?? '';
         print('$id');
         print('$phone');
+        print('$DOB');
       });
-      await fetchOtherDetails();
     }
 
   @override

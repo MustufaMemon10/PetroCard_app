@@ -36,6 +36,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   var logindata;
 
     Future<void> _updateProfile() async {
+      SharedPreferences setpreference = await SharedPreferences.getInstance();
       final form = _formKey.currentState;
       if (form!.validate()) {
         setState(() {
@@ -68,6 +69,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             });
 
             if (logindata['error'] == false) {
+              setpreference.setString('name', fullNameController.text);
+              setpreference.setString('email', emailController.text);
+              setpreference.setString('phone', _phoneNumberController.text);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(logindata['message'].toString()),

@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
         print('Error calling API: $error');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Invalid User and Password'),
+            content: Text('No Internet Connection'),
             duration: Duration(seconds: 2),
             backgroundColor: Colors.red, // Customize background color
           ),

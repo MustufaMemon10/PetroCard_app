@@ -58,7 +58,6 @@ class HomeWidgetState extends State<HomeWidget> {
         else{
           setpreference.setString('dob', responseData['data']['dob'].toString());
           setpreference.setString('gender', responseData['data']['gender'].toString());
-          print(setpreference.getString('gender'));
           setState(() {
             hasCard = true;
             isLoading = false;

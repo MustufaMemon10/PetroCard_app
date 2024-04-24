@@ -854,7 +854,7 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Select Blocking Reason'),
+          title: Text('Select Rejecting Reason'),
           content: DropdownButtonFormField(
               value: selectedReason,
               items: blockingReasons.map((reason) {

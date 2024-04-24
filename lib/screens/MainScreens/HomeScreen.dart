@@ -31,6 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _isInit = true; // Move this line here
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     if (_isInit) {
       fetchTransactionDetails();
       _isInit = false;
@@ -42,9 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
     final apiUrl =
         'https://petrocard.000webhostapp.com/API/fetchalltranscations.php';
     try {
-      setState(() {
-        isLoading = true;
-      });
+      if (mounted) { // Check if the widget is mounted before calling setState
+        setState(() {
+          isLoading = true;
+        });
+      }
       final response = await http.post(
         Uri.parse(apiUrl),
         body: {'id': setpreference.getString('id')},
@@ -52,10 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         if (!responseData['error']) {
-          setState(() {
-            transactions = responseData['transactions'];
-            isLoading = false;
-          });
+          if (mounted) { // Check if the widget is mounted before calling setState
+            setState(() {
+              transactions = responseData['transactions'];
+              isLoading = false;
+            });
+          }
         } else {
           print('Error fetching user data: ${responseData['message']}');
         }
@@ -65,14 +75,17 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (error) {
       print('Error fetching user data: $error');
     }
-    setState(() {
-      isLoading = false;
-    });
+    if (mounted) { // Check if the widget is mounted before calling setState
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   Future<void> _refreshData() async {
     await fetchTransactionDetails();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -99,40 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
                   padding: EdgeInsets.only(top: screenHeight * 0.04,left: screenWidth * 0.05,right: screenWidth * 0.05,bottom: 0),
-                  child: isLoading
-                      ? Column(
-                    children: [
-                      SizedBox(height: screenHeight * 0.13), // Adjusted for responsiveness
-                      CardLoading(
-                        height: screenHeight * 0.25, // Adjusted for responsiveness
-                        borderRadius: BorderRadius.circular(20.0),
-                        animationDuration: Duration(seconds: 2),
-                        animationDurationTwo: Duration(seconds: 2),
-                        cardLoadingTheme: CardLoadingTheme.defaultTheme,
-                        curve: Curves.bounceOut,
-                        width: screenWidth * 0.9, // Adjusted for responsiveness
-                      ),
-                      SizedBox(
-                        height: screenHeight * 0.035, // Adjusted for responsiveness
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          CardLoading(
-                            height: screenHeight * 0.065, // Adjusted for responsiveness
-                            width: screenWidth * 0.15, // Adjusted for responsiveness
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          CardLoading(
-                            height: screenHeight * 0.065, // Adjusted for responsiveness
-                            width: screenWidth * 0.15, // Adjusted for responsiveness
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ],
-                      )
-                    ],
-                  )
-                      : Cardsfield(),
+                  child: Cardsfield(),
                 ),
               ),
             ),
@@ -148,16 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: SizedBox(),
                 preferredSize: Size.fromHeight( -0.20),
               ),
-              flexibleSpace: isLoading
-                  ? Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.02), // Adjusted for responsiveness
-                child: CardLoading(
-                  height: screenHeight * 0.06, // Adjusted for responsiveness
-                  borderRadius: BorderRadius.circular(40.0),
-                ),
-              )
-                  : Container(
+              flexibleSpace: Container(
                 decoration: BoxDecoration(
                   color: isDark
                       ? AppColors.darkTransactionBackground
@@ -190,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     } else if (transactions.isEmpty) {
                       return FadeIn(
-                        duration: Duration(milliseconds: 250),
+                        duration: Duration(milliseconds: 550),
                         child: Center(
                           child: Text(
                             'No Transaction',

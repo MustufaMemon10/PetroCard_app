@@ -75,66 +75,64 @@ class _CardLimitScreenState extends State<CardLimitScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Stack(
-        children: [
-          Scaffold(
-            resizeToAvoidBottomInset: false,
-            appBar: AppBar(
-              backgroundColor: AppColors.white,
-              title: Text('Set Limit',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 20,color: AppColors.darkPurple),),
-              centerTitle: true,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(15),
-                ),
-              ),
-              leading: IconButton(
-                icon: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    color: AppColors.black.withAlpha(20),
-                  ),
-                  child: Icon(Icons.arrow_back_ios_new, color:Colors.black, size: 20),
-                ),
-                onPressed: () => Navigator.of(context).pop(),
+    return Stack(
+      children: [
+        Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            backgroundColor: AppColors.white,
+            title: Text('Set Limit',style: TextStyle(fontWeight: FontWeight.w800,fontSize: 20,color: AppColors.black),),
+            centerTitle: true,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(15),
               ),
             ),
-            body: Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: GestureDetector(
-                  onTap: (){
-                    FocusScope.of(context).unfocus();
-                  },
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 20.0,),
-                      Container(
-                            padding: const EdgeInsets.all(10),
-                            margin: const EdgeInsets.only(bottom: 10.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            child: FadeInDown(
-                                duration:Duration(milliseconds: 200),child: Text('Customize Your Card Spending Limit',style: TextStyle(color: AppColors.primaryText,fontSize: 22,fontWeight: FontWeight.w600),))),
-                      SizedBox(height: 20,),
-                      Center(
+            leading: IconButton(
+              icon: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  color: AppColors.black.withAlpha(20),
+                ),
+                child: Icon(Icons.arrow_back_ios_new, color:Colors.black, size: 20),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
+          body: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: GestureDetector(
+                onTap: (){
+                  FocusScope.of(context).unfocus();
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20.0,),
+                    Container(
+                          padding: const EdgeInsets.all(10),
+                          margin: const EdgeInsets.only(bottom: 10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          child: FadeInDown(
+                              duration:Duration(milliseconds: 550),child: Text('Customize Your Card Spending Limit',style: TextStyle(color: AppColors.darkPurple,fontSize: 22,fontWeight: FontWeight.w600),))),
+                    SizedBox(height: 20,),
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 20.0),
                         child: FadeInDown(
-                          duration:Duration(milliseconds: 300),
-                          child: Container(
-                              padding: const EdgeInsets.all(10),
-                              margin: const EdgeInsets.only(bottom: 10.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
-                              child: Text('Your Current Card Limit is:'+cardlimit,style: TextStyle(color: AppColors.secondaryText,fontSize: 18),)),
+                          duration:Duration(milliseconds: 580),
+                          child: Text('Your Current Card Limit is:'+cardlimit,style: TextStyle(color: AppColors.secondaryText,fontSize: 18),),
                         ),
                       ),
-                      TextFormField(
+                    ),
+                    FadeInDown(
+                      duration: Duration(milliseconds: 600),
+                      child: TextFormField(
                         keyboardType: TextInputType.number,
                         controller: _limitController,
                         textInputAction: TextInputAction.next,
@@ -176,10 +174,13 @@ class _CardLimitScreenState extends State<CardLimitScreen> {
                            prefixIcon: Icon(Icons.keyboard_double_arrow_up,color: AppColors.darkPurple,size: 18,)
                         ),
                       ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Center(
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Center(
+                      child: FadeInDown(
+                        duration: Duration(milliseconds: 650),
                         child: SizedBox(
                           width: 250.w,
                           height: 40.h,
@@ -198,13 +199,13 @@ class _CardLimitScreenState extends State<CardLimitScreen> {
                           ),
                         ),
                       ),
-                  ],),
-                ),
+                    ),
+                ],),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -7,9 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 
 class PetroMainCard extends StatefulWidget {
-  final String userName;
   final String card_num;
-
+  final String userName;
    const PetroMainCard({
     required this.card_num,
     required this.userName,
@@ -24,6 +23,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
   bool isDark = false;
   bool isBalanceHidden = true;
   String userId = '';
+  String userName = '';
   var data;
   bool isLoading = false;
   var logindata;
@@ -54,6 +54,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
           setpreference.setString('status', data[0]['status'].toString());
           setState(() {
             isLoading = false;
+            userName = setpreference.getString('name') ?? '';
           });
         }
       } else {
@@ -163,7 +164,7 @@ class _PetroMainCardState extends State<PetroMainCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            widget.userName,
+                           widget.userName,
                             style: TextStyle(
                               fontSize: 19.0.sp,
                               color: isDark

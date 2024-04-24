@@ -40,6 +40,7 @@ class _CardScreenState extends State<CardScreen> {
   }
 
   Future<void> updateCardStatus(String id, String status) async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
     setState(() {
       isLoading = true;
     });
@@ -60,6 +61,7 @@ class _CardScreenState extends State<CardScreen> {
           backgroundColor: Colors.green,
         ),
       );
+      setpreference.setString('status', status);
       await getCardDetails();
       setState(() {
         isLoading = false;
@@ -91,277 +93,263 @@ class _CardScreenState extends State<CardScreen> {
     });
   }
 
-  Future<void> _refreshData() async {
-    await getCardDetails();
-  }
 
   @override
   void initState() {
     super.initState();
     getCardDetails();
   }
-
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: _refreshData,
-        displacement: kToolbarHeight + 20.0,
-        color: AppColors.black,
-        backgroundColor: AppColors.white,
-        child: Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-              child: Column(children: [
-                SizedBox(
-                  height: 80,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'My Card',
-                        style: TextStyle(
-                          fontSize: 20.0.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.primaryText,
-                        ),
+      body: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+            child: Column(children: [
+              SizedBox(
+                height: 80,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10, vertical: 15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'My Card',
+                      style: TextStyle(
+                        fontSize: 20.0.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryText,
                       ),
-                    ],
+                    ),
+                  ],
+                ),
+              ),
+              PetroMainCard(
+                card_num: card_num,
+                userName: userName,
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Divider(),
+              ListTile(
+                leading: Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: AppColors.white.withAlpha(20)),
+                  child: Icon(
+                    FontAwesomeIcons.creditCard,
+                    color: AppColors.darkPurple,
                   ),
                 ),
-                PetroMainCard(
-                  userName: userName,
-                  card_num: card_num,
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Divider(),
-                ListTile(
-                  leading: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: AppColors.white.withAlpha(20)),
-                    child: Icon(
-                      FontAwesomeIcons.creditCard,
-                      color: AppColors.darkPurple,
-                    ),
-                  ),
-                  title: Text(
-                    card_num,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: AppColors.black,
-                      letterSpacing: 0.8,
-                    ),
+                title: Text(
+                  card_num,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: AppColors.black,
+                    letterSpacing: 0.8,
                   ),
                 ),
-                ListTile(
-                  leading: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: AppColors.white.withAlpha(20)),
-                    child: Icon(
-                      FontAwesomeIcons.userCheck,
-                      color: AppColors.darkPurple,
-                    ),
-                  ),
-                  title: Text(
-                    userName,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: AppColors.black,
-                      letterSpacing: 0.8,
-                    ),
+              ),
+              ListTile(
+                leading: Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: AppColors.white.withAlpha(20)),
+                  child: Icon(
+                    FontAwesomeIcons.userCheck,
+                    color: AppColors.darkPurple,
                   ),
                 ),
-                ListTile(
-                  leading: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: AppColors.white.withAlpha(20)),
-                    child: Icon(
-                      FontAwesomeIcons.envelope,
-                      color: AppColors.darkPurple,
-                    ),
-                  ),
-                  title: Text(
-                    email,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: AppColors.black,
-                      letterSpacing: 0.8,
-                    ),
+                title: Text(
+                  userName,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: AppColors.black,
+                    letterSpacing: 0.8,
                   ),
                 ),
+              ),
+              ListTile(
+                leading: Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: AppColors.white.withAlpha(20)),
+                  child: Icon(
+                    FontAwesomeIcons.envelope,
+                    color: AppColors.darkPurple,
+                  ),
+                ),
+                title: Text(
+                  email,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: AppColors.black,
+                    letterSpacing: 0.8,
+                  ),
+                ),
+              ),
 
-                    ListTile(
-                        leading: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: AppColors.white.withAlpha(20)),
-                          child: Icon(
-                            FontAwesomeIcons.creativeCommonsSampling,
-                            color: AppColors.darkPurple,
-                          ),
+                  ListTile(
+                      leading: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: AppColors.white.withAlpha(20)),
+                        child: Icon(
+                          FontAwesomeIcons.creativeCommonsSampling,
+                          color: AppColors.darkPurple,
                         ),
-                        title: Text(
-                          status,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: AppColors.black,
-                            letterSpacing: 0.8,
-                          ),
-                        ),
-                        trailing: status != 'Blocked'?Switch(
-                          value: switchValue,
-                          onChanged: handleSwitchChanged,
-                          activeColor: AppColors.green,
-                          inactiveThumbColor: AppColors.red,
-                          inactiveTrackColor: AppColors.red.withOpacity(0.3),
-                          activeTrackColor: AppColors.green.withOpacity(0.3),
-                        ):  SizedBox(),
                       ),
-                status == 'Active' || status == 'Inactive' ?
-                ListTile(
-                  leading: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: AppColors.white.withAlpha(20)),
-                    child: Icon(
-                      Icons.block,
-                      color: AppColors.darkPurple,
+                      title: Text(
+                        status,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: AppColors.black,
+                          letterSpacing: 0.8,
+                        ),
+                      ),
+                      trailing: status != 'Blocked'?Switch(
+                        value: switchValue,
+                        onChanged: handleSwitchChanged,
+                        activeColor: AppColors.green,
+                        inactiveThumbColor: AppColors.red,
+                        inactiveTrackColor: AppColors.red.withOpacity(0.3),
+                        activeTrackColor: AppColors.green.withOpacity(0.3),
+                      ):  SizedBox(),
                     ),
+              status == 'Active' || status == 'Inactive' ?
+              ListTile(
+                leading: Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: AppColors.white.withAlpha(20)),
+                  child: Icon(
+                    Icons.block,
+                    color: AppColors.darkPurple,
                   ),
-                  title: Text(
-                        'Block card',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: AppColors.black,
-                      letterSpacing: 0.8,
-                    ),
+                ),
+                title: Text(
+                      'Block card',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: AppColors.black,
+                    letterSpacing: 0.8,
                   ),
-                  trailing: GestureDetector(
-                    onTap: () {
-                      showBlockingReasonDialog(context, card_id);
-                    },
-                    child: Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color:
-                                AppColors.translightPurple2.withOpacity(0.1)),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 18,
-                          color: AppColors.translightPurple2,
-                        )),
+                ),
+                trailing: GestureDetector(
+                  onTap: () {
+                    showBlockingReasonDialog(context, card_id);
+                  },
+                  child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color:
+                              AppColors.translightPurple2.withOpacity(0.1)),
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 18,
+                        color: AppColors.translightPurple2,
+                      )),
+                ),
+              ):
+              ListTile(
+                leading: Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: AppColors.white.withAlpha(20)),
+                  child: Icon(
+                    Icons.block,
+                    color: AppColors.darkPurple,
                   ),
-                ):
-                ListTile(
-                  leading: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: AppColors.white.withAlpha(20)),
-                    child: Icon(
-                      Icons.block,
-                      color: AppColors.darkPurple,
-                    ),
+                ),
+                title: Text(
+                  'Unblock card',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: AppColors.black,
+                    letterSpacing: 0.8,
                   ),
-                  title: Text(
-                    'Unblock card',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: AppColors.black,
-                      letterSpacing: 0.8,
-                    ),
-                  ),
-                  trailing: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            AlertDialog(
-                              title:  Text('Are you sure? You want to Unblock your Card',
-                                style: TextStyle(fontSize: 16.0),
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop(
-                                        false); // Return false when cancel is pressed
-                                  },
-                                  child: Text(
-                                    "Cancel",
-                                    style: TextStyle(
-                                        color: AppColors
-                                            .darkPurple.withOpacity(0.5),letterSpacing: .7),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    updateCardStatus(userId, 'Active');
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(
-                                    "Unblock",
-                                    style: TextStyle(
-                                        color: AppColors
-                                            .darkPurple,letterSpacing: 0.6),
-                                  ),
-                                ),
-                              ],
+                ),
+                trailing: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          AlertDialog(
+                            title:  Text('Are you sure? You want to Unblock your Card',
+                              style: TextStyle(fontSize: 16.0),
                             ),
-                      );
-                    },
-                    child: Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color:
-                            AppColors.translightPurple2.withOpacity(0.1)),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 18,
-                          color: AppColors.translightPurple2,
-                        )),
-                  ),
-                )
-              ]),
-            ),
-            Positioned.fill(
-              child: isLoading
-                  ? Container(
-                      color: AppColors.white.withOpacity(0.5),
-                      child: Center(
-                        child: LoadingAnimationWidget.halfTriangleDot(
-                            color: AppColors.darkPurple, size: 50),
-                      ))
-                  : SizedBox(),
-            ),
-          ],
-        ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(
+                                      false); // Return false when cancel is pressed
+                                },
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                      color: AppColors
+                                          .darkPurple.withOpacity(0.9),letterSpacing: .7),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  updateCardStatus(userId, 'Active');
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  "Unblock",
+                                  style: TextStyle(
+                                      color: AppColors
+                                          .darkPurple,letterSpacing: 0.6),
+                                ),
+                              ),
+                            ],
+                          ),
+                    );
+                  },
+                  child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color:
+                          AppColors.translightPurple2.withOpacity(0.1)),
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 18,
+                        color: AppColors.translightPurple2,
+                      )),
+                ),
+              )
+            ]),
+          ),
+          Positioned.fill(
+            child: isLoading
+                ? Container(
+                    color: AppColors.white.withOpacity(0.5),
+                    child: Center(
+                      child: LoadingAnimationWidget.halfTriangleDot(
+                          color: AppColors.darkPurple, size: 50),
+                    ))
+                : SizedBox(),
+          ),
+        ],
       ),
     );
   }
@@ -425,6 +413,7 @@ class _CardScreenState extends State<CardScreen> {
             ),
             TextButton(
               onPressed: () {
+                Navigator.of(context).pop();
                 print('Selected Blocking Reason: $selectedReason');
                 _blockreason(card_id, selectedReason);
               },
@@ -440,6 +429,7 @@ class _CardScreenState extends State<CardScreen> {
   }
 
   Future<void> _blockreason(String card_id, String selectedReason) async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
     final apiUrl = 'https://petrocard.000webhostapp.com/API/blockcard.php';
     try {
       setState(() {
@@ -454,10 +444,12 @@ class _CardScreenState extends State<CardScreen> {
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        setState(() {
-          isLoading = false;
-        });
         if (!responseData['error']) {
+          setpreference.setString('status', 'Blocked');
+          await getCardDetails();
+          setState(() {
+            isLoading = false;
+          });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(responseData['message'].toString()),
@@ -465,7 +457,6 @@ class _CardScreenState extends State<CardScreen> {
               backgroundColor: Colors.green, // Customize background color
             ),
           );
-          Navigator.of(context).pop();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -474,6 +465,9 @@ class _CardScreenState extends State<CardScreen> {
               backgroundColor: Colors.red, // Customize background color
             ),
           );
+          setState(() {
+            isLoading = false;
+          });
         }
       } else {
         print('Failed to fetch user data: ${response.statusCode}');
