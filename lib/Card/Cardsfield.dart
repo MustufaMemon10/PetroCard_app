@@ -1,5 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:card_loading/card_loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petrocardapppp/Card/MainCard.dart';

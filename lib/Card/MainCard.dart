@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:card_loading/card_loading.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -4,7 +4,6 @@ import 'package:card_loading/card_loading.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/Card/Cardsfield.dart';
 import 'package:petrocardapppp/Widgets/Transaction_card.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
