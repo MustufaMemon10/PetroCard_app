@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:petrocardapppp/Card/Request/Request_Card_Screen.dart';
 import 'package:petrocardapppp/Card/Request_Card/pending..dart';
@@ -13,7 +14,10 @@ import '../../utilities/colors.dart';
 class RequestCardScreen extends StatefulWidget {
   final String userId;
 
-  const RequestCardScreen({Key? key, required this.userId,}) : super(key: key);
+  const RequestCardScreen({
+    Key? key,
+    required this.userId,
+  }) : super(key: key);
 
   @override
   State<RequestCardScreen> createState() => _RequestCardScreenState();
@@ -21,7 +25,7 @@ class RequestCardScreen extends StatefulWidget {
 
 class _RequestCardScreenState extends State<RequestCardScreen> {
   String? status;
-  String? reason;
+  String reason = '';
   bool isLoading = true;
 
   @override
@@ -29,6 +33,10 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
     super.initState();
     _checkHasRequested();
   }
+  Future<void> _refreshData() async {
+    await _checkHasRequested();
+  }
+
   Future<void> _checkHasRequested() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     final apiUrl =
@@ -37,24 +45,24 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
       setState(() {
         isLoading = true;
       });
+      print(setpreference.getString('req_id'));
       final response = await http.post(
         Uri.parse(apiUrl),
-        body: {'id': setpreference.getString('id') ?? ''},
+        body: {'id': setpreference.getString('id') ?? '',
+      'req_id': setpreference.getString('req_id'),
+        },
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        print('reason:$reason');
-        setpreference.setString('reqStatus',
-            responseData['status'].toString());
-        setpreference.setString('r_reason',
-            responseData['reason'].toString());
-        setpreference.setString('gender',
-            responseData['gender'].toString());
+        setpreference.setString('reqStatus', responseData['status'].toString());
+        setpreference.setString('reason', responseData['r_reason'].toString());
+        setpreference.setString('gender', responseData['gender'].toString());
         setState(() {
           isLoading = false;
           status = setpreference.getString('reqStatus')!;
-          reason = setpreference.getString('r_reason')!;
+          reason = setpreference.getString('reason')!;
         });
+        print('reason:$reason');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -66,53 +74,74 @@ class _RequestCardScreenState extends State<RequestCardScreen> {
       }
     } catch (error) {
       print('Error calling API: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('No connection'),
-          duration: Duration(seconds: 5),
-          backgroundColor: Colors.black,
-        ),
-      );
+      setState(() {
+        isLoading = false;
+      });
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? Center(
-        child: LoadingAnimationWidget.halfTriangleDot(
-          color: AppColors.darkPurple,
-          size: 50,
-        ))
-        : Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: Center(
-        child:
-     status == "pending"
-              ? pendingscreen()
-     : status == "Accepted"
-         ? HomeScreen()
-              : status == "rejected"?
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Request Rejected,'),
-                reason != null ?Text(reason!, style: TextStyle(color: AppColors.red)) : Text('Reason not provided'),
-                TextButton(onPressed: (){const Request_Screen();}, child: Text('Request Again?'))
-              ],
-            ),
-          )
-          :TextButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => const Request_Screen(),
-            ),
-          );
-        },
-        child: Text('REQUEST FOR CARD'),
-      )
+    return Scaffold(
+      body: RefreshIndicator(
+        onRefresh: _refreshData,
+        displacement: kToolbarHeight + 20.0,
+        color: AppColors.black,
+        backgroundColor: AppColors.white,
+        child: isLoading
+            ? Center(
+                child: LoadingAnimationWidget.halfTriangleDot(
+                color: AppColors.darkPurple,
+                size: 50,
+              ))
+            : Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Center(
+                    child: status == "pending"
+                        ? pendingscreen()
+                        : status == "Approved"
+                            ? HomeScreen()
+                            : status == "rejected"
+                                ? Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text('Request Rejected,',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 14.0)),
+                                            reason == 'other'
+                                                ? Text('Reason not provided')
+                                                : Text(reason,
+                                                    style: TextStyle(
+                                                        color: AppColors.red,fontWeight: FontWeight.w500,fontSize: 14.0)),
+                                          ],
+                                        ),
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (BuildContext context) =>
+                                                          Request_Screen()));
+                                            },
+                                            child: Text('Request Again?',style: TextStyle(
+                                                color: AppColors.accentColor,fontWeight: FontWeight.w700,fontSize: 16.0)))
+                                      ],
+                                    ),
+                                  )
+                                : TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) =>
+                                              const Request_Screen(),
+                                        ),
+                                      );
+                                    },
+                                    child: Text('REQUEST FOR CARD'),
+                                  )),
+              ),
       ),
     );
   }

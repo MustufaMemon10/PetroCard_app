@@ -102,12 +102,12 @@ class _SplashScreenState extends State<SplashScreen>
               Center(
                 child: Image.asset(
                   'assets/Animations/splashimage.png',
-                  height: 80,
-                  width: 80,
+                  height: 100,
+                  width: 100,
                 ),
               ),
               Text(
-                'Petro Card',
+                'Petro App',
                 style: TextStyle(
                   color: Color(0xFF032737),
                   fontSize: 22,

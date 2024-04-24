@@ -33,7 +33,7 @@ class _AssignCardScreenState extends State<AssignCardScreen> {
         isLoading = true;
       });
       final apiUrl =
-          'https://petrocard.000webhostapp.com/API/Admin/assigncardnumber.php';
+          'https://petrocard.000webhostapp.com/API/assigncardnumber.php';
       try {
         setState(() {
           isLoading = true;

@@ -22,7 +22,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         isLoading = true;
       });
       final response = await http.get(Uri.parse(
-          'https://petrocard.000webhostapp.com/API/Admin/fetchallfeedback.php'));
+          'https://petrocard.000webhostapp.com/API/fetchallfeedback.php'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         if (responseData['error'] == false) {
@@ -132,6 +132,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       )
           : RefreshIndicator(
         onRefresh: _refreshData,
+        color: AppColors.black,
+        backgroundColor: AppColors.white,
         child: ListView.builder(
           itemCount: userData.length,
           itemBuilder: (context, index) {

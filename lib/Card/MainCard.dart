@@ -44,7 +44,6 @@ class _PetroMainCardState extends State<PetroMainCard> {
         logindata = jsonDecode(response.body);
         data = logindata['data'];
         if (!logindata['error']) {
-          print(data);
           SharedPreferences setpreference =
               await SharedPreferences.getInstance();
           setpreference.setString('card_id', data[0]['card_id'].toString());

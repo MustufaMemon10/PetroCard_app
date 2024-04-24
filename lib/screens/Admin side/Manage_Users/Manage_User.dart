@@ -16,8 +16,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
   bool isLoading = false;
 
   Future<void> deleteUser(String userId) async {
-    final apiUrl =
-        'https://petrocard.000webhostapp.com/API/Admin/deleteapi.php';
+    final apiUrl = 'https://petrocard.000webhostapp.com/API/deleteapi.php';
     try {
       final response = await http.post(
         Uri.parse(apiUrl),
@@ -49,7 +48,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
         isLoading = true;
       });
       final response = await http.get(Uri.parse(
-          'https://petrocard.000webhostapp.com/API/Admin/users_details.php'));
+          'https://petrocard.000webhostapp.com/API/users_details.php'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         if (responseData['error'] == false) {
@@ -167,6 +166,8 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
             )
           : RefreshIndicator(
               onRefresh: _refreshData,
+              color: AppColors.black,
+              backgroundColor: AppColors.white,
               child: ListView.builder(
                 itemCount: userData.length,
                 itemBuilder: (context, index) {
@@ -288,16 +289,18 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                                   actions: <Widget>[
                                     TextButton(
                                       onPressed: () {
-                                        Navigator.of(context).pop(
-                                            false);
+                                        Navigator.of(context).pop(false);
                                       },
-                                      child: Text("Cancel",style: TextStyle(color: Colors.green)),
+                                      child: Text("Cancel",
+                                          style:
+                                              TextStyle(color: Colors.green)),
                                     ),
                                     TextButton(
                                       onPressed: () {
                                         deleteUser(user['id']);
                                       },
-                                      child: Text("Delete",style: TextStyle(color: Colors.red)),
+                                      child: Text("Delete",
+                                          style: TextStyle(color: Colors.red)),
                                     ),
                                   ],
                                 ),

@@ -37,6 +37,7 @@ class _Request_ScreenState extends State<Request_Screen> {
   String email = '';
   String name = '';
   String phone = '';
+  String? req_id;
   bool imageUploaded = false;
 
   getUserName() async {
@@ -46,7 +47,6 @@ class _Request_ScreenState extends State<Request_Screen> {
       email = sharedPreferences.getString('email') ?? '';
       name = sharedPreferences.getString('name') ?? '';
       phone = sharedPreferences.getString('phone') ?? '';
-      print('$phone');
       _emailController.text = email;
       _phoneNumberController.text = phone;
     });
@@ -54,6 +54,7 @@ class _Request_ScreenState extends State<Request_Screen> {
 
   uploadImageMedia(File fileImage) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
     setState(() {
       isLoading = true;
     });
@@ -80,6 +81,10 @@ class _Request_ScreenState extends State<Request_Screen> {
           print(logindata);
 
           if (logindata['error'] == false) {
+            setpreference.setString('gender', _selectedGender);
+            setpreference.setString('address', _addressController.text);
+            setpreference.setString('dob', _dobController.text);
+            setpreference.setString('req_id', logindata['req_id']);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(logindata['message'].toString()),
@@ -88,6 +93,7 @@ class _Request_ScreenState extends State<Request_Screen> {
               ),
             );
             setState(() {
+              req_id = prefs.getString('req_id');
               isLoading = false;
             });
             Navigator.of(context).pushAndRemoveUntil(
@@ -102,6 +108,9 @@ class _Request_ScreenState extends State<Request_Screen> {
                 backgroundColor: Colors.red, // Customize background color
               ),
             );
+            setState(() {
+              isLoading = false;
+            });
           }
           print(streamedResponse.stream);
           print(value);
@@ -118,6 +127,9 @@ class _Request_ScreenState extends State<Request_Screen> {
       });
     } catch (e) {
       print(e);
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -180,7 +192,7 @@ class _Request_ScreenState extends State<Request_Screen> {
   }
 
   bool _validateForm() {
-    if (panNumberController.text.isEmpty || _addressController.text.isEmpty || _dobController.text.isEmpty ||_selectedGender.isEmpty || _image == null || _image!.path.isEmpty) {
+    if (panNumberController.text.isEmpty || _addressController.text.isEmpty || _dobController.text.isEmpty ||_selectedGender.isEmpty || _image == null || _image!.path.isEmpty ) {
       return false;
     }
     if (_formKey.currentState!.validate()) {
@@ -656,14 +668,24 @@ class _Request_ScreenState extends State<Request_Screen> {
                                 FadeInUp(
                                   duration: Duration(milliseconds: 395),
                                   child: InkWell(
-                                    onTap: () {
-                                      if (_image != null&&_validateForm()) {
-                                        uploadImageMedia(_image!);
+                                    onTap: ()async {
+                                      if (_image != null && _validateForm()) {
+                                        if (_isAgeValid(_selectedDate!)) {
+                                          await uploadImageMedia(_image!);
+                                          FocusScope.of(context).unfocus();
+                                        } else {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text('You must be at least 18 years old.'),
+                                              duration: Duration(seconds: 2),
+                                              backgroundColor: Colors.red,
+                                            ),
+                                          );
+                                        }
                                       } else {
                                         ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(
-                                            content: Text(
-                                                'Please fill in all required fields.'),
+                                            content: Text('Please fill all fields.'),
                                             duration: Duration(seconds: 2),
                                             backgroundColor: Colors.red,
                                           ),

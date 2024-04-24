@@ -58,6 +58,8 @@ class _MainDashBoardScreenState extends State<MainDashBoardScreen> {
       return Scaffold(
         body: RefreshIndicator(
           onRefresh: _refreshData,
+          color: AppColors.black,
+          backgroundColor: AppColors.white,
           child: isLoading?
           Center(
             child: LoadingAnimationWidget.halfTriangleDot(

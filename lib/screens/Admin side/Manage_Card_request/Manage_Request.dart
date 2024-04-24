@@ -38,7 +38,7 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
         isLoading = true;
       });
       final response = await http.get(Uri.parse(
-          'https://petrocard.000webhostapp.com/API/Admin/fetchallrequests.php'));
+          'https://petrocard.000webhostapp.com/API/fetchallrequests.php'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         if (responseData['error'] == false) {
@@ -130,7 +130,7 @@ class _ManageRequestsScreenState extends State<ManageRequestsScreen> {
                           final reqDate = DateFormat('dd-MM-yyyy').format(
                               DateTime.parse(requestData[index]['req_date']));
                           final imageUrl =
-                              'https://petrocard.000webhostapp.com/${requestData[index]['doc_img']}';
+                              'https://petrocard.000webhostapp.com/API/${requestData[index]['doc_img']}';
                           return Stack(
                             children: [
                               SingleChildScrollView(

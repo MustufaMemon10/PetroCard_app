@@ -51,12 +51,12 @@ class HomeWidgetState extends State<HomeWidget> {
         final responseData = jsonDecode(response.body);
         if (responseData['error']== true) {
           setState(() {
-            hasCard = true;
+            hasCard = false;
           });
         }
         else{
           setState(() {
-            hasCard = false;
+            hasCard = true;
           });
         }
       } else {
@@ -65,7 +65,6 @@ class HomeWidgetState extends State<HomeWidget> {
       print('No connection');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return  isLoading
@@ -122,9 +121,9 @@ class HomeWidgetState extends State<HomeWidget> {
       case 0:
         return const LocationScreen();
       case 1:
-        return  RequestCardScreen(userId: userId,);
+        return hasCard ?  HomeScreen() :  RequestCardScreen(userId: userId,);
       case 2:
-        return hasCard ? const CardScreen() :  RequestCardScreen(userId: userId,);
+        return hasCard ?  CardScreen() :  RequestCardScreen(userId: userId,);
       default:
         return Container();
     }

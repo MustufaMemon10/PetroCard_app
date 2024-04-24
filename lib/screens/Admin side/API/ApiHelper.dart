@@ -9,7 +9,7 @@ class ApiHelper {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     try {
       final response = await http.get(Uri.parse(
-          'https://petrocard.000webhostapp.com/API/Admin/fetchallrequests.php'));
+          'https://petrocard.000webhostapp.com/API/fetchallrequests.php'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         if (responseData['error'] == false) {
@@ -28,7 +28,7 @@ class ApiHelper {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     try {
       final response = await http.get(Uri.parse(
-          'https://petrocard.000webhostapp.com/API/Admin/users_details.php'));
+          'https://petrocard.000webhostapp.com/API/users_details.php'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         if (responseData['error'] == false) {
@@ -49,7 +49,7 @@ class ApiHelper {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     try {
       final response = await http.get(Uri.parse(
-          'https://petrocard.000webhostapp.com/API/Admin/fetchallcomplaint.php'));
+          'https://petrocard.000webhostapp.com/API/fetchallcomplaint.php'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         if (responseData['error'] == false) {
@@ -70,7 +70,7 @@ static Future<void> fetchFeedbackLength() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
     try {
       final response = await http.get(Uri.parse(
-          'https://petrocard.000webhostapp.com/API/Admin/fetchallfeedback.php'));
+          'https://petrocard.000webhostapp.com/API/fetchallfeedback.php'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         if (responseData['error'] == false) {

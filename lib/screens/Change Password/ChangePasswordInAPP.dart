@@ -8,7 +8,6 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrocardapppp/screens/MainScreens/BaseScreen.dart';
-import 'package:petrocardapppp/screens/Profile_screen/Update_profile_screen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -252,8 +251,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                       if (value!.isEmpty) {
                                         return 'Confirm password is required';
                                       }
+                                      return "Password doesn't match";
                                     }
-                                    return "Password doesn't match";
                                   },
                                   decoration: InputDecoration(
                                       hintText: 'Confirm password',

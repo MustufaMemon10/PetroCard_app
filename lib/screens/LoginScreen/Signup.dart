@@ -34,7 +34,6 @@ class _SignUppageState extends State<SignUppage> {
 
   Future<void> _handleSingUp() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
-
     final form = formKey.currentState;
     if (form!.validate()) {
       setState(() {

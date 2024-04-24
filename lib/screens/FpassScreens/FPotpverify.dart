@@ -4,22 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-// import 'package:petrocardapppp/screens/Change%20Password%20/ChangePasswordScreen.dart';
-import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
+import 'package:petrocardapppp/screens/FpassScreens/ForgotPasswordScreen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class OtpPage extends StatefulWidget {
+class FPOtpPage extends StatefulWidget {
 
-  const OtpPage({
+  const FPOtpPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<OtpPage> createState() => OtpPageState();
+  State<FPOtpPage> createState() => FPOtpPageState();
 }
 
-class OtpPageState extends State<OtpPage> {
+class FPOtpPageState extends State<FPOtpPage> {
   TextEditingController otpController1 = TextEditingController();
   TextEditingController otpController2 = TextEditingController();
   TextEditingController otpController3 = TextEditingController();
@@ -37,70 +36,71 @@ class OtpPageState extends State<OtpPage> {
 
   Future<void> _checkOtp() async {
     SharedPreferences setpreference = await SharedPreferences.getInstance();
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) =>
-         OtpPage()));
-    // final String apiUrl =
-    //     'https://petrocard.000webhostapp.com/API/checkotp.php'; // Replace with your API URL
-    // String OTP =
-    //     '${otpController1.text}${otpController2.text}${otpController3.text}${otpController4.text}${otpController5.text}${otpController6.text}';
-    // if (OTP.length != 6) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: Text("Enter a valid OTP"),
-    //       duration: Duration(seconds: 2),
-    //       backgroundColor: Colors.red,
-    //     ),
-    //   );
-    //   return;
-    // }
-    // try {
-    //   setState(() {
-    //     isLoading = true;
-    //   });
-    //   final response = await http.post(
-    //     Uri.parse(apiUrl),
-    //     body: {'email': setpreference.getString('email'),
-    //       'otp': OTP},
-    //   );
-    //
-    //   if (response.statusCode == 200) {
-    //     final responseData = json.decode(response.body);
-    //     setState(() {
-    //       isLoading = false;
-    //     });
-    //     if (responseData['success'] == true) {
-    //       print('$responseData');
-    //       ScaffoldMessenger.of(context).showSnackBar(
-    //         SnackBar(
-    //           content: Text(responseData['message'].toString()),
-    //           duration: Duration(seconds: 2),
-    //           backgroundColor: Colors.green,
-    //         ),
-    //       );
-    //       Navigator.of(context).pushAndRemoveUntil(
-    //           MaterialPageRoute(builder: (context) => ChangePasswordScreen()),
-    //               (Route<dynamic> route) => false);
-    //       print(responseData['message']);
-    //     } else {
-    //       print(responseData['message']);
-    //       ScaffoldMessenger.of(context).showSnackBar(
-    //         SnackBar(
-    //           content: Text(responseData['message'].toString()),
-    //           duration: Duration(seconds: 2),
-    //           backgroundColor: Colors.red, // Customize background color
-    //         ),
-    //       );
-    //     }
-    //   } else {
-    //     // Handle API error
-    //     print('Error: ${response.reasonPhrase}');
-    //   }
-    // } catch (e) {
-    //   // Handle network or other errors
-    //   print('Error: $e');
-    // }
+    final String apiUrl = 'https://petrocard.000webhostapp.com/API/checkotpFP.php'; // Replace with your API URL
+    String OTP = '${otpController1.text}${otpController2.text}${otpController3.text}${otpController4.text}${otpController5.text}${otpController6.text}';
+    if (OTP.length != 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Enter a valid OTP"),
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        body: {
+          'phone': setpreference.getString('phone'),
+          'otp': OTP,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        setState(() {
+          isLoading = false;
+        });
+        if (responseData['success'] == true) {
+          print('$responseData');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(responseData['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.green,
+            ),
+          );
+          // Store email in SharedPreferences
+          setpreference.setString('email', responseData['email'].toString());
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
+                (Route<dynamic> route) => false,
+          );
+          print(responseData['message']);
+        } else {
+          print(responseData['message']);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(responseData['message'].toString()),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red, // Customize background color
+            ),
+          );
+        }
+      } else {
+        // Handle API error
+        print('Error: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      // Handle network or other errors
+      print('Error: $e');
+    }
   }
+
 
 
   @override

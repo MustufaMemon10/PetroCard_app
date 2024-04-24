@@ -50,8 +50,7 @@ class _LoginPageState extends State<LoginPage> {
         );
         if (response.statusCode == 200) {
           final responseData = jsonDecode(response.body);
-          final  data = jsonDecode(response.body)['user'];
-          print('$responseData');
+          final data = jsonDecode(response.body)['user'];
           setpreference.setString('id', data['id'].toString());
           setpreference.setString('name', data['name'].toString());
           setpreference.setString('phone', data['phone'].toString());
@@ -67,15 +66,14 @@ class _LoginPageState extends State<LoginPage> {
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                       builder: (BuildContext context) => BaseScreen()),
-                      (Route<dynamic> route) => false);
+                  (Route<dynamic> route) => false);
             } else if (role == '0') {
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                       builder: (BuildContext context) => AdminDashboard()),
-                      (Route<dynamic> route) => false);
+                  (Route<dynamic> route) => false);
             }
-          }
-        else {
+          } else {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(responseData['message'].toString()),
@@ -88,12 +86,11 @@ class _LoginPageState extends State<LoginPage> {
             });
           }
         }
-      }
-      catch (error) {
+      } catch (error) {
         print('Error calling API: $error');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('No Internet connection'),
+            content: Text('Invalid User and Password'),
             duration: Duration(seconds: 2),
             backgroundColor: Colors.red, // Customize background color
           ),
@@ -109,7 +106,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    Color bcolor = AppColors.lightPurple;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
@@ -233,8 +229,7 @@ class _LoginPageState extends State<LoginPage> {
                                         borderRadius:
                                             BorderRadius.circular(20.r),
                                         color: AppColors.white,
-                                        border: Border.all(
-                                            color: bcolor),
+                                        border: Border.all(color: AppColors.lightPurple),
                                         boxShadow: const [
                                           BoxShadow(
                                             color: AppColors.lightPurple,
@@ -250,8 +245,7 @@ class _LoginPageState extends State<LoginPage> {
                                             if (RegExp(r"\s").hasMatch(val!)) {
                                               return "Invalid email";
                                             } else {
-                                              if (RegExp(
-                                                      r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
+                                              if (RegExp(r"^[a-zA-Z0-9]+[^#$%&*]+[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}")
                                                   .hasMatch(val)) {}
                                             }
                                             return null;
@@ -291,8 +285,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 context,
                                                 CupertinoPageRoute(
                                                   builder: (context) =>
-                                                      const NumberCheck(
-                                                  ),
+                                                       NumberCheck(),
                                                 ),
                                               );
                                             },
@@ -383,11 +376,11 @@ class _LoginPageState extends State<LoginPage> {
             Positioned.fill(
               child: isLoading
                   ? Container(
-                  color: AppColors.white.withOpacity(0.5),
-                  child: Center(
-                    child: LoadingAnimationWidget.halfTriangleDot(
-                        color: AppColors.darkPurple, size: 50),
-                  ))
+                      color: AppColors.white.withOpacity(0.5),
+                      child: Center(
+                        child: LoadingAnimationWidget.halfTriangleDot(
+                            color: AppColors.darkPurple, size: 50),
+                      ))
                   : SizedBox(),
             ),
           ],

@@ -1,9 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:petrocardapppp/screens/Change%20Password%20/ChangePasswordScreen.dart';
-import 'package:petrocardapppp/screens/LoginScreen/LoginPage.dart';
-import 'package:petrocardapppp/screens/OTPverified/otpVerify.dart';
 import 'package:petrocardapppp/screens/StartingScreen/splashscreen.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 

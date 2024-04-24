@@ -67,7 +67,7 @@ class _CardScreenState extends State<CardScreen> {
       card_num = setpreference.getString('card_num') ?? '';
       card_id = setpreference.getString('card_id') ?? '';
       status = setpreference.getString('status') ?? '';
-      switchValue = status == 'Active' ? true : false;
+      switchValue = status == 'active' ? true : false;
     });
   }
   Future<void> _refreshData() async {
@@ -79,15 +79,18 @@ class _CardScreenState extends State<CardScreen> {
     super.initState();
     getCardDetails();
   }
+  void dispose() {
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: _refreshData,
-        displacement: kToolbarHeight + 20.0,
-        color: AppColors.black,
-        backgroundColor: AppColors.white,
-        child: Stack(
+    return RefreshIndicator(
+      onRefresh: _refreshData,
+      displacement: kToolbarHeight + 20.0,
+      color: AppColors.black,
+      backgroundColor: AppColors.white,
+      child: Scaffold(
+        body: Stack(
           children: [
             Container(
               padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
@@ -219,7 +222,7 @@ class _CardScreenState extends State<CardScreen> {
                     ),
                   ),
                   title: Text(
-                    'Block card',
+                    status == 'active' || status == 'deactive' ? 'Block card' : 'Unblock card',
                     style: TextStyle(
                       fontSize: 16.0,
                       color: AppColors.black,
