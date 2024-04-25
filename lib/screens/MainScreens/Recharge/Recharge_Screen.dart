@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -129,8 +130,14 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
                         keyboardType: TextInputType.number,
                         controller: _cardNumberController,
                         textInputAction: TextInputAction.next,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          FilteringTextInputFormatter.singleLineFormatter,
+                          CreditCardNumberFormatter(),
+                          LengthLimitingTextInputFormatter(19), // Limit input to 5 characters (MM/YY)
+                        ],
                         validator: (value) {
-                          if (value!.length != 16) {
+                          if (value!.length != 19) {
                             if (value.isEmpty) {
                               return 'Card Number is required';
                             }
@@ -236,33 +243,36 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
                           width: 0.41.sw,
                           child: FadeInDown(
                             duration: Duration(milliseconds: 680),
-                            child: TextFormField(
+                            child:TextFormField(
                               controller: _expiryController,
+                              keyboardType: TextInputType.number,
                               textInputAction: TextInputAction.next,
-                              keyboardType: TextInputType.text,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                _ExpiryDateFormatter(),
+                                LengthLimitingTextInputFormatter(5), // Limit input to 5 characters (MM/YY)
+                              ],
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return 'Expiry date is required';
                                 }
+                                // Add additional validation logic for expiry date format if needed
                                 return null;
                               },
                               decoration: InputDecoration(
-                                labelText: 'Expiry',
+                                labelText: 'Expiry (MM/YY)', // Update the label to reflect MM/YY format
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: BorderSide(
-                                        color: AppColors.lightPurple, width: 0.5)),
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderSide: BorderSide(color: AppColors.lightPurple, width: 0.5),
+                                ),
                                 filled: true,
-                                // Enable filled mode
                                 fillColor: Colors.grey[200],
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: AppColors.lightPurple2),
+                                  borderSide: BorderSide(color: AppColors.lightPurple2),
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: AppColors.darkPurple),
-                                  // Customize focused border color
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
                                 errorBorder: OutlineInputBorder(
@@ -270,14 +280,17 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
                                 floatingLabelStyle: const TextStyle(
-                                    color: AppColors.darkPurple, letterSpacing: 0.7),
+                                  color: AppColors.darkPurple,
+                                  letterSpacing: 0.7,
+                                ),
                                 labelStyle: const TextStyle(
-                                    color: AppColors.secondaryText,
-                                    letterSpacing: 0.7),
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 15.0, horizontal: 20.0),
+                                  color: AppColors.secondaryText,
+                                  letterSpacing: 0.7,
+                                ),
+                                contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
                               ),
-                            ),
+                            )
+
                           ),
                         ),
                       ],
@@ -375,3 +388,42 @@ class _RechargeCardScreenState extends State<RechargeCardScreen> {
     );
   }
 }
+class _ExpiryDateFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    var text = newValue.text;
+
+    if (text.length > 2 && !text.contains('-')) {
+      text = text.substring(0, 2) + '/' + text.substring(2);
+    }
+
+    return TextEditingValue(
+      text: text,
+      selection: TextSelection.collapsed(offset: text.length),
+    );
+  }
+}
+class CreditCardNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    var text = newValue.text;
+
+    if (text.length > 4) {
+      text = text.substring(0, 4) +
+          '-' +
+          text.substring(4, 8) +
+          '-' +
+          text.substring(8, 12) +
+          '-' +
+          text.substring(12, 16);
+    }
+
+
+    return TextEditingValue(
+      text: text,
+      selection: TextSelection.collapsed(offset: text.length),
+    );
+  }
+}
+
+

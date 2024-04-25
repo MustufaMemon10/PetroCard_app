@@ -32,8 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchCardDetails();
-    _isInit = true; // Move this line here
+    getCardDetails();
+    // Move this line here
   }
 
   @override
@@ -70,8 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
           setpreference.setString('status', data[0]['status'].toString());
           setState(() {
             isLoading = false;
-            userName = setpreference.getString('name') ?? '';
-            card_num = setpreference.getString('card_num') ?? '';
           });
         }
       } else {
@@ -81,6 +79,13 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (error) {
       print('Error fetching data: $error');
     }
+  }
+  Future<void> getCardDetails() async {
+    SharedPreferences setpreference = await SharedPreferences.getInstance();
+    setState(() {
+      userName = setpreference.getString('name') ?? '';
+      card_num = setpreference.getString('card_num') ?? '';
+    });
   }
 
   Future<void> fetchTransactionDetails() async {
