@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool hasCard = false;
   var data;
   var logindata;
-  bool _isInit = true;
 
   @override
   void initState() {

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -137,6 +138,9 @@ class _CardLimitScreenState extends State<CardLimitScreen> {
                         keyboardType: TextInputType.number,
                         controller: _limitController,
                         textInputAction: TextInputAction.next,
+                        inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Limit is required';
