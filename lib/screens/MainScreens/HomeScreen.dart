@@ -37,14 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
     getCardDetails();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      fetchTransactionDetails();
-      _isInit = false;
-    }
-  }
   Future<void> _fetchCardDetails() async {
     try {
       SharedPreferences setpreference = await SharedPreferences.getInstance();
@@ -106,12 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         if (!responseData['error']) {
-          if (mounted) { // Check if the widget is mounted before calling setState
             setState(() {
               transactions = responseData['transactions'];
               isLoading = false;
             });
-          }
         } else {
           print('Error fetching user data: ${responseData['message']}');
         }
@@ -120,11 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     } catch (error) {
       print('Error fetching user data: $error');
-    }
-    if (mounted) { // Check if the widget is mounted before calling setState
-      setState(() {
-        isLoading = false;
-      });
     }
   }
 
