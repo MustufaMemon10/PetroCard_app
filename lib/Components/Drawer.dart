@@ -60,7 +60,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                               Navigator.of(context).pop(
                                   false);
                             },
-                            child: Text("Cancel",style: TextStyle(color: AppColors.accentColor),),
+                            child: Text("Cancel",style: TextStyle(color: AppColors.darkPurple.withOpacity(0.9)),),
                           ),
                           TextButton(
                             onPressed: () async{
@@ -72,7 +72,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                   MaterialPageRoute(builder: (context) => LoginPage()),
                                       (route) => false);
                             },
-                            child: Text("Logout",style: TextStyle(color: AppColors.accentColor),),
+                            child: Text("Logout",style: TextStyle(color: AppColors.darkPurple),),
                           ),
                         ],
                       ),
