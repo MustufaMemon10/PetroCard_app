@@ -70,7 +70,7 @@ class _BalanceScreenState extends State<BalanceScreen> {
                     FadeInUp(
                       duration: Duration(milliseconds: 650),
                       child: Text(
-                        '${balance ?? "N/A"}',
+                        '${balance ?? "N/A"+'₹'}',
                         style: TextStyle(fontSize: 24.0),
                       ),
                     ),

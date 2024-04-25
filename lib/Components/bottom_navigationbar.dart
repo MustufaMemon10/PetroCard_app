@@ -100,10 +100,10 @@ class _MyNavBarState extends State<MyNavBar> {
                               index == _currentindex
                                   ? '${listOfStrings[index]}'
                                   : '',
-                              style: const TextStyle(
+                              style:  TextStyle(
                                 color: AppColors.darkPurple,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 14,
+                                fontSize: 14.sp,
                               ),
                             ),
                           ),

@@ -66,6 +66,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             onPressed: () async{
                               final pref = await SharedPreferences.getInstance();
                               await pref.clear();
+                              await pref.remove('seen');
                               await pref.setBool('seen',true);
                               Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(builder: (context) => LoginPage()),

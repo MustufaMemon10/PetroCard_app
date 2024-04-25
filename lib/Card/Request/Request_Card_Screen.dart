@@ -671,6 +671,7 @@ class _Request_ScreenState extends State<Request_Screen> {
                                   duration: Duration(milliseconds: 395),
                                   child: InkWell(
                                     onTap: ()async {
+                                      FocusScope.of(context).unfocus();
                                       if (_image != null && _validateForm()) {
                                         if (_isAgeValid(_selectedDate!)) {
                                           await uploadImageMedia(_image!);
@@ -693,7 +694,6 @@ class _Request_ScreenState extends State<Request_Screen> {
                                           ),
                                         );
                                       }
-                                      FocusScope.of(context).unfocus();
                                     },
                                     splashColor:
                                         AppColors.accentColor.withOpacity(0.2),

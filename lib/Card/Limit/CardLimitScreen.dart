@@ -3,6 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:petrocardapppp/screens/MainScreens/BaseScreen.dart';
@@ -204,6 +205,16 @@ class _CardLimitScreenState extends State<CardLimitScreen> {
               ),
             ),
           ),
+        ),
+        Positioned.fill(
+          child: isLoading
+              ? Container(
+              color: AppColors.white.withOpacity(0.5),
+              child: Center(
+                child: LoadingAnimationWidget.halfTriangleDot(
+                    color: AppColors.darkPurple, size: 50),
+              ))
+              : SizedBox(),
         ),
       ],
     );

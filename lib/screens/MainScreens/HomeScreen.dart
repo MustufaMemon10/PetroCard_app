@@ -22,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = true;
   List<dynamic> transactions = [];
   String? userId;
+  String? userName;
+  String? card_num;
   bool hasCard = false;
   var data;
   var logindata;
@@ -30,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _fetchCardDetails();
     _isInit = true; // Move this line here
   }
 
@@ -39,6 +42,44 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_isInit) {
       fetchTransactionDetails();
       _isInit = false;
+    }
+  }
+  Future<void> _fetchCardDetails() async {
+    try {
+      SharedPreferences setpreference = await SharedPreferences.getInstance();
+      setState(() {
+        userId = setpreference.getString('id')!;
+      });
+      setState(() {
+        isLoading = true;
+      });
+      final loginUrl = Uri.parse(
+          "https://petrocard.000webhostapp.com/API/card_data_fetchapi.php?id=$userId");
+      final response = await http.get(loginUrl);
+      if (response.statusCode == 200) {
+        logindata = jsonDecode(response.body);
+        data = logindata['data'];
+        if (!logindata['error']) {
+          SharedPreferences setpreference =
+          await SharedPreferences.getInstance();
+          setpreference.setString('card_id', data[0]['card_id'].toString());
+          setpreference.setString('card_num', data[0]['card_num'].toString());
+          setpreference.setString('addedtime', data[0]['addedtime'].toString());
+          setpreference.setString('cardlimit', data[0]['cardlimit'].toString());
+          setpreference.setString('balance', data[0]['balance'].toString());
+          setpreference.setString('status', data[0]['status'].toString());
+          setState(() {
+            isLoading = false;
+            userName = setpreference.getString('name') ?? '';
+            card_num = setpreference.getString('card_num') ?? '';
+          });
+        }
+      } else {
+        print(
+            'Failed to get response from server. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching data: $error');
     }
   }
 
@@ -83,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _refreshData() async {
     await fetchTransactionDetails();
+    await _fetchCardDetails();
   }
 
 
@@ -111,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
                   padding: EdgeInsets.only(top: screenHeight * 0.04,left: screenWidth * 0.05,right: screenWidth * 0.05,bottom: 0),
-                  child: Cardsfield(),
+                  child: Cardsfield(userName: userName ?? '',card_num: card_num ?? '',),
                 ),
               ),
             ),

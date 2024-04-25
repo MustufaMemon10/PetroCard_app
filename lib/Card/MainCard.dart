@@ -27,50 +27,6 @@ class _PetroMainCardState extends State<PetroMainCard> {
   bool isLoading = false;
   var logindata;
 
-  Future<void> _fetchCardDetails() async {
-    try {
-      SharedPreferences setpreference = await SharedPreferences.getInstance();
-      setState(() {
-        userId = setpreference.getString('id')!;
-      });
-      setState(() {
-        isLoading = true;
-      });
-      final loginUrl = Uri.parse(
-          "https://petrocard.000webhostapp.com/API/card_data_fetchapi.php?id=$userId");
-      final response = await http.get(loginUrl);
-      if (response.statusCode == 200) {
-        logindata = jsonDecode(response.body);
-        data = logindata['data'];
-        if (!logindata['error']) {
-          SharedPreferences setpreference =
-              await SharedPreferences.getInstance();
-          setpreference.setString('card_id', data[0]['card_id'].toString());
-          setpreference.setString('card_num', data[0]['card_num'].toString());
-          setpreference.setString('addedtime', data[0]['addedtime'].toString());
-          setpreference.setString('cardlimit', data[0]['cardlimit'].toString());
-          setpreference.setString('balance', data[0]['balance'].toString());
-          setpreference.setString('status', data[0]['status'].toString());
-          setState(() {
-            isLoading = false;
-            userName = setpreference.getString('name') ?? '';
-          });
-        }
-      } else {
-        print(
-            'Failed to get response from server. Status code: ${response.statusCode}');
-      }
-    } catch (error) {
-      print('Error fetching data: $error');
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchCardDetails();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -7,7 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Cardsfield extends StatefulWidget {
+  final String card_num;
+  final String userName;
  const Cardsfield({
+   required this.card_num,
+   required this.userName,
    Key? key}) : super(key: key);
 
   @override
@@ -16,31 +20,16 @@ class Cardsfield extends StatefulWidget {
 
 class _CardsfieldState extends State<Cardsfield> {
   bool isLoading = false;
-  String userName = '';
-  String email = '';
-  String card_num = '';
 
-  Future<void> getCardDetails() async {
-    SharedPreferences setpreference = await SharedPreferences.getInstance();
-    setState(() {
-      userName = setpreference.getString('name') ?? '';
-      card_num = setpreference.getString('card_num') ?? '';
-    });
-  }
-  @override
-  void initState() {
-    super.initState();
-    getCardDetails();
-  }
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 105),
+        SizedBox(height: 80),
         FadeInDown(
             duration: Duration(milliseconds: 400),
-            child: PetroMainCard(card_num: card_num,userName: userName,)),
-        SizedBox(height: 30.0,),
+            child: PetroMainCard(card_num: widget.card_num,userName: widget.userName,)),
+        SizedBox(height: 20.0,),
         FadeIn(child: Appbtns()),
       ],
     );
