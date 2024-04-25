@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:petrocardapppp/utilities/colors.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -49,73 +51,96 @@ class _AddComplaintsPageState extends State<AddComplaintsPage> {
           SizedBox(width: 20,),
         ],
       ),
-      body: isLoading ? Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor)) : SingleChildScrollView(
-        child: Form(
-          key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 20,),
-              Padding(padding: EdgeInsets.all(16),
-                child:  Text(
-                  "What's your Complaints",
-                  style:
-                  TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                ),),
-              Container(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-                child: TextFormField(
-                  style: TextStyle(color: Color(0xFF08364B)),
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return "Please enter message";
-                    }
-                    return null;
-                  },
-                  controller: messageController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Message',
-                    labelStyle:TextStyle(color: Color(0xFF08364B)),
-                    helperStyle: TextStyle(color: Color(0xFF08364B)),
-                    hintStyle: TextStyle(color: Color(0xFF08364B)),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                      borderSide: BorderSide(
-                        color: Color(0xFF08364B),
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                      borderSide: BorderSide(
-                        color: Color(0xFF08364B),
-                        width: 2.0,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20,),
+                  FadeInDown(
+                    duration: Duration(milliseconds: 550),
+                    child: Padding(padding: EdgeInsets.all(16),
+                      child:  Text(
+                        "What's your Complaint?",
+                        style:
+                        TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.left,
+                      ),),
+                  ),
+                  FadeInDown(
+                    duration: Duration(milliseconds: 600),
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                      child: TextFormField(
+                        style: TextStyle(color: Color(0xFF08364B)),
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return "Please enter message";
+                          }
+                          return null;
+                        },
+                        controller: messageController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Message',
+                          labelStyle:TextStyle(color: Color(0xFF08364B)),
+                          helperStyle: TextStyle(color: Color(0xFF08364B)),
+                          hintStyle: TextStyle(color: Color(0xFF08364B)),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFF08364B),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFF08364B),
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  SizedBox(height:20 ),
+                  FadeInDown(
+                    duration: Duration(milliseconds: 650),
+                    child: Container(
+                        height: 55,
+                        width: double.infinity,
+                        padding: EdgeInsets.only(left: 16,right: 16),
+                        margin: EdgeInsets.all(10),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: AppColors.darkPurple,
+                              side: BorderSide.none,
+                              shape: StadiumBorder(),
+                            ),
+                            child: const Text('Send Complaint',
+                              style: TextStyle(color: Colors.white),),
+                            onPressed: _submit
+                        )),
+                  ),
+                ],
               ),
-              SizedBox(height:20 ),
-              Container(
-                  height: 55,
-                  width: double.infinity,
-                  padding: EdgeInsets.only(left: 16,right: 16),
-                  margin: EdgeInsets.all(10),
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor: AppColors.darkPurple,
-                        side: BorderSide.none,
-                        shape: StadiumBorder(),
-                      ),
-                      child: const Text('Send Complaint',
-                        style: TextStyle(color: Colors.white),),
-                      onPressed: _submit
-                  )),
-            ],
+            ),
           ),
-        ),
+          Positioned.fill(
+            child: isLoading
+                ? Container(
+                color: AppColors.white.withOpacity(0.5),
+                child: Center(
+                  child: LoadingAnimationWidget.halfTriangleDot(
+                      color: AppColors.darkPurple, size: 50),
+                ))
+                : SizedBox(),
+          ),
+        ],
       ) ,
     );
   }
